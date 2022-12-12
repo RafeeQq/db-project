@@ -55,9 +55,9 @@ AS
 	CREATE TABLE Fan (
 		national_id VARCHAR(20),
 		name VARCHAR(20) NOT NULL,
-		birth_date DATE NOT NULL,
+		birth_date DATETIME NOT NULL,
 		address VARCHAR(20) NOT NULL,
-		phone_number VARCHAR(20) NOT NULL,
+		phone_number INT NOT NULL,
 		status BIT NOT NULL DEFAULT 1, -- blocked => 0 / not blocked => 1 
 		username VARCHAR(20) NOT NULL,
 		CONSTRAINT PK_Fan PRIMARY KEY (national_id),
@@ -202,6 +202,15 @@ AS
 
 GO
 
+---------------------------------------- 2.2b --------------------------------------
+CREATE VIEW allClubRepresentatives
+AS
+	SELECT ClubRepresentative.username, ClubRepresentative.name, Club.name AS represented_club_name
+	FROM ClubRepresentative INNER JOIN Club ON ClubRepresentative.club_id = Club.id;
+------------------------------------------------------------------------------------
+
+GO
+
 ---------------------------------------- 2.2c --------------------------------------
 CREATE VIEW allStadiumManagers
 AS 
@@ -217,6 +226,15 @@ CREATE VIEW allFans
 AS
 	SELECT F.username, SU.password, F.name, F.national_id, F.birth_date, F.status 
 	FROM Fan F INNER JOIN SystemUser SU ON F.username = SU.username;
+------------------------------------------------------------------------------------
+
+GO
+
+---------------------------------------- 2.2e --------------------------------------
+CREATE VIEW allMatches
+AS
+SELECT C. 
+FROM 
 ------------------------------------------------------------------------------------
 
 GO
@@ -255,12 +273,107 @@ AS
 
 GO
 
------------------------------------------ II ---------------------------------------
+----------------------------------------- II --------------------------------------- 
+CREATE PROC addNewMatch
+	@first_club VARCHAR(20),
+	@second_club VARCHAR(20),
+	@host VARCHAR(20),
+	@start_time DATETIME,
+	@end_time DATETIME
+AS
+	DECLARE @first_club_id INT;
+	DECLARE @second_club_id INT;
+	DECLARE @stadium_id INT;
+
+	SELECT @first_club_id = Club.id
+	FROM Club
+	WHERE Club.name = @first_club;
+
+	SELECT @second_club_id = Club.id
+	FROM Club
+	WHERE Club.name = @first_club;
+	
+	IF @host = @first_club
+	BEGIN
+		INSERT INTO Match VALUES (@start_time, @end_time, NULL, @first_club_id, @second_club_id);
+	END
+	ELSE
+	BEGIN
+		INSERT INTO Match VALUES (@start_time, @end_time, NULL, @second_club_id, @first_club_id);
+	END
+------------------------------------------------------------------------------------
+
+GO
+
+----------------------------------------- III --------------------------------------
 CREATE VIEW clubsWithNoMatches
 AS
 	SELECT C.name 
 	FROM Club AS C 
 	WHERE C.id NOT IN (SELECT M.guest_club_id FROM Match M UNION SELECT M.host_club_id FROM Match M) 
+------------------------------------------------------------------------------------
+
+GO
+
+----------------------------------------- IV ---------------------------------------
+CREATE PROC deleteMatch
+	@first_club VARCHAR(20),
+	@second_club VARCHAR(20),
+	@host VARCHAR(20)
+AS
+	DECLARE @first_club_id INT;
+	DECLARE @second_club_id INT;
+	DECLARE @host_id INT;
+
+	SELECT @first_club_id = Club.id
+	FROM Club
+	WHERE Club.name = @first_club;
+
+	SELECT @second_club_id = Club.id
+	FROM Club
+	WHERE Club.name = @first_club;
+
+	SELECT @host_id = Club.id
+	FROM Club
+	WHERE Club.name = @host;
+
+	IF @host = @first_club
+	BEGIN
+		DELETE FROM Match 
+		WHERE Match.host_id = @first_club_id AND Match.guest_id = @second_club_id;
+	END
+	ELSE
+	BEGIN
+		DELETE FROM Match 
+		WHERE Match.host_id = @second_club_id AND Match.guest_id = @first_club_id;
+	END
+------------------------------------------------------------------------------------
+
+GO
+
+----------------------------------------- V ----------------------------------------
+CREATE PROC deleteMatchesOnStadium
+	@stadium VARCHAR(20)
+AS
+	DECLARE @stadium_id INT
+	
+	SELECT @stadium_id = Stadium.id
+	FROM Stadium
+	WHERE Stadium.name = @stadium;
+
+	DELETE FROM Match
+	WHERE Match.stadium_id = @stadium_id AND start_time > CURRENT_TIMESTAMP;
+------------------------------------------------------------------------------------
+
+
+GO
+
+----------------------------------------- VI ---------------------------------------
+CREATE PROC addClub
+	@club_name VARCHAR(20),
+	@club_location VARCHAR(20)
+AS
+	INSERT INTO Club VALUES (@club_name, @club_location);
 ------------------------------------------------------------------------------------
 
 GO
@@ -387,12 +500,20 @@ AS
 
 GO
 
+-------------------------------------- XVI -----------------------------------------
+CREATE FUNCTION allUnassignedMatches(@club VARCHAR(20))
+RETURNS TABLE
+AS 
+------------------------------------------------------------------------------------
+
+GO
+
 -------------------------------------- XVII -----------------------------------------
 CREATE PROC  addStadiumManager
-@name VARCHAR(20),
-@stadiumName VARCHAR(20),
-@username VARCHAR(20),
-@password VARCHAR(20)
+	@name VARCHAR(20),
+	@stadiumName VARCHAR(20),
+	@username VARCHAR(20),
+	@password VARCHAR(20)
 AS 
 	DECLARE @stadiumID INT 
 	SELECT @stadiumID = S.id
@@ -405,6 +526,19 @@ AS
 
 	INSERT INTO StadiumManager 
 	VALUES (@name,@stadiumID,@username);
+------------------------------------------------------------------------------------
+
+GO
+
+-------------------------------------- XXI -----------------------------------------
+CREATE PROC addFan
+	@fan_name VARCHAR(20),
+	@national_id_number VARCHAR(20),
+	@birth_date DATETIME,
+	@address VARCHAR(20),
+	@phone_number INT
+AS
+	INSERT INTO Fan VALUES (@national_id_number, @phone_number, @fan_name, @address, '0', @birth_date, NULL)
 ------------------------------------------------------------------------------------
 
 GO
@@ -497,6 +631,14 @@ RETURN (
 		OR (C1.name = @clubName AND C2.name =C.name)
 	)
 )
+------------------------------------------------------------------------------------
+
+GO
+
+---------------------------------------- XXIX --------------------------------------
+CREATE FUNCTION clubsNeverPlayed(@club_name VARCHAR(20))
+RETURNS TABLE
+AS
 ------------------------------------------------------------------------------------
 
 GO
@@ -626,3 +768,11 @@ EXEC addRepresentative 'CR 4', 'Club 3', 'cr4', 'pass_cr4';
 SELECT * FROM ClubRepresentative;
 
 -- TODO: Test remaining procedures and functions.
+
+INSERT INTO Club VALUES ('Tersana', 'Cairo');
+INSERT INTO Club VALUES ('Arsenal', 'London');
+INSERT INTO SystemUser VALUES ('rafeek' , '1223');
+INSERT INTO ClubRepresentative VALUES ('Raf', 'rafeek', 1);
+
+SELECT *
+FROM allClubRepresentatives
