@@ -46,11 +46,11 @@ AS
 
 	CREATE TABLE Fan (
 		national_id VARCHAR(20),
-		phone_number VARCHAR(20) NOT NULL,
+		phone_number INT NOT NULL,
 		name VARCHAR(20) NOT NULL,
 		address VARCHAR(20) NOT NULL,
 		status BIT NOT NULL DEFAULT '0', -- blocked 1 or not 0 
-		birth_date DATE NOT NULL,
+		birth_date DATETIME NOT NULL,
 		username VARCHAR(20),
 		CONSTRAINT PK_Fan PRIMARY KEY (national_id, username),
 		CONSTRAINT FK_Fan_SystemUser FOREIGN KEY (username) REFERENCES SystemUser
@@ -76,7 +76,7 @@ AS
 		id INT PRIMARY KEY IDENTITY,
 		start_time DATETIME NOT NULL,
 		end_time DATETIME NOT NULL,
-		stadium_id INT NOT NULL,
+		stadium_id INT,
 		host_id INT NOT NULL,
 		guest_id INT NOT NULL,
 		CONSTRAINT FK_Match_Stadium FOREIGN KEY (stadium_id) REFERENCES Stadium,
@@ -145,3 +145,166 @@ AS
 	DROP PROC clearAllTables;
 
 GO
+
+
+--b
+CREATE VIEW allClubRepresentatives
+AS
+SELECT ClubRepresentative.username, ClubRepresentative.name, Club.name AS represented_club_name
+FROM ClubRepresentative INNER JOIN Club ON ClubRepresentative.club_id = Club.id;
+GO
+
+
+
+
+--e
+GO
+CREATE VIEW allMatches
+AS
+SELECT C. 
+FROM 
+
+--II
+GO 
+CREATE PROC addNewMatch
+@first_club VARCHAR(20),
+@second_club VARCHAR(20),
+@host VARCHAR(20),
+@start_time DATETIME,
+--end time????
+@end_time DATETIME
+AS
+DECLARE @first_club_id INT;
+DECLARE @second_club_id INT;
+DECLARE @stadium_id INT;
+	SELECT @first_club_id = Club.id
+	FROM Club
+	WHERE Club.name = @first_club;
+
+	SELECT @second_club_id = Club.id
+	FROM Club
+	WHERE Club.name = @first_club;
+	
+IF @host = @first_club
+BEGIN
+INSERT INTO Match VALUES (@start_time, @end_time, NULL, @first_club_id, @second_club_id);
+END
+ELSE
+BEGIN
+INSERT INTO Match VALUES (@start_time, @end_time, NULL, @second_club_id, @first_club_id);
+END
+GO
+
+--IV
+CREATE PROC deleteMatch
+@first_club VARCHAR(20),
+@second_club VARCHAR(20),
+@host VARCHAR(20)
+AS
+DECLARE @first_club_id INT;
+DECLARE @second_club_id INT;
+DECLARE @host_id INT;
+	SELECT @first_club_id = Club.id
+	FROM Club
+	WHERE Club.name = @first_club;
+
+	SELECT @second_club_id = Club.id
+	FROM Club
+	WHERE Club.name = @first_club;
+
+	SELECT @host_id = Club.id
+	FROM Club
+	WHERE Club.name = @host;
+IF @host = @first_club
+BEGIN
+	DELETE FROM Match 
+	WHERE Match.host_id = @first_club_id AND Match.guest_id = @second_club_id;
+END
+ELSE
+BEGIN
+	DELETE FROM Match 
+	WHERE Match.host_id = @second_club_id AND Match.guest_id = @first_club_id;
+END
+GO
+
+--V
+CREATE PROC deleteMatchesOnStadium
+@stadium VARCHAR(20)
+AS
+DECLARE @stadium_id INT
+	SELECT @stadium_id = Stadium.id
+	FROM Stadium
+	WHERE Stadium.name = @stadium;
+
+DELETE FROM Match
+WHERE Match.stadium_id = @stadium_id AND start_time > CURRENT_TIMESTAMP;
+GO
+
+--VI
+CREATE PROC addClub
+@club_name VARCHAR(20),
+@club_location VARCHAR(20)
+AS
+INSERT INTO Club VALUES (@club_name, @club_location);
+GO
+
+--XVI
+CREATE FUNCTION allUnassignedMatches
+(@club VARCHAR(20))
+RETURNS TABLE
+AS 
+BEGIN
+
+
+--XXI
+CREATE PROC addFan
+@fan_name VARCHAR(20),
+@national_id_number VARCHAR(20),
+@birth_date DATETIME,
+@address VARCHAR(20),
+@phone_number INT
+AS
+INSERT INTO Fan VALUES (@national_id_number, @phone_number, @fan_name, @address, '0', @birth_date, NULL)
+GO
+
+
+--XXVI
+CREATE PROC updateMatchHost
+@old_host_name VARCHAR(20),
+@old_guest_name VARCHAR(20),
+@match_date DATETIME
+AS
+DECLARE @new_host_id INT
+DECLARE @new_guest_id INT
+	SELECT @new_host_id = Club.id
+	FROM Club
+	WHERE Club.name = @old_guest_name;
+
+	SELECT @new_guest_id = Club.id
+	From Club
+	WHERE Club.name = @old_host_name;
+
+UPDATE Match
+SET Match.host_id = @new_host_id , Match.guest_id = @new_guest_id
+WHERE Match.host_id = @new_guest_id AND Match.guest_id = @new_host_id AND Match.start_time = @match_date;
+GO
+
+
+--XXIX
+CREATE FUNCTION clubsNeverPlayed
+(@club_name VARCHAR(20))
+RETURNS TABLE
+AS
+BEGIN
+
+
+INSERT INTO Club VALUES ('Tersana', 'Cairo');
+INSERT INTO Club VALUES ('Arsenal', 'London');
+INSERT INTO SystemUser VALUES ('rafeek' , '1223');
+INSERT INTO ClubRepresentative VALUES ('Raf', 'rafeek', 1);
+
+SELECT *
+FROM allClubRepresentatives
+
+EXEC dropAllTables
+EXEC createAllTables
