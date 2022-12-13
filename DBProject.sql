@@ -279,3 +279,15 @@ RETURN (
 	 AND C1.name = @clubName  AND S.name = @stadiumName 
 )
  GO;
+CREATE VIEW allAssocManagers 
+AS 
+SELECT SU.username , SU.password ,SAM.name
+FROM SportsAssociationManager SAM , SystemUser SU 
+WHERE SAM.username = SU.username ;
+GO;
+CREATE VIEW allStadiumManagers
+AS 
+SELECT SU.username , SU.password ,SM.name AS stadiumMangerName, S.name as stadiumName
+FROM StadiumManager SM , Stadium S , SystemUser SU
+WHERE SM.stadium_id = S.id AND SM.username = SU.username 
+GO;
