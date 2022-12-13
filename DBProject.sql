@@ -192,6 +192,26 @@ AS
 
 GO
 
+---------------------------------------- 2.2a --------------------------------------
+CREATE VIEW allAssocManagers 
+AS 
+	SELECT SU.username , SU.password ,SAM.name
+	FROM SportsAssociationManager SAM , SystemUser SU 
+	WHERE SAM.username = SU.username ;
+------------------------------------------------------------------------------------
+
+GO
+
+---------------------------------------- 2.2c --------------------------------------
+CREATE VIEW allStadiumManagers
+AS 
+	SELECT SU.username , SU.password ,SM.name AS stadiumMangerName, S.name as stadiumName
+	FROM StadiumManager SM , Stadium S , SystemUser SU
+	WHERE SM.stadium_id = S.id AND SM.username = SU.username 
+------------------------------------------------------------------------------------
+
+GO
+
 ---------------------------------------- 2.2d --------------------------------------
 CREATE VIEW allFans
 AS
@@ -482,18 +502,19 @@ RETURN (
 GO
 
 ----------------------------------------- XXX --------------------------------------
-CREATE FUNCTION matchesRankedByAttendance ()
+CREATE FUNCTION matchesRankedByAttendance()
 RETURNS TABLE 
 AS 
-RETURN (
-	SELECT C1.name  AS hostClub, C2.name AS guestClub
-	FROM Match M ,Club C1 , Club C2 , Ticket T 
-	WHERE M.host_club_id =C1.id AND M.guest_club_id = C2.id 
-	AND T.match_id = M.id 
-	GROUP BY T.match_id
-	HAVING T.status = 0 
-	ORDER BY COUNT(*) DESC
-)
+	RETURN (
+		SELECT TOP 100 PERCENT C1.name AS host_club, C2.name AS guest_club
+		FROM Match M, Club C1, Club C2, Ticket T 
+		WHERE M.host_club_id = C1.id
+			AND M.guest_club_id = C2.id 
+			AND T.match_id = M.id 
+			AND T.status = 0
+		GROUP BY T.match_id, C1.name, C2.name
+		ORDER BY COUNT(*) DESC
+	)
 ------------------------------------------------------------------------------------
 
 GO
@@ -504,12 +525,12 @@ CREATE FUNCTION requestsFromClub
 RETURNS TABLE 
 AS 
 RETURN (
-	SELECT C1.name , C2.name
-	 FROM Match M , Club  C1 , Club C2 , HostRequest H ,Stadium S ,StadiumManager SM
-	 WHERE M.host_club_id =C1.id  AND M.guest_club_id = C2.id  
-	 AND M.id = H.match_id AND H.stadium_manager_id = SM.id 
-	 AND SM.stadium_id = S.id
-	 AND C1.name = @clubName  AND S.name = @stadiumName 
+	SELECT C1.name AS host_club_name, C2.name AS guest_club_name
+	FROM Match M, Club  C1, Club C2, HostRequest H, Stadium S, StadiumManager SM
+	WHERE M.host_club_id = C1.id  AND M.guest_club_id = C2.id  
+	AND M.id = H.match_id AND H.stadium_manager_id = SM.id 
+	AND SM.stadium_id = S.id
+	AND C1.name = @clubName AND S.name = @stadiumName 
 )
 ------------------------------------------------------------------------------------
 
