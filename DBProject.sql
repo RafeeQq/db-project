@@ -338,6 +338,57 @@ AS
 
 GO
 
+---------------------------------------- XV -----------------------------------------
+CREATE PROC	addHostRequest
+@clubName VARCHAR(20),
+@stadiumName VARCHAR(20),
+@startTime DATETIME 
+AS
+	DECLARE @matchID INT
+	SELECT @matchID = M.id
+	FROM Match M , Club C , Stadium S
+	WHERE M.host_club_id = C.id AND M.stadium_id = S.id
+	AND C.name = @clubName AND S.name =@stadiumName 
+	AND M.start_time = @startTime ;
+
+	DECLARE @clubRepresentativeID INT 
+	SELECT @clubRepresentativeID = CR.id
+	FROM Club C , ClubRepresentative CR
+	WHERE CR.club_id = C.id AND C.name =@clubName ;
+
+	DECLARE @stadiumManagerID INT 
+	SELECT @stadiumManagerID =SM.id
+	FROM Stadium S , StadiumManager SM
+	WHERE S.id = SM.stadium_id AND S.name =@stadiumName ;
+
+	INSERT INTO HostRequest 
+	VALUES (@clubRepresentativeID,@stadiumManagerID,@matchID,'unhandled');
+------------------------------------------------------------------------------------
+
+GO
+
+-------------------------------------- XVII -----------------------------------------
+CREATE PROC  addStadiumManager
+@name VARCHAR(20),
+@stadiumName VARCHAR(20),
+@username VARCHAR(20),
+@password VARCHAR(20)
+AS 
+	DECLARE @stadiumID INT 
+	SELECT @stadiumID = S.id
+	FROM Stadium S 
+	WHERE S.name = @stadiumName;
+
+
+	INSERT INTO SystemUser 
+	VALUES(@username , @password) ;
+
+	INSERT INTO StadiumManager 
+	VALUES (@name,@stadiumID,@username);
+------------------------------------------------------------------------------------
+
+GO
+
 ---------------------------------------- XXIII --------------------------------------
 CREATE FUNCTION availableMatchesToAttend(@date DATETIME)
 RETURNS TABLE
@@ -405,6 +456,62 @@ AS
 		WHERE host_club_id = @host_club_id AND guest_club_id = @guest_club_id AND start_time = @match_start_time
 	);
 ------------------------------------------------------------------------------------	
+
+GO
+
+-------------------------------------- XXVII --------------------------------------
+CREATE FUNCTION [clubsNeverPlayed] 
+(@clubName VARCHAR(20))
+RETURNS TABLE 
+AS
+RETURN (
+	SELECT C.name 
+	FROM Club  C 
+	WHERE C.name <> @clubName
+	AND NOT EXISTS 
+	(
+		SELECT * 
+		FROM Match  M , Club  C1 , Club C2 
+		WHERE M.host_club_id = C1.id AND M.guest_club_id = C2.id AND 
+		(C1.name = C.name AND C2.name = @clubName ) 
+		OR (C1.name = @clubName AND C2.name =C.name)
+	)
+)
+------------------------------------------------------------------------------------
+
+GO
+
+----------------------------------------- XXX --------------------------------------
+CREATE FUNCTION matchesRankedByAttendance ()
+RETURNS TABLE 
+AS 
+RETURN (
+	SELECT C1.name  AS hostClub, C2.name AS guestClub
+	FROM Match M ,Club C1 , Club C2 , Ticket T 
+	WHERE M.host_club_id =C1.id AND M.guest_club_id = C2.id 
+	AND T.match_id = M.id 
+	GROUP BY T.match_id
+	HAVING T.status = 0 
+	ORDER BY COUNT(*) DESC
+)
+------------------------------------------------------------------------------------
+
+GO
+
+---------------------------------------- XXXI --------------------------------------
+CREATE FUNCTION requestsFromClub
+(@stadiumName VARCHAR(20),@clubName VARCHAR(20))
+RETURNS TABLE 
+AS 
+RETURN (
+	SELECT C1.name , C2.name
+	 FROM Match M , Club  C1 , Club C2 , HostRequest H ,Stadium S ,StadiumManager SM
+	 WHERE M.host_club_id =C1.id  AND M.guest_club_id = C2.id  
+	 AND M.id = H.match_id AND H.stadium_manager_id = SM.id 
+	 AND SM.stadium_id = S.id
+	 AND C1.name = @clubName  AND S.name = @stadiumName 
+)
+------------------------------------------------------------------------------------
 
 GO
 
@@ -498,5 +605,3 @@ EXEC addRepresentative 'CR 4', 'Club 3', 'cr4', 'pass_cr4';
 SELECT * FROM ClubRepresentative;
 
 -- TODO: Test remaining procedures and functions.
-
-GO
