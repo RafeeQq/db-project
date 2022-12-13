@@ -220,6 +220,49 @@ AS
 
 GO
 
+------------------------------------------ I ---------------------------------------
+CREATE PROC addAssociationManager
+	@name VARCHAR(20),
+	@username VARCHAR(20),
+	@password VARCHAR(20)
+AS
+	INSERT INTO SystemUser 
+	VALUES (@username, @password)
+
+	INSERT INTO SportsAssociationManager
+	VALUES (@name, @username)
+------------------------------------------------------------------------------------
+
+GO
+
+----------------------------------------- II ---------------------------------------
+CREATE VIEW clubsWithNoMatches
+AS
+	SELECT C.name 
+	FROM Club AS C 
+	WHERE C.id NOT IN (SELECT M.guest_club_id FROM Match M UNION SELECT M.host_club_id FROM Match M) 
+------------------------------------------------------------------------------------
+
+GO
+
+--------------------------------------- VII ---------------------------------------
+CREATE PROC  addTicket
+	@hostClub VARCHAR(20),
+	@guestClub VARCHAR(20),
+	@startTime DATETIME 
+AS 
+	DECLARE @matchID INT
+	SELECT @matchID = M.id 
+	FROM Match M, Club C1, Club C2
+	WHERE M.guest_club_id = C2.id AND M.host_club_id = C1.id
+	AND C1.name = @hostClub AND C2.name = @guestClub AND M.start_time = @startTime
+
+	INSERT INTO Ticket 
+	VALUES (1, @matchID)
+------------------------------------------------------------------------------------
+
+GO
+
 --------------------------------------- VIII ---------------------------------------
 -- TODO: Delete everything that references the club.
 CREATE PROC deleteClub
@@ -455,3 +498,5 @@ EXEC addRepresentative 'CR 4', 'Club 3', 'cr4', 'pass_cr4';
 SELECT * FROM ClubRepresentative;
 
 -- TODO: Test remaining procedures and functions.
+
+GO
