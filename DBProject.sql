@@ -52,6 +52,7 @@ AS
 		status BIT NOT NULL DEFAULT '0', -- blocked 1 or not 0 
 		birth_date DATETIME NOT NULL,
 		username VARCHAR(20),
+		password VARCHAR(20),
 		CONSTRAINT PK_Fan PRIMARY KEY (national_id, username),
 		CONSTRAINT FK_Fan_SystemUser FOREIGN KEY (username) REFERENCES SystemUser
 	);
@@ -150,7 +151,7 @@ GO
 --b
 CREATE VIEW allClubRepresentatives
 AS
-SELECT ClubRepresentative.username, ClubRepresentative.name, Club.name AS represented_club_name
+SELECT ClubRepresentative.username,ClubRepresentative.password, ClubRepresentative.name, Club.name AS represented_club_name
 FROM ClubRepresentative INNER JOIN Club ON ClubRepresentative.club_id = Club.id;
 GO
 
@@ -161,70 +162,55 @@ GO
 GO
 CREATE VIEW allMatches
 AS
-SELECT C. 
-FROM 
+(SELECT C.name AS host,C2.name AS guest, Match.start_time  
+FROM Club AS C INNER JOIN Match ON C.id = Match.host_id INNER JOIN Club AS C2 ON C2.id = Match.guest_id)
+UNION 
+(SELECT C.name AS host,C2.name AS guest, Match.start_time  
+FROM Club AS C2 INNER JOIN Match ON C2.id = Match.guest_id INNER JOIN Club AS C ON C.id = Match.host_id)
 
 --II
 GO 
 CREATE PROC addNewMatch
-@first_club VARCHAR(20),
-@second_club VARCHAR(20),
 @host VARCHAR(20),
+@guest VARCHAR(20),
 @start_time DATETIME,
---end time????
 @end_time DATETIME
 AS
-DECLARE @first_club_id INT;
-DECLARE @second_club_id INT;
-DECLARE @stadium_id INT;
-	SELECT @first_club_id = Club.id
+DECLARE @host_id INT;
+DECLARE @guest_id INT;
+	SELECT @host_id = Club.id
 	FROM Club
-	WHERE Club.name = @first_club;
+	WHERE Club.name = @host;
 
-	SELECT @second_club_id = Club.id
+	SELECT @guest_id = Club.id
 	FROM Club
-	WHERE Club.name = @first_club;
+	WHERE Club.name = @guest;
 	
-IF @host = @first_club
-BEGIN
-INSERT INTO Match VALUES (@start_time, @end_time, NULL, @first_club_id, @second_club_id);
-END
-ELSE
-BEGIN
-INSERT INTO Match VALUES (@start_time, @end_time, NULL, @second_club_id, @first_club_id);
-END
+INSERT INTO Match VALUES (@start_time, @end_time, NULL, @host_id, @guest_id);
 GO
 
 --IV
 CREATE PROC deleteMatch
-@first_club VARCHAR(20),
-@second_club VARCHAR(20),
-@host VARCHAR(20)
+@host VARCHAR(20),
+@guest VARCHAR(20)
 AS
-DECLARE @first_club_id INT;
-DECLARE @second_club_id INT;
 DECLARE @host_id INT;
-	SELECT @first_club_id = Club.id
+DECLARE @guest_id INT;
+	SELECT @host_id = Club.id
 	FROM Club
-	WHERE Club.name = @first_club;
+	WHERE Club.name = @host_id;
 
-	SELECT @second_club_id = Club.id
+	SELECT @guest_id = Club.id
 	FROM Club
-	WHERE Club.name = @first_club;
+	WHERE Club.name = @guest;
 
 	SELECT @host_id = Club.id
 	FROM Club
-	WHERE Club.name = @host;
-IF @host = @first_club
-BEGIN
+	WHERE Club.name = @guest;
+
 	DELETE FROM Match 
-	WHERE Match.host_id = @first_club_id AND Match.guest_id = @second_club_id;
-END
-ELSE
-BEGIN
-	DELETE FROM Match 
-	WHERE Match.host_id = @second_club_id AND Match.guest_id = @first_club_id;
-END
+	WHERE Match.host_id = @host_id AND Match.guest_id = @guest_id;
+
 GO
 
 --V
@@ -254,21 +240,31 @@ CREATE FUNCTION allUnassignedMatches
 RETURNS TABLE
 AS 
 BEGIN
-
-
+DECLARE @club_id INT
+	SELECT @club_id = Club.id
+	FROM Club
+	WHERE Club.name = @club
+RETURN (SELECT DISTINCT Club.name, Match.start_time
+		FROM Match, Club
+		WHERE Match.guest_id = Club.id AND Match.host_id = @club_id
+			AND Match.stadium_id = NULL);
+END
+GO
 --XXI
 CREATE PROC addFan
 @fan_name VARCHAR(20),
+@username VARCHAR(20),
+@password VARCHAR(20),
 @national_id_number VARCHAR(20),
 @birth_date DATETIME,
 @address VARCHAR(20),
 @phone_number INT
 AS
-INSERT INTO Fan VALUES (@national_id_number, @phone_number, @fan_name, @address, '0', @birth_date, NULL)
+INSERT INTO Fan VALUES (@national_id_number, @phone_number, @fan_name, @address, '1', @birth_date, @password)
 GO
 
 
---XXVI
+--XXV
 CREATE PROC updateMatchHost
 @old_host_name VARCHAR(20),
 @old_guest_name VARCHAR(20),
@@ -289,14 +285,33 @@ SET Match.host_id = @new_host_id , Match.guest_id = @new_guest_id
 WHERE Match.host_id = @new_guest_id AND Match.guest_id = @new_host_id AND Match.start_time = @match_date;
 GO
 
+--XXVI
+GO
+CREATE VIEW matchesPerTeam
+AS
+(SELECT Club.name, COUNT(*)
+FROM Club INNER JOIN MATCH ON Club.id = Match.host_id
+GROUP BY Club.name)
+UNION 
+(SELECT Club.name, COUNT(*)
+FROM Club INNER JOIN MATCH ON Club.id = Match.guest_id
+GROUP BY Club.name)
+GO
 
 --XXIX
-CREATE FUNCTION clubsNeverPlayed
-(@club_name VARCHAR(20))
+CREATE FUNCTION matchWithHighestAttendance
+()
 RETURNS TABLE
 AS
-BEGIN
-
+RETURN(SELECT MAX(X)
+		FROM (SELECT X = Host.name, Guest.name, Count(*)
+				FROM Club AS Host INNER JOIN Match ON Match.host_id = Host.id
+				INNER JOIN Club AS Guest ON Match.guest_id = Guest.id  
+				INNER JOIN Ticket ON Ticket.match_id = Match.id
+				GROUP BY Host.name, Guest.name
+				HAVING Ticket.status = '0'
+			)
+GO
 
 INSERT INTO Club VALUES ('Tersana', 'Cairo');
 INSERT INTO Club VALUES ('Arsenal', 'London');
