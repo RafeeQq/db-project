@@ -205,8 +205,10 @@ GO
 ---------------------------------------- 2.2b --------------------------------------
 CREATE VIEW allClubRepresentatives
 AS
-	SELECT ClubRepresentative.username, ClubRepresentative.name, Club.name AS represented_club_name
-	FROM ClubRepresentative INNER JOIN Club ON ClubRepresentative.club_id = Club.id;
+	SELECT CR.username, SU.password, CR.name, C.name AS club_name
+	FROM ClubRepresentative CR 
+	INNER JOIN Club C ON CR.club_id = C.id
+	INNER JOIN SystemUser SU ON SU.username = CR.username;
 ------------------------------------------------------------------------------------
 
 GO
@@ -214,7 +216,7 @@ GO
 ---------------------------------------- 2.2c --------------------------------------
 CREATE VIEW allStadiumManagers
 AS 
-	SELECT SU.username , SU.password ,SM.name AS stadiumMangerName, S.name as stadiumName
+	SELECT SU.username, SU.password, SM.name AS stadium_manger_name, S.name as stadium_name
 	FROM StadiumManager SM , Stadium S , SystemUser SU
 	WHERE SM.stadium_id = S.id AND SM.username = SU.username 
 ------------------------------------------------------------------------------------
@@ -233,8 +235,17 @@ GO
 ---------------------------------------- 2.2e --------------------------------------
 CREATE VIEW allMatches
 AS
-SELECT C. 
-FROM 
+	(
+		SELECT C.name AS host, C2.name AS guest, Match.start_time  
+		FROM Club AS C 
+		INNER JOIN Match ON C.id = Match.host_club_id 
+		INNER JOIN Club AS C2 ON C2.id = Match.guest_club_id
+	) UNION (
+		SELECT C.name AS host,C2.name AS guest, Match.start_time  
+		FROM Club AS C2 
+		INNER JOIN Match ON C2.id = Match.guest_club_id 
+		INNER JOIN Club AS C ON C.id = Match.host_club_id
+	)
 ------------------------------------------------------------------------------------
 
 GO
@@ -275,32 +286,23 @@ GO
 
 ----------------------------------------- II --------------------------------------- 
 CREATE PROC addNewMatch
-	@first_club VARCHAR(20),
-	@second_club VARCHAR(20),
 	@host VARCHAR(20),
+	@guest VARCHAR(20),
 	@start_time DATETIME,
 	@end_time DATETIME
 AS
-	DECLARE @first_club_id INT;
-	DECLARE @second_club_id INT;
-	DECLARE @stadium_id INT;
+	DECLARE @host_id INT;
+	DECLARE @guest_id INT;
 
-	SELECT @first_club_id = Club.id
+	SELECT @host_id = Club.id
 	FROM Club
-	WHERE Club.name = @first_club;
+	WHERE Club.name = @host;
 
-	SELECT @second_club_id = Club.id
+	SELECT @guest_id = Club.id
 	FROM Club
-	WHERE Club.name = @first_club;
+	WHERE Club.name = @guest;
 	
-	IF @host = @first_club
-	BEGIN
-		INSERT INTO Match VALUES (@start_time, @end_time, NULL, @first_club_id, @second_club_id);
-	END
-	ELSE
-	BEGIN
-		INSERT INTO Match VALUES (@start_time, @end_time, NULL, @second_club_id, @first_club_id);
-	END
+	INSERT INTO Match VALUES (@start_time, @end_time, @host_id, @guest_id, NULL);
 ------------------------------------------------------------------------------------
 
 GO
@@ -317,36 +319,12 @@ GO
 
 ----------------------------------------- IV ---------------------------------------
 CREATE PROC deleteMatch
-	@first_club VARCHAR(20),
-	@second_club VARCHAR(20),
-	@host VARCHAR(20)
+	@host VARCHAR(20),
+	@guest VARCHAR(20)
 AS
-	DECLARE @first_club_id INT;
-	DECLARE @second_club_id INT;
-	DECLARE @host_id INT;
-
-	SELECT @first_club_id = Club.id
-	FROM Club
-	WHERE Club.name = @first_club;
-
-	SELECT @second_club_id = Club.id
-	FROM Club
-	WHERE Club.name = @first_club;
-
-	SELECT @host_id = Club.id
-	FROM Club
-	WHERE Club.name = @host;
-
-	IF @host = @first_club
-	BEGIN
-		DELETE FROM Match 
-		WHERE Match.host_id = @first_club_id AND Match.guest_id = @second_club_id;
-	END
-	ELSE
-	BEGIN
-		DELETE FROM Match 
-		WHERE Match.host_id = @second_club_id AND Match.guest_id = @first_club_id;
-	END
+	DELETE FROM Match 
+	WHERE host_club_id = (SELECT id FROM Club WHERE Club.name = @host) 
+	AND guest_club_id = (SELECT id FROM Club WHERE Club.name = @guest);
 ------------------------------------------------------------------------------------
 
 GO
@@ -473,9 +451,9 @@ GO
 
 ---------------------------------------- XV -----------------------------------------
 CREATE PROC	addHostRequest
-@clubName VARCHAR(20),
-@stadiumName VARCHAR(20),
-@startTime DATETIME 
+	@clubName VARCHAR(20),
+	@stadiumName VARCHAR(20),
+	@startTime DATETIME 
 AS
 	DECLARE @matchID INT
 	SELECT @matchID = M.id
@@ -503,7 +481,14 @@ GO
 -------------------------------------- XVI -----------------------------------------
 CREATE FUNCTION allUnassignedMatches(@club VARCHAR(20))
 RETURNS TABLE
-AS 
+AS
+	RETURN (
+		SELECT DISTINCT Club.name, Match.start_time
+		FROM Match, Club
+		WHERE Match.guest_club_id = Club.id 
+		AND Match.host_club_id = (SELECT id FROM Club WHERE name = @club) 
+		AND Match.stadium_id IS NULL
+	);
 ------------------------------------------------------------------------------------
 
 GO
@@ -515,17 +500,16 @@ CREATE PROC  addStadiumManager
 	@username VARCHAR(20),
 	@password VARCHAR(20)
 AS 
-	DECLARE @stadiumID INT 
+	DECLARE @stadiumID INT
 	SELECT @stadiumID = S.id
 	FROM Stadium S 
 	WHERE S.name = @stadiumName;
 
-
 	INSERT INTO SystemUser 
-	VALUES(@username , @password) ;
+	VALUES(@username, @password);
 
 	INSERT INTO StadiumManager 
-	VALUES (@name,@stadiumID,@username);
+	VALUES (@name, @stadiumID, @username);
 ------------------------------------------------------------------------------------
 
 GO
@@ -533,12 +517,15 @@ GO
 -------------------------------------- XXI -----------------------------------------
 CREATE PROC addFan
 	@fan_name VARCHAR(20),
+	@username VARCHAR(20),
+	@password VARCHAR(20),
 	@national_id_number VARCHAR(20),
 	@birth_date DATETIME,
 	@address VARCHAR(20),
 	@phone_number INT
 AS
-	INSERT INTO Fan VALUES (@national_id_number, @phone_number, @fan_name, @address, '0', @birth_date, NULL)
+	INSERT INTO SystemUser VALUES (@username, @password);
+	INSERT INTO Fan VALUES (@national_id_number, @fan_name, @birth_date, @address, @phone_number, 1, @username)
 ------------------------------------------------------------------------------------
 
 GO
@@ -613,6 +600,22 @@ AS
 
 GO
 
+-------------------------------------- XXVI --------------------------------------
+CREATE VIEW matchesPerTeam
+AS
+(
+	SELECT Club.name, COUNT(*) AS number_of_matches 
+	FROM Club INNER JOIN MATCH ON Club.id = Match.host_club_id
+	GROUP BY Club.name
+) UNION (
+	SELECT Club.name, COUNT(*) AS number_of_matches
+	FROM Club INNER JOIN MATCH ON Club.id = Match.guest_club_id
+	GROUP BY Club.name
+)
+------------------------------------------------------------------------------------
+
+GO
+
 -------------------------------------- XXVII --------------------------------------
 CREATE FUNCTION [clubsNeverPlayed] 
 (@clubName VARCHAR(20))
@@ -636,9 +639,23 @@ RETURN (
 GO
 
 ---------------------------------------- XXIX --------------------------------------
-CREATE FUNCTION clubsNeverPlayed(@club_name VARCHAR(20))
+CREATE FUNCTION matchWithHighestAttendance()
 RETURNS TABLE
 AS
+	RETURN (
+		SELECT C1.name AS host_club, C2.name AS guest_club
+		FROM Match M, Club C1, Club C2, Ticket T 
+		WHERE M.host_club_id = C1.id
+			AND M.guest_club_id = C2.id 
+			AND T.match_id = M.id
+		GROUP BY T.match_id, C1.name, C2.name
+		HAVING COUNT(T.id) >= ALL (
+			SELECT COUNT(T.id)
+			FROM Match M INNER JOIN Ticket T ON T.match_id = M.id
+			WHERE T.status = 0
+			GROUP BY M.id
+		)
+	)
 ------------------------------------------------------------------------------------
 
 GO
