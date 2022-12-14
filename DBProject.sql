@@ -1,8 +1,8 @@
-﻿USE master;
+﻿-- Uncomment to reset database
+USE master;
 DROP DATABASE Project;
 
 CREATE DATABASE Project;
-
 USE Project;
 
 GO
@@ -21,7 +21,7 @@ AS
 		name VARCHAR(20) NOT NULL,
 		location VARCHAR(20) NOT NULL,
 		capacity INT NOT NULL,
-		status BIT NOT NULL, -- not available => 0 / available => 1
+		status BIT NOT NULL DEFAULT 1, -- unavailable => 0 / available => 1
 		CONSTRAINT PK_Stadium PRIMARY KEY (id)
 	);
 
@@ -31,8 +31,8 @@ AS
 		stadium_id INT NOT NULL,
 		username VARCHAR(20) NOT NULL,
 		CONSTRAINT PK_StadiumManager PRIMARY KEY (id),
-		CONSTRAINT FK_StadiumManager_Stadium FOREIGN KEY (stadium_id) REFERENCES Stadium,
-		CONSTRAINT FK_StadiumManager_SystemUser FOREIGN KEY (username) REFERENCES SystemUser
+		CONSTRAINT FK_StadiumManager_Stadium FOREIGN KEY (stadium_id) REFERENCES Stadium ON DELETE CASCADE,
+		CONSTRAINT FK_StadiumManager_SystemUser FOREIGN KEY (username) REFERENCES SystemUser ON DELETE CASCADE
 	);
 
 	CREATE TABLE Club (
@@ -48,8 +48,8 @@ AS
 		club_id INT NOT NULL,
 		username VARCHAR(20) NOT NULL,
 		CONSTRAINT PK_ClubRepresentative PRIMARY KEY (id),
-		CONSTRAINT FK_ClubRepresentative_Club FOREIGN KEY (club_id) REFERENCES Club,
-		CONSTRAINT FK_ClubRepresentative_SystemUser FOREIGN KEY (username) REFERENCES SystemUser
+		CONSTRAINT FK_ClubRepresentative_Club FOREIGN KEY (club_id) REFERENCES Club ON DELETE CASCADE,
+		CONSTRAINT FK_ClubRepresentative_SystemUser FOREIGN KEY (username) REFERENCES SystemUser ON DELETE CASCADE
 	);
 
 	CREATE TABLE Fan (
@@ -58,10 +58,10 @@ AS
 		birth_date DATE NOT NULL,
 		address VARCHAR(20) NOT NULL,
 		phone_number VARCHAR(20) NOT NULL,
-		status BIT NOT NULL DEFAULT '0', -- blocked => 1 / not blocked => 0 
+		status BIT NOT NULL DEFAULT 1, -- blocked => 0 / not blocked => 1 
 		username VARCHAR(20) NOT NULL,
 		CONSTRAINT PK_Fan PRIMARY KEY (national_id),
-		CONSTRAINT FK_Fan_SystemUser FOREIGN KEY (username) REFERENCES SystemUser
+		CONSTRAINT FK_Fan_SystemUser FOREIGN KEY (username) REFERENCES SystemUser ON DELETE CASCADE
 	);
 
 	CREATE TABLE SportsAssociationManager (
@@ -69,7 +69,7 @@ AS
 		name VARCHAR(20) NOT NULL,
 		username VARCHAR(20) NOT NULL,
 		CONSTRAINT PK_SportsAssociationManager PRIMARY KEY (id),
-		CONSTRAINT FK_SportsAssociationManager_SystemUser FOREIGN KEY (username) REFERENCES SystemUser
+		CONSTRAINT FK_SportsAssociationManager_SystemUser FOREIGN KEY (username) REFERENCES SystemUser ON DELETE CASCADE
 	);
 
 	CREATE TABLE SystemAdmin (
@@ -77,7 +77,7 @@ AS
 		name VARCHAR(20) NOT NULL,
 		username VARCHAR(20) NOT NULL,
 		CONSTRAINT PK_SystemAdmin PRIMARY KEY (id),
-		CONSTRAINT FK_SystemAdmin_SystemUser FOREIGN KEY (username) REFERENCES SystemUser
+		CONSTRAINT FK_SystemAdmin_SystemUser FOREIGN KEY (username) REFERENCES SystemUser ON DELETE CASCADE
 	);
 
 	CREATE TABLE Match (
@@ -86,11 +86,11 @@ AS
 		end_time DATETIME NOT NULL,
 		host_club_id INT NOT NULL,
 		guest_club_id INT NOT NULL,
-		stadium_id INT NOT NULL,
+		stadium_id INT,
 		CONSTRAINT PK_MATCH PRIMARY KEY (id),
-		CONSTRAINT FK_Match_Host FOREIGN KEY (host_club_id) REFERENCES Club,
+		CONSTRAINT FK_Match_Host FOREIGN KEY (host_club_id) REFERENCES Club ,
 		CONSTRAINT FK_Match_Guest FOREIGN KEY (guest_club_id) REFERENCES Club,
-		CONSTRAINT FK_Match_Stadium FOREIGN KEY (stadium_id) REFERENCES Stadium
+		CONSTRAINT FK_Match_Stadium FOREIGN KEY (stadium_id) REFERENCES Stadium ON DELETE CASCADE
 	);
 
 	CREATE TABLE HostRequest (
@@ -98,32 +98,34 @@ AS
 		club_representative_id INT NOT NULL,
 		stadium_manager_id INT NOT NULL,
 		match_id INT NOT NULL,
-		status VARCHAR(20) CHECK (status IN ('unhandled', 'accepted', 'rejected')),
+		status VARCHAR(20) CHECK (status IN ('unhandled', 'accepted', 'rejected')) DEFAULT 'unhandled',
 		CONSTRAINT PK_HostRequest PRIMARY KEY (id),
-		CONSTRAINT FK_HostRequest_ClubRepresentative FOREIGN KEY (club_representative_id) REFERENCES ClubRepresentative,
-		CONSTRAINT FK_HostRequest_StadiumManager FOREIGN KEY (stadium_manager_id) REFERENCES StadiumManager,
-		CONSTRAINT FK_HostRequest_Match FOREIGN KEY (match_id) REFERENCES Match
+		CONSTRAINT FK_HostRequest_ClubRepresentative FOREIGN KEY (club_representative_id) REFERENCES ClubRepresentative ON DELETE CASCADE,
+		CONSTRAINT FK_HostRequest_StadiumManager FOREIGN KEY (stadium_manager_id) REFERENCES StadiumManager /*ON DELETE CASCADE*/,
+		CONSTRAINT FK_HostRequest_Match FOREIGN KEY (match_id) REFERENCES Match ON DELETE CASCADE
 	);
 
 	CREATE TABLE Ticket (
 		id INT IDENTITY,
-		status BIT NOT NULL, -- sold => 0 / available => 1
+		status BIT NOT NULL DEFAULT 1, -- sold => 0 / available => 1
 		match_id INT NOT NULL,
 		CONSTRAINT PK_Ticket PRIMARY KEY (id),
-		CONSTRAINT FK_Ticket_Match FOREIGN KEY (match_id) REFERENCES Match,
+		CONSTRAINT FK_Ticket_Match FOREIGN KEY (match_id) REFERENCES Match ON DELETE CASCADE,
 	);
 
 	CREATE TABLE TicketBuyingTransactions (
 		fan_national_id VARCHAR(20) NOT NULL,
 		ticket_id INT NOT NULL,
 		CONSTRAINT PK_TicketBuyingTransactions PRIMARY KEY (ticket_id),
-		CONSTRAINT FK_TicketBuyingTransactions_Fan FOREIGN KEY (fan_national_id) REFERENCES Fan,
-		CONSTRAINT FK_TicketBuyingTransactions_Ticket FOREIGN KEY (ticket_id) REFERENCES Ticket
+		CONSTRAINT FK_TicketBuyingTransactions_Fan FOREIGN KEY (fan_national_id) REFERENCES Fan ON DELETE CASCADE,
+		CONSTRAINT FK_TicketBuyingTransactions_Ticket FOREIGN KEY (ticket_id) REFERENCES Ticket ON DELETE CASCADE
 	);
 ------------------------------------------------------------------------------------
 
--- TODO: Remove this line before submitting
-EXEC createAllTables
+GO
+
+-- Should I remove this line before submitting?
+EXEC createAllTables;
 
 GO
 
@@ -191,16 +193,15 @@ AS
 GO
 
 ---------------------------------------- 2.2d --------------------------------------
--- TODO: Should status be returned as a string or as a bit?
 CREATE VIEW allFans
 AS
-	SELECT name, national_id, birth_date, status FROM Fan;
+	SELECT F.username, SU.password, F.name, F.national_id, F.birth_date, F.status 
+	FROM Fan F INNER JOIN SystemUser SU ON F.username = SU.username;
 ------------------------------------------------------------------------------------
 
 GO
 
 --------------------------------------- 2.2h ---------------------------------------
--- TODO: Should status be returned as a string or as a bit?
 CREATE VIEW allStadiums
 AS
 	SELECT name, location, capacity, status
@@ -210,10 +211,9 @@ AS
 GO
 
 --------------------------------------- 2.2i ---------------------------------------
--- TODO: How to represent the status of the request? String?
 CREATE VIEW allRequests
 AS
-	SELECT CR.name AS club_representative_name, SM.name AS stadium_manager_name, R.status
+	SELECT CR.username AS club_representative_username, SM.username AS stadium_manager_username, R.status
 	FROM HostRequest R, ClubRepresentative CR, StadiumManager SM
 	WHERE R.club_representative_id = CR.id AND R.stadium_manager_id = SM.id
 ------------------------------------------------------------------------------------
@@ -221,15 +221,20 @@ AS
 GO
 
 --------------------------------------- VIII ---------------------------------------
+-- TODO: Delete everything that references the club.
 CREATE PROC deleteClub
 	@club_name VARCHAR(20)
 AS
-	DELETE FROM Club WHERE name = @club_name;
+	DECLARE @club_id INT;
+	SELECT @club_id = id FROM Club WHERE name = @club_name;
+	DELETE FROM Match WHERE host_club_id = @club_id OR guest_club_id = @club_id;
+	DELETE FROM Club WHERE id = @club_id;
 ------------------------------------------------------------------------------------
 
 GO
 
 ---------------------------------------- IX ----------------------------------------
+-- TODO: Should the default for a stadium to be available?
 CREATE PROC addStadium
 	@stadium_name VARCHAR(20),
 	@stadium_location VARCHAR(20),
@@ -246,7 +251,7 @@ CREATE PROC unblockFan
 	@national_id VARCHAR(20)
 AS
 	UPDATE Fan
-	SET status = 0
+	SET status = 1
 	WHERE national_id = @national_id;
 ------------------------------------------------------------------------------------
 
@@ -272,7 +277,7 @@ AS
 GO
 
 ---------------------------------------- XIV ----------------------------------------
--- TODO: Again, what should date be?
+-- TODO: Should you also make sure there are no requests to host matches on that stadium?
 CREATE FUNCTION viewAvailableStadiumsOn(@date DATETIME)
 RETURNS TABLE
 AS
@@ -291,8 +296,7 @@ AS
 GO
 
 ---------------------------------------- XXIII --------------------------------------
--- TODO: What exactly is match start date?
-CREATE FUNCTION availableMatchesToAttend(@date DATE)
+CREATE FUNCTION availableMatchesToAttend(@date DATETIME)
 RETURNS TABLE
 AS
 	RETURN (
@@ -312,9 +316,6 @@ AS
 GO
 
 ---------------------------------------- XXIV --------------------------------------
--- TODO: Should status 0 be used for sold or for available?
--- TODO: What is date for the match? Is it start datetime?
--- TODO: Ticket Status can be derived from a function?
 CREATE PROC purchaseTicket
 	@fan_national_id VARCHAR(20),
 	@host_club_name VARCHAR(20),
@@ -330,7 +331,7 @@ AS
 	AND start_time = @match_start_time;
 	
 	DECLARE @ticket_id INT;
-	SELECT @ticket_id = id FROM Ticket WHERE match_id = @match_id AND status = 1;
+	SELECT TOP 1 @ticket_id = id FROM Ticket WHERE match_id = @match_id AND status = 1;
 	
 	UPDATE Ticket
 	SET status = 0
@@ -343,8 +344,6 @@ AS
 GO
 
 ---------------------------------------- XXV --------------------------------------
--- TODO: Yet again, what the hell is the date of the match?! Is it the date of the start date or the end date?
--- TODO: Should start time and end time be derived?
 CREATE PROC updateMatchHost
 	@host_club_name VARCHAR(20),
 	@guest_club_name VARCHAR(20),
@@ -364,3 +363,95 @@ AS
 	);
 ------------------------------------------------------------------------------------	
 
+GO
+
+
+--############## Testing (DONT FORGET TO REMOVE BEFORE SUBMITTING ) ################
+
+INSERT INTO SystemUser VALUES 
+	('cr1', 'pass_cr1'), 
+	('sm1', 'pass_sm1'), 
+	('cr2', 'pass_cr2'), 
+	('sm2', 'pass_sm2'), 
+	('cr3', 'pass_cr3'), 
+	('sm3', 'pass_sm3'),
+	('fan1', 'pass_fan1'),
+	('fan2', 'pass_fan2'),
+	('blocked_fan', 'pass_blocked_fan'),
+	('sa1', 'pass_sa1'),
+	('sa2', 'pass_sa2'),
+	('sam1', 'pass_sam1'),
+	('sam2', 'pass_sam2');
+	
+INSERT INTO SystemAdmin VALUES
+	('SA 1', 'sa1'),
+	('SA 2', 'sa2');
+
+INSERT INTO SportsAssociationManager VALUES
+	('SAM 1', 'sam1'),
+	('SAM 2', 'sam2');
+
+INSERT INTO Club VALUES 
+	('Club 1', 'Egypt'), 
+	('Club 2', 'Egypt'), 
+	('Club 3', 'Germany');
+
+INSERT INTO Stadium VALUES 
+	('Stadium 1', 'Egypt', 1000, 1), 
+	('Stadium 2', 'Egypt', 2000, 1), 
+	('Stadium 3', 'Germany', 2000, 1);
+
+INSERT INTO ClubRepresentative VALUES 
+	('CR 1', 1, 'cr1'), 
+	('CR 2', 2, 'cr2'), 
+	('CR 3', 2, 'cr3');
+
+INSERT INTO StadiumManager VALUES 
+	('SM 1', 1, 'sm1'), 
+	('SM 2', 2, 'sm2'), 
+	('SM 3', 3, 'sm3');
+
+INSERT INTO Fan VALUES
+	('id_fan1', 'Fan 1', '1-1-2000', 'Address 1', '0123456789', 1, 'fan1'),
+	('id_fan2', 'Fan 2', '1-5-2001', 'Address 2', '0123456789', 1, 'fan2'),
+	('id_blocked_fan', 'Blocked Fan', '10-9-2001', 'Address 3', '0123456789', 0, 'blocked_fan');
+
+INSERT INTO Match VALUES 
+	('12-14-2022', '12-14-2022', 1, 2, 1), 
+	('12-15-2022', '12-15-2022', 2, 3, 2), 
+	('12-15-2022', '12-15-2022', 3, 1, NULL);
+
+INSERT INTO HostRequest VALUES 
+	(1, 1, 1, 'unhandled'), 
+	(2, 2, 2, 'accepted'),
+	(3, 3, 3, 'rejected');
+
+INSERT INTO Ticket VALUES
+	(1, 1),
+	(1, 1),
+	(1, 1),
+	(1, 2),
+	(0, 2),
+	(0, 3);
+
+INSERT INTO TicketBuyingTransactions VALUES
+	('id_fan1', 5),
+	('id_fan2', 6);
+
+
+SELECT * FROM allFans;
+SELECT * FROM allStadiums;
+SELECT * FROM allRequests;
+
+EXEC addStadium 'Stadium 4', "Egypt", 1000;
+SELECT * FROM Stadium;
+
+EXEC deleteClub "Club 3";
+SELECT * FROM Club;
+
+EXEC unblockFan "id_blocked_fan";
+
+EXEC addRepresentative 'CR 4', 'Club 3', 'cr4', 'pass_cr4';
+SELECT * FROM ClubRepresentative;
+
+-- TODO: Test remaining procedures and functions.
