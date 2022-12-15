@@ -195,9 +195,9 @@ GO
 ---------------------------------------- 2.2a --------------------------------------
 CREATE VIEW allAssocManagers 
 AS 
-	SELECT SU.username , SU.password ,SAM.name
-	FROM SportsAssociationManager SAM , SystemUser SU 
-	WHERE SAM.username = SU.username ;
+	SELECT SU.username, SU.password, SAM.name
+	FROM SportsAssociationManager SAM, SystemUser SU 
+	WHERE SAM.username = SU.username;
 ------------------------------------------------------------------------------------
 
 GO
@@ -246,6 +246,29 @@ AS
 		INNER JOIN Match ON C2.id = Match.guest_club_id 
 		INNER JOIN Club AS C ON C.id = Match.host_club_id
 	)
+------------------------------------------------------------------------------------
+
+GO
+
+---------------------------------------- 2.2f --------------------------------------
+CREATE VIEW allTickets
+AS
+SELECT C1.name, C2.name, Stadium.name, Match.start_time
+FROM Ticket
+INNER JOIN Match ON Ticket.match_id = Match.id
+INNER JOIN Stadium ON Match.stadium_id = Stadium.id
+INNER JOIN Club C1 ON Match.host_club_id = C1.id
+INNER JOIN Club C2 ON Match.guest_club_id = C2.id
+WHERE C1 <> C2
+------------------------------------------------------------------------------------
+
+GO
+
+---------------------------------------- 2.2g --------------------------------------
+CREATE VIEW allClubs
+AS
+SELECT name, location
+FROM Clubs
 ------------------------------------------------------------------------------------
 
 GO
@@ -400,6 +423,26 @@ AS
 
 GO
 
+---------------------------------------- X ----------------------------------------
+CREATE PROC deleteStadium
+@n VARCHAR(20)
+AS
+DELETE FROM Stadium WHERE @n = Stadium.name
+------------------------------------------------------------------------------------
+
+GO
+
+---------------------------------------- XI ----------------------------------------
+CREATE PROC blockFan
+@n VARCHAR(20)
+AS
+UPDATE Fan
+SET status = 0
+WHERE @n = fan.national_id
+------------------------------------------------------------------------------------
+
+GO
+
 ---------------------------------------- XII ----------------------------------------
 CREATE PROC unblockFan
 	@national_id VARCHAR(20)
@@ -514,6 +557,76 @@ AS
 
 GO
 
+-------------------------------------- XVIII -----------------------------------------
+CREATE FUNCTION allPendingRequests
+(@m VARCHAR(20))
+RETURNS TABLE
+RETURN (SELECT ClubRepresentative.name, Club.name, Match.start_time
+FROM HostRequest
+INNER JOIN ClubRepresentative ON HostRequest.club_representative_id = ClubRepresentative.id
+INNER JOIN Match ON HostRequest.match_id = Match.id
+INNER JOIN Club ON Match.guest_club_id = Club.id
+INNER JOIN StadiumManager ON HostRequest.stadium_manager_id = StadiumManager.id
+WHERE @m = StadiumManager.id)
+------------------------------------------------------------------------------------
+
+GO
+
+-------------------------------------- XIX -----------------------------------------
+CREATE PROC generateTickets
+@i INT, @s INT
+AS
+DECLARE @c INT = 0;
+WHILE @c < @s
+BEGIN
+INSERT INTO TICKETS VALUES (1,@i);
+SET @c = @c+1;
+END;
+GO
+
+CREATE PROC acceptRequest
+@m VARCHAR (20),
+@h VARCHAR (20),
+@g VARCHAR (20),
+@d DATETIME
+AS
+UPDATE HostRequest
+SET status = 'accepted'
+WHERE id = (
+SELECT id
+FROM HostRequest
+INNER JOIN StadiumManager ON HostRequest.stadium_manager_id = StadiumManager.id
+INNER JOIN Match ON HostRequest.match_id = Match.id
+INNER JOIN Club C1 ON Match.host_club_id = C1.id
+INNER JOIN Club C2 ON Match.guest_club_id = C2.id
+WHERE @m = StadiumManager.username AND @d = Match.start_time AND @h = C1.name AND @g = C2.name
+);
+------------------------------------------------------------------------------------
+
+GO
+
+-------------------------------------- XX -----------------------------------------
+CREATE PROC rejectRequest
+@m VARCHAR (20),
+@h VARCHAR (20),
+@g VARCHAR (20),
+@d DATETIME
+AS
+UPDATE HostRequest
+SET status = 'rejected'
+WHERE id = (
+SELECT id
+FROM HostRequest
+INNER JOIN StadiumManager ON HostRequest.stadium_manager_id = StadiumManager.id
+INNER JOIN Match ON HostRequest.match_id = Match.id
+INNER JOIN Club C1 ON Match.host_club_id = C1.id
+INNER JOIN Club C2 ON Match.guest_club_id = C2.id
+WHERE @m = StadiumManager.username AND @d = Match.start_time AND @h = C1.name AND @g = C2.name AND C1 <> C2
+);
+------------------------------------------------------------------------------------
+
+GO
+
 -------------------------------------- XXI -----------------------------------------
 CREATE PROC addFan
 	@fan_name VARCHAR(20),
@@ -526,6 +639,20 @@ CREATE PROC addFan
 AS
 	INSERT INTO SystemUser VALUES (@username, @password);
 	INSERT INTO Fan VALUES (@national_id_number, @fan_name, @birth_date, @address, @phone_number, 1, @username)
+------------------------------------------------------------------------------------
+
+GO
+
+-------------------------------------- XXII ----------------------------------------
+CREATE FUNCTION upcomingMatchesOfClub
+(@c VARCHAR(20))
+RETURNS TABLE
+RETURN (SELECT C1.name, C2.name, Match.start_time, Stadium.name
+FROM Match
+INNER JOIN Stadium ON Match.stadium_id = Stadium.id
+INNER JOIN Club C1 ON C1.id = Match.host_club_id
+INNER JOIN Club C2 ON C2.id = Match.guest_club_id
+WHERE Match.start_time > CURRENT_TIMESTAMP AND C1.name <> C2.name)
 ------------------------------------------------------------------------------------
 
 GO
@@ -617,8 +744,22 @@ AS
 GO
 
 -------------------------------------- XXVII --------------------------------------
-CREATE FUNCTION [clubsNeverPlayed] 
-(@clubName VARCHAR(20))
+CREATE VIEW clubsNeverMatched
+AS
+SELECT C1.name, C2.name
+FROM Club
+WHERE NOT EXISTS (
+SELECT C1.name, C2.name
+FROM Club C1
+INNER JOIN Match ON C1.id = Match.host_club_id
+INNER JOIN Club C2 ON Match.guest_club_id = C2.id
+);
+------------------------------------------------------------------------------------
+
+GO
+
+-------------------------------------- XXVIII --------------------------------------
+CREATE FUNCTION clubsNeverPlayed(@clubName VARCHAR(20))
 RETURNS TABLE 
 AS
 RETURN (
