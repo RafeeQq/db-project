@@ -2,13 +2,13 @@
 
 <asp:Content ContentPlaceHolderID="Navbar" runat="server">
     <li class="nav-item">
-        <a class="nav-link" href="#">Clubs</a>
+        <a class="nav-link" href="/SystemAdmin/Default.aspx">Clubs</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Stadiums</a>
+        <a class="nav-link" href="/SystemAdmin/Stadiums.aspx">Stadiums</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Fans</a>
+        <a class="nav-link" href="/SystemAdmin/Fans.aspx">Fans</a>
     </li>
 </asp:Content>
 

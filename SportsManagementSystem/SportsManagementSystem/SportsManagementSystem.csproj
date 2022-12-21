@@ -99,7 +99,9 @@
     <Content Include="Auth\Login.aspx" />
     <Content Include="SportsAssociationManager\Default.aspx" />
     <Content Include="StadiumManager\Default.aspx" />
+    <Content Include="SystemAdmin\AddClub.aspx" />
     <Content Include="SystemAdmin\Default.aspx" />
+    <Content Include="SystemAdmin\DeleteClub.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -217,12 +219,26 @@
     <Compile Include="StadiumManager\StadiumManager.Master.designer.cs">
       <DependentUpon>StadiumManager.Master</DependentUpon>
     </Compile>
+    <Compile Include="SystemAdmin\AddClub.aspx.cs">
+      <DependentUpon>AddClub.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemAdmin\AddClub.aspx.designer.cs">
+      <DependentUpon>AddClub.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SystemAdmin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SystemAdmin\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SystemAdmin\DeleteClub.aspx.cs">
+      <DependentUpon>DeleteClub.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemAdmin\DeleteClub.aspx.designer.cs">
+      <DependentUpon>DeleteClub.aspx</DependentUpon>
     </Compile>
     <Compile Include="SystemAdmin\SystemAdmin.Master.cs">
       <DependentUpon>SystemAdmin.Master</DependentUpon>

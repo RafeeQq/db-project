@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -100,6 +101,33 @@ namespace SportsManagementSystem
             }
 
             return "";
+        }
+
+        public static DataTable ConvertToTable(List<Dictionary<string, object>> data)
+        {
+            var table = new DataTable();
+
+            if (data.Count() > 0)
+            {
+                foreach (var key in data[0].Keys)
+                {
+                    table.Columns.Add(key);
+                }
+
+                foreach (var row in data)
+                {
+                    var newRow = table.NewRow();
+
+                    foreach (var key in row.Keys)
+                    {
+                        newRow[key] = row[key];
+                    }
+
+                    table.Rows.Add(newRow);
+                }
+            }
+
+            return table;
         }
     }
 }

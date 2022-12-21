@@ -1,7 +1,17 @@
-﻿-- Uncomment to reset database
+﻿-- #########################################################################
+-- # WHEN RUNNING YOU NEED TO FOLLOW THESE STEPS: ##                       #
+-- # 1. RUN "CREATE PROC createAllTables"                                  #
+-- # 2. RUN "EXEC createAllTables"                                         #
+-- # 3. RUN ALL OTHER CREATE STATEMENTS                                    #
+-- #                                                                       #
+-- # IF YOU GET ERROR WHEN RUNNING THE CREATE STATEMENTS, MAKE SURE        #
+-- # THAT YOU DIDN'T SELECT ONLY A PART OF SOME COMMENTS, MAY BE YOU       #
+-- # WHEN SELECTING YOU DIDN'T SELECT THE ENTIRE COMMENT SO THE COMPILER   #
+-- # THOUGHT IT WAS A STATEMENT NOT A COMMENT                              #
+-- #########################################################################
+
 USE master;
 DROP DATABASE Project;
-
 CREATE DATABASE Project;
 USE Project;
 
@@ -21,7 +31,7 @@ AS
 		name VARCHAR(20) NOT NULL,
 		location VARCHAR(20) NOT NULL,
 		capacity INT NOT NULL,
-		status BIT NOT NULL DEFAULT 1, -- unavailable => 0 / available => 1
+		status BIT NOT NULL DEFAULT 1, /* unavailable => 0 / available => 1 */
 		CONSTRAINT PK_Stadium PRIMARY KEY (id)
 	);
 
@@ -58,7 +68,7 @@ AS
 		birth_date DATETIME NOT NULL,
 		address VARCHAR(20) NOT NULL,
 		phone_number INT NOT NULL,
-		status BIT NOT NULL DEFAULT 1, -- blocked => 0 / not blocked => 1 
+		status BIT NOT NULL DEFAULT 1, /* blocked => 0 / not blocked => 1 */
 		username VARCHAR(20) NOT NULL,
 		CONSTRAINT PK_Fan PRIMARY KEY (national_id),
 		CONSTRAINT FK_Fan_SystemUser FOREIGN KEY (username) REFERENCES SystemUser ON DELETE CASCADE
@@ -107,7 +117,7 @@ AS
 
 	CREATE TABLE Ticket (
 		id INT IDENTITY,
-		status BIT NOT NULL DEFAULT 1, -- sold => 0 / available => 1
+		status BIT NOT NULL DEFAULT 1, /* sold => 0 / available => 1 */
 		match_id INT NOT NULL,
 		CONSTRAINT PK_Ticket PRIMARY KEY (id),
 		CONSTRAINT FK_Ticket_Match FOREIGN KEY (match_id) REFERENCES Match ON DELETE CASCADE,
@@ -124,8 +134,7 @@ AS
 
 GO
 
--- Should I remove this line before submitting?
-EXEC createAllTables;
+EXEC createAllTables
 
 GO
 
@@ -958,173 +967,7 @@ AS
 
 GO
 
--- #######################################################################################
--- ######################################### (Testing) ###################################
--- #######################################################################################
+INSERT INTO SystemUser VALUES ('admin', 'password');
+INSERT INTO SystemAdmin VALUES ('Admin', 'admin');
 
------------------------------------ Adding sample data -----------------------------------
-INSERT INTO SystemUser VALUES 
-	('cr1', 'pass_cr1'), 
-	('sm1', 'pass_sm1'), 
-	('cr2', 'pass_cr2'), 
-	('sm2', 'pass_sm2'), 
-	('cr3', 'pass_cr3'), 
-	('sm3', 'pass_sm3'),
-	('cr4', 'pass_cr4'),
-	('fan1', 'pass_fan1'),
-	('fan2', 'pass_fan2'),
-	('blocked_fan', 'pass_blocked_fan'),
-	('sa1', 'pass_sa1'),
-	('sa2', 'pass_sa2'),
-	('sam1', 'pass_sam1'),
-	('sam2', 'pass_sam2');
-	
-INSERT INTO SystemAdmin VALUES
-	('SA 1', 'sa1'),
-	('SA 2', 'sa2');
-
-INSERT INTO SportsAssociationManager VALUES
-	('SAM 1', 'sam1'),
-	('SAM 2', 'sam2');
-
-INSERT INTO Club VALUES 
-	('Club 1', 'Egypt'), 
-	('Club 2', 'Egypt'), 
-	('Club 3', 'Germany'),
-	('Club 4', 'Japan'),
-	('Club 5', 'Shbeen El Koom');
-
-INSERT INTO Stadium VALUES 
-	('Stadium 1', 'Egypt', 5, 1), 
-	('Stadium 2', 'Egypt', 3, 1), 
-	('Stadium 3', 'Germany', 2, 1), 
-	('Stadium 4', 'Poland', 2, 0);
-
-INSERT INTO ClubRepresentative VALUES 
-	('CR 1', 1, 'cr1'), 
-	('CR 2', 2, 'cr2'), 
-	('CR 3', 3, 'cr3'),
-	('CR 4', 4, 'cr4');
-
-INSERT INTO StadiumManager VALUES 
-	('SM 1', 1, 'sm1'), 
-	('SM 2', 2, 'sm2'), 
-	('SM 3', 3, 'sm3');
-
-INSERT INTO Fan VALUES
-	('id_fan1', 'Fan 1', '1-1-2000', 'Address 1', '0123456789', 1, 'fan1'),
-	('id_fan2', 'Fan 2', '1-5-2001', 'Address 2', '0123456789', 1, 'fan2'),
-	('id_blocked_fan', 'Blocked Fan', '10-9-2001', 'Address 3', '0123456789', 0, 'blocked_fan');
-
-INSERT INTO Match VALUES 
-	('12-14-2022 09:00:00', '12-14-2022 10:30:00', 1, 2, 1), 
-	('12-15-2022 05:00:00', '12-15-2022 06:30:00', 2, 3, 2), 
-	('12-15-2022 21:00:00', '12-15-2022 22:30:00', 3, 1, NULL),
-	('12-1-2022 21:00:00', '12-1-2022 22:30:00', 4, 1, 4),
-	('12-31-2022 21:00:00', '12-31-2022 22:30:00', 3, 4, NULL),
-	('12-31-2022 21:00:00', '12-31-2022 22:30:00', 4, 2, 3),
-	('1-1-2022 21:00:00', '1-1-2022 22:30:00', 5, 1, 3);
-
-INSERT INTO HostRequest VALUES 
-	(1, 1, 1, 'unhandled'), 
-	(2, 2, 2, 'accepted'),
-	(3, 3, 3, 'rejected');
-
-	/*
-INSERT INTO Ticket VALUES
-	(1, 1),
-	(1, 1),
-	(0, 1),
-	(1, 2),
-	(0, 2),
-	(1, 4),
-	(1, 4),
-	(1, 4),
-	(1, 4);
-	*/
-INSERT INTO Ticket VALUES
-	(1, 1),
-	(1, 1),
-	(1, 1),
-	(1, 2),
-	(1, 2),
-	(1, 4),
-	(1, 4),
-	(1, 4),
-	(1, 4);
-
-
-INSERT INTO TicketBuyingTransactions VALUES
-	('id_fan1', 5),
-	('id_fan2', 3);
-------------------------------------------------------------------------------------
-
--- ############################### Testing ################################
-
-SELECT * FROM allAssocManagers;
-SELECT * FROM allClubRepresentatives;
-SELECT * FROM allStadiumManagers;
-SELECT * FROM allFans;
-SELECT * FROM allMatches;
-SELECT * FROM allTickets;
-SELECT * FROM allCLubs;
-SELECT * FROM allStadiums;
-SELECT * FROM allRequests;
-
-
-EXEC addAssociationManager 'SAM 3', 'sam3', 'pass_sam3'
-EXEC addNewMatch 'Club 1', 'Club 3', '12-18-2022 05:00:00', '12-18-2022 06:30:00'
-SELECT * FROM clubsWithNoMatches;
-EXEC deleteMatch 'Club 1', 'Club 3'
-EXEC addClub 'Club 4', 'Poland'
-EXEC deleteMatchesOnStadium 'Stadium 2'
-EXEC addTicket 'Club 2', 'Club 3', '2022-12-15 05:00:00';
-EXEC deleteClub 'Club 1'
-EXEC addStadium 'Stadium 4', 'UK', 4;
-EXEC deleteStadium 'Stadium 1'
-EXEC blockFan 'id_fan1'
-EXEC unblockFan 'id_fan1'
-EXEC addRepresentative 'CR4', 'Club 4', 'cr4', 'pass_cr4'
-SELECT * FROM viewAvailableStadiumsOn('2022-12-15 04:30:00');
-EXEC addHostRequest 'Club 4', 'Stadium 2', '12-1-2022 21:00:00'
-SELECT * FROM dbo.allUnassignedMatches('Club 3') 
-EXEC addStadiumManager 'SM 4', 'Stadium 4', 'sm4', 'pass_sm4'
-SELECT * FROM allPendingRequests('sm1')
-EXEC addHostRequest 'Club 3', 'Stadium 3', '12-15-2022 21:00:00'
-EXEC acceptRequest 'sm3', 'Club 3', 'Club 1', '12-15-2022 21:00:00'
-EXEC rejectRequest 'sm3', 'Club 3', 'Club 1', '12-15-2022 21:00:00'
-EXEC addFan 'Fan 3', 'fan3', 'pass_fan3', 'id_fan3', '2001-9-10', 'Address 3', 121
-SELECT * FROM upcomingMatchesOfClub('Club 4')
-
-SELECT * FROM Match
-SELECT * FROM Club
-SELECT * FROM Ticket
-SELECT * FROM TicketBuyingTransactions
-SELECT * FROM Fan;
-SELECT * FROM HostRequest
-
-SELECT * FROM availableMatchesToAttend('2022-12-10')
-EXEC purchaseTicket 'id_blocked_fan', 'Club 4', 'Club 1', '2022-12-01 21:00:00';
-EXEC purchaseTicket 'id_fan2', 'Club 2', 'Club 3', '2022-12-15 05:00:00.000'
-EXEC updateMatchHost 'Club 1', 'Club 2', '2022-12-14 09:00:00'
-
-DELETE FROM Match WHERE id = 7;
-
-SELECT * FROM Match
-SELECT * FROM matchesPerTeam
-SELECT * FROM clubsNeverMatched
-SELECT * FROM clubsNeverPlayed('Club 1')
-
-SELECT * FROM matchWithHighestAttendance()
-
-EXEC purchaseTicket 'id_fan2', 'Club 1', 'Club 2', '2022-12-14 09:00:00.000'
-EXEC purchaseTicket 'id_fan2', 'Club 1', 'Club 2', '2022-12-14 09:00:00.000'
-
-SELECT * FROM matchesRankedByAttendance()
-
-EXEC addHostRequest 'Club 4', 'Stadium 2', '2022-12-01 21:00:00'
-EXEC addHostRequest 'Club 4', 'Stadium 2', '2022-12-31 21:00:00'
-SELECT * FROM requestsFromClub('Stadium 3', 'Club 5')
-
-
-EXEC clearAllTables;
+EXEC addClub "Chealsy", "Germany"
