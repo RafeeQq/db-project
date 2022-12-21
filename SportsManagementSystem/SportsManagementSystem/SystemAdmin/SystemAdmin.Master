@@ -1,0 +1,17 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/User.Master" AutoEventWireup="true" CodeBehind="SystemAdmin.master.cs" Inherits="SportsManagementSystem.SystemAdmin.SystemAdmin" %>
+
+<asp:Content ContentPlaceHolderID="Navbar" runat="server">
+    <li class="nav-item">
+        <a class="nav-link" href="#">Clubs</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Stadiums</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Fans</a>
+    </li>
+</asp:Content>
+
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
+    <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>

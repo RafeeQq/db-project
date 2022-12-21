@@ -1,0 +1,4 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/User.Master" AutoEventWireup="true" CodeBehind="ClubRepresentative.master.cs" Inherits="SportsManagementSystem.ClubRepresentative.ClubRepresentative" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+</asp:Content>

@@ -1,0 +1,4 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/User.Master" AutoEventWireup="true" CodeBehind="StadiumManager.master.cs" Inherits="SportsManagementSystem.StadiumManager.StadiumManager" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+</asp:Content>
