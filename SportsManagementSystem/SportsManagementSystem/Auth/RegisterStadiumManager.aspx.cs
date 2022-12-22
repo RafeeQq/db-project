@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace SportsManagementSystem.Auth
 {
-    public partial class RegisterSportsAssociationManager : System.Web.UI.Page
+    public partial class RegisterStadiumManager : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -19,7 +19,7 @@ namespace SportsManagementSystem.Auth
         protected void RegisterBtn_Click(object sender, EventArgs e)
         {
             // name, username, a password, national id number, phone number,birth date and an address
-            if (Name.Text == "" || Username.Text == "" || Password.Text == "" || StadiumName.Text == "0")
+            if (Name.Text == "" || Username.Text == "" || Password.Text == "" || StadiumName.Text == "")
             {
                 EmptyFieldsMsg.Visible = true;
                 return;
@@ -38,11 +38,26 @@ namespace SportsManagementSystem.Auth
                 return;
             }
 
-            DbHelper.RunStoredProcedure("addAssociationManager", new Dictionary<string, object>()
+            var stadium = DbHelper.RunQuery(
+               "SELECT * FROM StadiumManager INNER JOIN Stadium ON Stadium.id = StadiumManager.stadium_id WHERE Stadium.name = StadiumName.Text",
+               new Dictionary<string, object>()
+               {
+                    { "@stadiumName", StadiumName.Text }
+               }
+           );
+
+            if (stadium.Count > 0)
+            {
+                DuplicateStadium.Visible = true;
+                return;
+            }
+
+            DbHelper.RunStoredProcedure("addStadiumManager", new Dictionary<string, object>()
             {
                 { "@name", Name.Text },
                 { "@username", Username.Text },
                 { "@password", Password.Text },
+                { "@stadiumName",StadiumName.Text}
             });
 
             Session["Username"] = Username.Text;
