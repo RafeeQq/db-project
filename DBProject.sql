@@ -273,12 +273,12 @@ GO
 CREATE VIEW allMatches
 AS
 	(
-		SELECT C.name AS host, C2.name AS guest, Match.start_time  
+		SELECT C.name AS host, C2.name AS guest, Match.start_time, Match.end_time
 		FROM Club AS C 
 		INNER JOIN Match ON C.id = Match.host_club_id 
 		INNER JOIN Club AS C2 ON C2.id = Match.guest_club_id
 	) UNION (
-		SELECT C.name AS host,C2.name AS guest, Match.start_time  
+		SELECT C.name AS host,C2.name AS guest, Match.start_time, Match.end_time  
 		FROM Club AS C2 
 		INNER JOIN Match ON C2.id = Match.guest_club_id 
 		INNER JOIN Club AS C ON C.id = Match.host_club_id
@@ -379,11 +379,14 @@ GO
 ----------------------------------------- IV ---------------------------------------
 CREATE PROC deleteMatch
 	@host VARCHAR(20),
-	@guest VARCHAR(20)
+	@guest VARCHAR(20),
+	@start_time DATETIME,
+	@end_time DATETIME
 AS
 	DELETE FROM Match 
 	WHERE host_club_id = (SELECT id FROM Club WHERE Club.name = @host) 
-	AND guest_club_id = (SELECT id FROM Club WHERE Club.name = @guest);
+	AND guest_club_id = (SELECT id FROM Club WHERE Club.name = @guest)
+	AND start_time = @start_time AND end_time = @end_time;
 ------------------------------------------------------------------------------------
 
 GO
@@ -969,5 +972,4 @@ GO
 
 INSERT INTO SystemUser VALUES ('admin', 'password');
 INSERT INTO SystemAdmin VALUES ('Admin', 'admin');
-
 EXEC addClub "Chealsy", "Germany"

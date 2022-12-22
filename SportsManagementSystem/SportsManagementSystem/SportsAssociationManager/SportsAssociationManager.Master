@@ -1,4 +1,13 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/User.Master" AutoEventWireup="true" CodeBehind="SportsAssociationManager.master.cs" Inherits="SportsManagementSystem.SportsAssociationManager.SportsAssociationManager" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ContentPlaceHolderID="Navbar" runat="server">
+    <li class="nav-item">
+        <a class="nav-link" href="/SportsAssociationManager/Default.aspx">Matches</a>
+    </li>
+
 </asp:Content>
+
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
+    <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+

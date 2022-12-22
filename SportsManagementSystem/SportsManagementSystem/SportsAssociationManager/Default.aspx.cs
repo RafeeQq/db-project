@@ -13,5 +13,31 @@ namespace SportsManagementSystem.SportsAssociationManager
         {
 
         }
+
+        protected void UpcomingMatches_Click(object sender, EventArgs e)
+        {
+
+            Response.Redirect("/SportsAssociationManager/UpcomingMatches.aspx");
+        }
+
+        protected void AlreadyPlayedMatches_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/SportsAssociationManager/AlreadyPlayedMatches.aspx");
+        }
+
+        protected void ClubsNeverMatched_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/SportsAssociationManager/ClubsNeverMatched.aspx");
+        }
+
+        protected void AddMatch_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/SportsAssociationManager/AddMatch.aspx");
+        }
+
+        protected void DeleteMatch_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/SportsAssociationManager/DeleteMatch.aspx");
+        }
     }
 }

@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SportsManagementSystem.Auth
+namespace SportsManagementSystem.SportsAssociationManager
 {
 
 
-    public partial class RegisterStadiumManager
+    public partial class AddMatch
     {
 
         /// <summary>
@@ -24,75 +24,75 @@ namespace SportsManagementSystem.Auth
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
-        /// DuplicateUsername control.
+        /// HostClubDoesNotExist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateUsername;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HostClubDoesNotExist;
 
         /// <summary>
-        /// DuplicateStadium control.
+        /// GuestClubDoesNotExist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateStadium;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl GuestClubDoesNotExist;
 
         /// <summary>
-        /// StadiumDoesNotExist control.
+        /// ClubVsItself control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StadiumDoesNotExist;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ClubVsItself;
 
         /// <summary>
-        /// Name control.
+        /// HostName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Name;
+        protected global::System.Web.UI.WebControls.TextBox HostName;
 
         /// <summary>
-        /// Username control.
+        /// GuestName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Username;
+        protected global::System.Web.UI.WebControls.TextBox GuestName;
 
         /// <summary>
-        /// Password control.
+        /// StartTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Password;
+        protected global::System.Web.UI.WebControls.TextBox StartTime;
 
         /// <summary>
-        /// StadiumName control.
+        /// EndTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StadiumName;
+        protected global::System.Web.UI.WebControls.TextBox EndTime;
 
         /// <summary>
-        /// RegisterBtn control.
+        /// AddMatchBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button RegisterBtn;
+        protected global::System.Web.UI.WebControls.Button AddMatchBtn;
     }
 }

@@ -7,56 +7,47 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SportsManagementSystem.SportsAssociationManager
+namespace SportsManagementSystem.SystemAdmin
 {
 
 
-    public partial class Default
+    public partial class DeleteStadium
     {
 
         /// <summary>
-        /// UpcomingMatches control.
+        /// EmptyFieldsMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button UpcomingMatches;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
-        /// AlreadyPlayedMatches control.
+        /// NoStadiumFoundMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AlreadyPlayedMatches;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoStadiumFoundMsg;
 
         /// <summary>
-        /// ClubsNeverMatched control.
+        /// StadiumName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ClubsNeverMatched;
+        protected global::System.Web.UI.WebControls.TextBox StadiumName;
 
         /// <summary>
-        /// AddMatch control.
+        /// DeleteStadiumBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AddMatch;
-
-        /// <summary>
-        /// DeleteMatch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button DeleteMatch;
+        protected global::System.Web.UI.WebControls.Button DeleteStadiumBtn;
     }
 }

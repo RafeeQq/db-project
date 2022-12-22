@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -60,11 +63,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Auth\RegisterClubRepresentative.aspx" />
@@ -99,12 +97,20 @@
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="Auth\Login.aspx" />
+    <Content Include="SportsAssociationManager\AddMatch.aspx" />
+    <Content Include="SportsAssociationManager\AlreadyPlayedMatches.aspx" />
+    <Content Include="SportsAssociationManager\ClubsNeverMatched.aspx" />
     <Content Include="SportsAssociationManager\Default.aspx" />
+    <Content Include="SportsAssociationManager\DeleteMatch.aspx" />
+    <Content Include="SportsAssociationManager\UpcomingMatches.aspx" />
     <Content Include="StadiumManager\Default.aspx" />
+    <Content Include="StadiumManager\Requests.aspx" />
     <Content Include="SystemAdmin\AddClub.aspx" />
     <Content Include="SystemAdmin\AddStadium.aspx" />
     <Content Include="SystemAdmin\Default.aspx" />
     <Content Include="SystemAdmin\DeleteClub.aspx" />
+    <Content Include="SystemAdmin\DeleteStadium.aspx" />
+    <Content Include="SystemAdmin\Fans.aspx" />
     <Content Include="SystemAdmin\Stadiums.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -209,12 +215,40 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
+    <Compile Include="SportsAssociationManager\AddMatch.aspx.cs">
+      <DependentUpon>AddMatch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SportsAssociationManager\AddMatch.aspx.designer.cs">
+      <DependentUpon>AddMatch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SportsAssociationManager\AlreadyPlayedMatches.aspx.cs">
+      <DependentUpon>AlreadyPlayedMatches.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SportsAssociationManager\AlreadyPlayedMatches.aspx.designer.cs">
+      <DependentUpon>AlreadyPlayedMatches.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SportsAssociationManager\ClubsNeverMatched.aspx.cs">
+      <DependentUpon>ClubsNeverMatched.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SportsAssociationManager\ClubsNeverMatched.aspx.designer.cs">
+      <DependentUpon>ClubsNeverMatched.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SportsAssociationManager\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SportsAssociationManager\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SportsAssociationManager\DeleteMatch.aspx.cs">
+      <DependentUpon>DeleteMatch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SportsAssociationManager\DeleteMatch.aspx.designer.cs">
+      <DependentUpon>DeleteMatch.aspx</DependentUpon>
     </Compile>
     <Compile Include="SportsAssociationManager\SportsAssociationManager.Master.cs">
       <DependentUpon>SportsAssociationManager.Master</DependentUpon>
@@ -223,12 +257,26 @@
     <Compile Include="SportsAssociationManager\SportsAssociationManager.Master.designer.cs">
       <DependentUpon>SportsAssociationManager.Master</DependentUpon>
     </Compile>
+    <Compile Include="SportsAssociationManager\UpcomingMatches.aspx.cs">
+      <DependentUpon>UpcomingMatches.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SportsAssociationManager\UpcomingMatches.aspx.designer.cs">
+      <DependentUpon>UpcomingMatches.aspx</DependentUpon>
+    </Compile>
     <Compile Include="StadiumManager\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="StadiumManager\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StadiumManager\Requests.aspx.cs">
+      <DependentUpon>Requests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StadiumManager\Requests.aspx.designer.cs">
+      <DependentUpon>Requests.aspx</DependentUpon>
     </Compile>
     <Compile Include="StadiumManager\StadiumManager.Master.cs">
       <DependentUpon>StadiumManager.Master</DependentUpon>
@@ -264,6 +312,20 @@
     </Compile>
     <Compile Include="SystemAdmin\DeleteClub.aspx.designer.cs">
       <DependentUpon>DeleteClub.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SystemAdmin\DeleteStadium.aspx.cs">
+      <DependentUpon>DeleteStadium.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemAdmin\DeleteStadium.aspx.designer.cs">
+      <DependentUpon>DeleteStadium.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SystemAdmin\Fans.aspx.cs">
+      <DependentUpon>Fans.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemAdmin\Fans.aspx.designer.cs">
+      <DependentUpon>Fans.aspx</DependentUpon>
     </Compile>
     <Compile Include="SystemAdmin\Stadiums.aspx.cs">
       <DependentUpon>Stadiums.aspx</DependentUpon>
