@@ -13,7 +13,7 @@ namespace SportsManagementSystem.Auth
         {
             if (Session["Username"] != null)
             {
-                Response.Redirect("Auth/Index.aspx");
+                Response.Redirect("/Auth/Login.aspx");
             }
         }
     }

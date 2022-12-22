@@ -108,6 +108,8 @@
     <Content Include="SystemAdmin\AddStadium.aspx" />
     <Content Include="SystemAdmin\Default.aspx" />
     <Content Include="SystemAdmin\DeleteClub.aspx" />
+    <Content Include="SystemAdmin\DeleteStadium.aspx" />
+    <Content Include="SystemAdmin\Fans.aspx" />
     <Content Include="SystemAdmin\Stadiums.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -302,6 +304,20 @@
     </Compile>
     <Compile Include="SystemAdmin\DeleteClub.aspx.designer.cs">
       <DependentUpon>DeleteClub.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SystemAdmin\DeleteStadium.aspx.cs">
+      <DependentUpon>DeleteStadium.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemAdmin\DeleteStadium.aspx.designer.cs">
+      <DependentUpon>DeleteStadium.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SystemAdmin\Fans.aspx.cs">
+      <DependentUpon>Fans.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemAdmin\Fans.aspx.designer.cs">
+      <DependentUpon>Fans.aspx</DependentUpon>
     </Compile>
     <Compile Include="SystemAdmin\Stadiums.aspx.cs">
       <DependentUpon>Stadiums.aspx</DependentUpon>
