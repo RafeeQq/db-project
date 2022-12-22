@@ -14,6 +14,8 @@ namespace SportsManagementSystem.Auth
         protected void Page_Load(object sender, EventArgs e)
         {
             EmptyFieldsMsg.Visible = false;
+            DuplicateUsername.Visible = false;
+            DuplicateNationalId.Visible = false;
         }
 
         protected void RegisterBtn_Click(object sender, EventArgs e)
@@ -24,15 +26,35 @@ namespace SportsManagementSystem.Auth
                 EmptyFieldsMsg.Visible = true;
                 return;
             }
-            /*
-            @fan_name VARCHAR(20),
-	        @username VARCHAR(20),
-	        @password VARCHAR(20),
-	        @national_id_number VARCHAR(20),
-	        @birth_date DATETIME,
-            @address VARCHAR(20),
-	        @phone_number INT
-            */
+
+            var users = DbHelper.RunQuery(
+                "SELECT * FROM SystemUser WHERE username = @username",
+                new Dictionary<string, object>()
+                {
+                    { "@username", Username.Text }
+                }
+            );
+
+            if (users.Count > 0)
+            {
+                DuplicateUsername.Visible = true;
+                return;
+            }
+
+
+            var fans = DbHelper.RunQuery(
+                "SELECT * FROM allFans WHERE national_id = @national_id",
+                new Dictionary<string, object>()
+                {
+                    { "@national_id", NationalId.Text }
+                }
+            );
+
+            if (fans.Count > 0)
+            {
+                DuplicateNationalId.Visible = true;
+                return;
+            }
 
             DbHelper.RunStoredProcedure("addFan", new Dictionary<string, object>()
             {
