@@ -379,11 +379,14 @@ GO
 ----------------------------------------- IV ---------------------------------------
 CREATE PROC deleteMatch
 	@host VARCHAR(20),
-	@guest VARCHAR(20)
+	@guest VARCHAR(20),
+	@start_time DATETIME,
+	@end_time DATETIME
 AS
 	DELETE FROM Match 
 	WHERE host_club_id = (SELECT id FROM Club WHERE Club.name = @host) 
-	AND guest_club_id = (SELECT id FROM Club WHERE Club.name = @guest);
+	AND guest_club_id = (SELECT id FROM Club WHERE Club.name = @guest)
+	AND start_time = @start_time AND end_time = @end_time;
 ------------------------------------------------------------------------------------
 
 GO

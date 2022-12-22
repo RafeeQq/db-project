@@ -1,4 +1,19 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/User.Master" AutoEventWireup="true" CodeBehind="StadiumManager.master.cs" Inherits="SportsManagementSystem.StadiumManager.StadiumManager" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ContentPlaceHolderID="Navbar" runat="server">
+    <li class="nav-item">
+        <a class="nav-link" href="/StadiumManager/Default.aspx">Stadium</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/StadiumManager/Requests.aspx">Requests</a>
+    </li>
+
+
 </asp:Content>
+
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
+    <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+
