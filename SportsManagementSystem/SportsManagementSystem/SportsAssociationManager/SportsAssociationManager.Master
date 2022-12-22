@@ -2,7 +2,7 @@
 
 <asp:Content ContentPlaceHolderID="Navbar" runat="server">
     <li class="nav-item">
-        <a class="nav-link" href="/SportsAssociationManager/Matches.aspx">Matches</a>
+        <a class="nav-link" href="/SportsAssociationManager/Default.aspx">Matches</a>
     </li>
 
 </asp:Content>

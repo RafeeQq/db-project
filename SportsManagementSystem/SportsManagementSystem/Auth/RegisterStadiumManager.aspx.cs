@@ -14,6 +14,7 @@ namespace SportsManagementSystem.Auth
             EmptyFieldsMsg.Visible = false;
             DuplicateUsername.Visible = false;
             DuplicateStadium.Visible = false;
+            StadiumDoesNotExist.Visible = false;
         }
 
         protected void RegisterBtn_Click(object sender, EventArgs e)
@@ -38,8 +39,22 @@ namespace SportsManagementSystem.Auth
                 return;
             }
 
+            var stadiumExists = DbHelper.RunQuery(
+               "SELECT * FROM Stadium WHERE name = @stadiumName",
+               new Dictionary<string, object>()
+               {
+                    { "@stadiumName", StadiumName.Text }
+               }
+           );
+
+            if (stadiumExists.Count == 0)
+            {
+                StadiumDoesNotExist.Visible = true;
+                return;
+            }
+
             var stadium = DbHelper.RunQuery(
-               "SELECT * FROM StadiumManager INNER JOIN Stadium ON Stadium.id = StadiumManager.stadium_id WHERE Stadium.name = StadiumName.Text",
+               "SELECT * FROM allStadiumManagers WHERE stadium_name = @stadiumName",
                new Dictionary<string, object>()
                {
                     { "@stadiumName", StadiumName.Text }

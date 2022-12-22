@@ -7,6 +7,18 @@
                 Please enter all fields.
             </div>
 
+             <div id="HostClubDoesNotExist" class="alert alert-danger" runat="server">
+                The entered host club does not exist.
+            </div>
+
+            <div id="GuestClubDoesNotExist" class="alert alert-danger" runat="server">
+                The entered guest club does not exist.
+            </div>
+
+            <div id="ClubVsItself" class="alert alert-danger" runat="server">
+                Please enter two different clubs.
+            </div>
+
             <div>
                 <asp:Label runat="server" Text="Host Club Name" CssClass="form-label"></asp:Label>
                 <asp:TextBox ID="HostName" runat="server" CssClass="form-control"></asp:TextBox>

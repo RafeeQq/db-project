@@ -100,7 +100,6 @@
     <Content Include="SportsAssociationManager\ClubsNeverMatched.aspx" />
     <Content Include="SportsAssociationManager\Default.aspx" />
     <Content Include="SportsAssociationManager\DeleteMatch.aspx" />
-    <Content Include="SportsAssociationManager\Matches.aspx" />
     <Content Include="SportsAssociationManager\UpcomingMatches.aspx" />
     <Content Include="StadiumManager\Default.aspx" />
     <Content Include="StadiumManager\Requests.aspx" />
@@ -234,13 +233,6 @@
     </Compile>
     <Compile Include="SportsAssociationManager\DeleteMatch.aspx.designer.cs">
       <DependentUpon>DeleteMatch.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="SportsAssociationManager\Matches.aspx.cs">
-      <DependentUpon>Matches.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SportsAssociationManager\Matches.aspx.designer.cs">
-      <DependentUpon>Matches.aspx</DependentUpon>
     </Compile>
     <Compile Include="SportsAssociationManager\SportsAssociationManager.Master.cs">
       <DependentUpon>SportsAssociationManager.Master</DependentUpon>

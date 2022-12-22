@@ -24,6 +24,33 @@ namespace SportsManagementSystem.SportsAssociationManager
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
+        /// HostClubDoesNotExist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HostClubDoesNotExist;
+
+        /// <summary>
+        /// GuestClubDoesNotExist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl GuestClubDoesNotExist;
+
+        /// <summary>
+        /// ClubVsItself control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ClubVsItself;
+
+        /// <summary>
         /// HostName control.
         /// </summary>
         /// <remarks>

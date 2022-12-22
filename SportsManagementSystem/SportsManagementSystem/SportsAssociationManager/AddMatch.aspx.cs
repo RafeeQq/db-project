@@ -12,6 +12,9 @@ namespace SportsManagementSystem.SportsAssociationManager
         protected void Page_Load(object sender, EventArgs e)
         {
             EmptyFieldsMsg.Visible = false;
+            HostClubDoesNotExist.Visible = false;
+            GuestClubDoesNotExist.Visible = false;
+            ClubVsItself.Visible = false;   
         }
 
         protected void AddMatchBtn_Click(object sender, EventArgs e)
@@ -22,6 +25,32 @@ namespace SportsManagementSystem.SportsAssociationManager
                 return;
             }
 
+            var club1 = DbHelper.RunQuery("SELECT * FROM Club WHERE Club.name = @hostName",
+                new Dictionary<string, object>()
+                {
+                    {"@hostName", HostName.Text }
+                });
+            if (club1.Count == 0)
+            {
+                HostClubDoesNotExist.Visible = true;
+                return;
+            }
+
+            var club2 = DbHelper.RunQuery("SELECT * FROM Club WHERE Club.name = @hostName",
+               new Dictionary<string, object>()
+               {
+                    {"@hostName", HostName.Text }
+               });
+            if (club2.Count == 0)
+            {
+                GuestClubDoesNotExist.Visible = true;
+                return;
+            }
+
+            if (HostName.Text == GuestName.Text)
+            { 
+                ClubVsItself.Visible=true;  return;
+            }
             DbHelper.RunStoredProcedure(
                "addNewMatch",
                new Dictionary<string, object>

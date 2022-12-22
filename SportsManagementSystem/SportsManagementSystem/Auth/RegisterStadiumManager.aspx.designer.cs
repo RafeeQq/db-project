@@ -42,6 +42,15 @@ namespace SportsManagementSystem.Auth
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateStadium;
 
         /// <summary>
+        /// StadiumDoesNotExist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StadiumDoesNotExist;
+
+        /// <summary>
         /// Name control.
         /// </summary>
         /// <remarks>

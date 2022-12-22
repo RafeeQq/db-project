@@ -34,5 +34,10 @@ namespace SportsManagementSystem.SportsAssociationManager
         {
             Response.Redirect("/SportsAssociationManager/AddMatch.aspx");
         }
+
+        protected void DeleteMatch_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/SportsAssociationManager/DeleteMatch.aspx");
+        }
     }
 }

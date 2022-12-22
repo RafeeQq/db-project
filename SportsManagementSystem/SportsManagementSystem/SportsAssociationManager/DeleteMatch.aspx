@@ -1,10 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SportsAssociationManager/SportsAssociationManager.Master" AutoEventWireup="true" CodeBehind="DeleteMatch.aspx.cs" Inherits="SportsManagementSystem.SportsAssociationManager.DeleteMatch" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Panel DefaultButton="AddMatchBtn" runat="server">
+    <asp:Panel DefaultButton="DeleteMatchBtn" runat="server">
         <div class="d-flex flex-column gap-3">
             <div id="EmptyFieldsMsg" class="alert alert-danger" runat="server">
                 Please enter all fields.
+            </div>
+
+            <div id="MatchDoesNotExist" class="alert alert-danger" runat="server">
+               The info entered doesn't match any matches.
             </div>
 
             <div>

@@ -11,6 +11,10 @@
      <div id="DuplicateStadium" class="alert alert-danger" runat="server">
         This stadium has already been registered.
     </div>
+
+     <div id="StadiumDoesNotExist" class="alert alert-danger" runat="server">
+        This stadium does not exist.Please check the name.
+    </div>
     
     <div>
         <asp:Label runat="server" Text="Name" CssClass="form-label"></asp:Label>
@@ -29,7 +33,7 @@
 
      <div>
         <asp:Label runat="server" Text="Stadium Name" CssClass="form-label"></asp:Label>
-        <asp:TextBox ID="StadiumName" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+        <asp:TextBox ID="StadiumName" runat="server" CssClass="form-control"></asp:TextBox>
     </div>
 
     <asp:Button ID="RegisterBtn" runat="server" Text="Register" OnClick="RegisterBtn_Click" CssClass="btn btn-primary w-100" />

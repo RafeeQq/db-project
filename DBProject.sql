@@ -273,12 +273,12 @@ GO
 CREATE VIEW allMatches
 AS
 	(
-		SELECT C.name AS host, C2.name AS guest, Match.start_time  
+		SELECT C.name AS host, C2.name AS guest, Match.start_time, Match.end_time
 		FROM Club AS C 
 		INNER JOIN Match ON C.id = Match.host_club_id 
 		INNER JOIN Club AS C2 ON C2.id = Match.guest_club_id
 	) UNION (
-		SELECT C.name AS host,C2.name AS guest, Match.start_time  
+		SELECT C.name AS host,C2.name AS guest, Match.start_time, Match.end_time  
 		FROM Club AS C2 
 		INNER JOIN Match ON C2.id = Match.guest_club_id 
 		INNER JOIN Club AS C ON C.id = Match.host_club_id
@@ -972,5 +972,4 @@ GO
 
 INSERT INTO SystemUser VALUES ('admin', 'password');
 INSERT INTO SystemAdmin VALUES ('Admin', 'admin');
-
 EXEC addClub "Chealsy", "Germany"

@@ -24,6 +24,15 @@ namespace SportsManagementSystem.SportsAssociationManager
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
+        /// MatchDoesNotExist control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MatchDoesNotExist;
+
+        /// <summary>
         /// HostName control.
         /// </summary>
         /// <remarks>

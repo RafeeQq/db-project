@@ -11,7 +11,7 @@ namespace SportsManagementSystem.SportsAssociationManager
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var matches = DbHelper.RunQuery("SELECT * FROM Match WHERE start_date > CURRENT_TIMESTAMP");
+            var matches = DbHelper.RunQuery("SELECT * FROM allMatches WHERE start_time > CURRENT_TIMESTAMP");
             UpcomingMatchesTable.DataSource = DbHelper.ConvertToTable(matches);
             UpcomingMatchesTable.DataBind();
         }
