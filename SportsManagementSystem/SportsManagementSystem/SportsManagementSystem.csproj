@@ -71,7 +71,9 @@
     <Content Include="Auth\RegisterFan.aspx" />
     <Content Include="Auth\RegisterSportsAssociationManager.aspx" />
     <Content Include="Auth\RegisterStadiumManager.aspx" />
+    <Content Include="ClubRepresentative\ClubInfo.aspx" />
     <Content Include="ClubRepresentative\Default.aspx" />
+    <Content Include="ClubRepresentative\UpComingMatches.aspx" />
     <Content Include="css\bootstrap-grid.css" />
     <Content Include="css\bootstrap-grid.min.css" />
     <Content Include="css\bootstrap-grid.rtl.css" />
@@ -142,6 +144,13 @@
     <Compile Include="Auth\RegisterStadiumManager.aspx.designer.cs">
       <DependentUpon>RegisterStadiumManager.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ClubRepresentative\ClubInfo.aspx.cs">
+      <DependentUpon>ClubInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClubRepresentative\ClubInfo.aspx.designer.cs">
+      <DependentUpon>ClubInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ClubRepresentative\ClubRepresentative.Master.cs">
       <DependentUpon>ClubRepresentative.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -155,6 +164,13 @@
     </Compile>
     <Compile Include="ClubRepresentative\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClubRepresentative\UpComingMatches.aspx.cs">
+      <DependentUpon>UpComingMatches.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClubRepresentative\UpComingMatches.aspx.designer.cs">
+      <DependentUpon>UpComingMatches.aspx</DependentUpon>
     </Compile>
     <Compile Include="DbHelper.cs" />
     <Compile Include="Fan\Fan.Master.cs">

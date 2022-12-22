@@ -8,3 +8,4 @@
 
     <asp:GridView runat="server" ID="StadiumTable" class="table table-bordered table-condensed table-responsive table-hover"></asp:GridView>
 </asp:Content>
+<a href="Stadiums.aspx">Stadiums.aspx</a>
