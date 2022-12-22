@@ -4,6 +4,14 @@
     <div id="EmptyFieldsMsg" class="alert alert-danger" runat="server">
         Please enter all fields.
     </div>
+
+    <div id="DuplicateUsername" class="alert alert-danger" runat="server">
+        This username is already taken. Try another one.
+    </div>
+    
+    <div id="DuplicateNationalId" class="alert alert-danger" runat="server">
+        This national id is already taken. Try another one.
+    </div>
     
     <div>
         <asp:Label runat="server" Text="Name" CssClass="form-label"></asp:Label>
@@ -32,7 +40,7 @@
 
     <div>
         <asp:Label runat="server" Text="Birth Date" CssClass="form-label"></asp:Label>
-        <asp:TextBox ID="BirthDate" runat="server" CssClass="form-control"></asp:TextBox>
+        <asp:TextBox ID="BirthDate" runat="server" CssClass="form-control" TextMode="DateTime"></asp:TextBox>
     </div>
 
     <div>

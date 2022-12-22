@@ -24,6 +24,24 @@ namespace SportsManagementSystem.Auth
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
+        /// DuplicateUsername control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateUsername;
+
+        /// <summary>
+        /// DuplicateNationalId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateNationalId;
+
+        /// <summary>
         /// Name control.
         /// </summary>
         /// <remarks>

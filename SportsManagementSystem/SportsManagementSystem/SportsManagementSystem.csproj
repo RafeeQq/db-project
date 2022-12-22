@@ -105,8 +105,10 @@
     <Content Include="StadiumManager\Default.aspx" />
     <Content Include="StadiumManager\Requests.aspx" />
     <Content Include="SystemAdmin\AddClub.aspx" />
+    <Content Include="SystemAdmin\AddStadium.aspx" />
     <Content Include="SystemAdmin\Default.aspx" />
     <Content Include="SystemAdmin\DeleteClub.aspx" />
+    <Content Include="SystemAdmin\Stadiums.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +282,13 @@
     <Compile Include="SystemAdmin\AddClub.aspx.designer.cs">
       <DependentUpon>AddClub.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SystemAdmin\AddStadium.aspx.cs">
+      <DependentUpon>AddStadium.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemAdmin\AddStadium.aspx.designer.cs">
+      <DependentUpon>AddStadium.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SystemAdmin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -293,6 +302,13 @@
     </Compile>
     <Compile Include="SystemAdmin\DeleteClub.aspx.designer.cs">
       <DependentUpon>DeleteClub.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SystemAdmin\Stadiums.aspx.cs">
+      <DependentUpon>Stadiums.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemAdmin\Stadiums.aspx.designer.cs">
+      <DependentUpon>Stadiums.aspx</DependentUpon>
     </Compile>
     <Compile Include="SystemAdmin\SystemAdmin.Master.cs">
       <DependentUpon>SystemAdmin.Master</DependentUpon>
