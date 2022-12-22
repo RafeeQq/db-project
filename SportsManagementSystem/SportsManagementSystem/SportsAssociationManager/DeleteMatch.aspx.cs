@@ -11,7 +11,29 @@ namespace SportsManagementSystem.SportsAssociationManager
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            EmptyFieldsMsg.Visible = false;
+        }
 
+        protected void DeleteMatchBtn_Click(object sender, EventArgs e)
+        {
+            if (HostName.Text == "" || GuestName.Text == "" || StartTime.Text == "" || EndTime.Text == "")
+            {
+                EmptyFieldsMsg.Visible = true;
+                return;
+            }
+
+            DbHelper.RunStoredProcedure(
+               "deleteMatch",
+               new Dictionary<string, object>
+               {
+                    {"@host", HostName.Text},
+                    {"@guest", GuestName.Text},
+                    {"@start_time", StartTime.Text},
+                    {"@end_time", EndTime.Text}
+               }
+           );
+
+            Response.Redirect("/SportsAssociationManager/Default.aspx");
         }
     }
 }

@@ -27,7 +27,7 @@
                 <asp:TextBox ID="EndTime" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
 
-            <asp:Button ID="DeleteMatchBtn" runat="server" Text="Delete Match" OnClick="AddClubBtn_Click" CssClass="btn btn-primary w-100" />
+            <asp:Button ID="DeleteMatchBtn" runat="server" Text="Delete Match" OnClick="DeleteMatchBtn_Click" CssClass="btn btn-primary w-100" />
         </div>
     </asp:Panel>
 

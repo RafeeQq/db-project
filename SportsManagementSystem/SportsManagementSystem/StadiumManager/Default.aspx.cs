@@ -11,7 +11,17 @@ namespace SportsManagementSystem.StadiumManager
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var manager = DbHelper.RunQuery("SELECT * FROM StadiumManager INNER JOIN Stadium ON" +
+                                            " Stadium.WHERE username = @username",
+                new Dictionary<string, object>()
+                {
+                    { "@username", Session["Username"] }
+                }
+                );
 
+
+            StadiumInfo.DataSource = DbHelper.ConvertToTable(manager);
+            StadiumInfo.DataBind();
         }
     }
 }
