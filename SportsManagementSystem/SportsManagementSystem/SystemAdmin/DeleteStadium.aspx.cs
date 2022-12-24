@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,24 +24,13 @@ namespace SportsManagementSystem.SystemAdmin
                 return;
             }
 
-            var clubs = DbHelper.RunQuery("SELECT * FROM allStadiums WHERE name = @name", new Dictionary<string, object>
-            {
-                {"@name", StadiumName.Text}
-            });
-
-            if (clubs.Count == 0)
+            if (!StadiumHelper.Exists(StadiumName.Text))
             {
                 NoStadiumFoundMsg.Visible = true;
                 return;
             }
 
-            DbHelper.RunStoredProcedure(
-                "deleteStadium",
-                new Dictionary<string, object>
-                {
-                    {"@n", StadiumName.Text},
-                }
-            );
+            StadiumHelper.Delete(StadiumName.Text);
 
             Response.Redirect("/SystemAdmin/Stadiums.aspx");
         }

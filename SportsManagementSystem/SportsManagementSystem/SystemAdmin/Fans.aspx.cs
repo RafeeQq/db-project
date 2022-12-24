@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,10 +12,21 @@ namespace SportsManagementSystem.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var fans = DbHelper.RunQuery("SELECT * FROM allFans");
-
-            FansTable.DataSource = DbHelper.ConvertToTable(fans);
+            FansTable.DataSource = FanHelper.All();
             FansTable.DataBind();
+        }
+
+        protected void FansTable_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Block")
+            {
+                var i = Convert.ToInt32(e.CommandArgument);
+                var nationalId = (string)FansTable.DataKeys[i]["national_id"];
+
+                FanHelper.Block(nationalId);
+
+                Response.Redirect("/SystemAdmin/Fans.aspx");
+            }
         }
     }
 }

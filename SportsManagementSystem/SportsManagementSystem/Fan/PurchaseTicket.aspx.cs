@@ -1,6 +1,9 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Lifetime;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -11,80 +14,61 @@ namespace SportsManagementSystem.Fan
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            EmptyFieldsMsg.Visible = false;
+            NoTicketsAvailableMsg.Visible = false;
+            MatchNotFoundMsg.Visible = false;
+            InvalidDateFormat.Visible = false;
 
+
+            if (!Page.IsPostBack)
+            {
+                var clubs = DbHelper.ConvertToTable(
+                    DbHelper.RunQuery("SELECT name FROM allClubs")
+                );
+
+                HostClubName.DataSource = clubs;
+                HostClubName.DataValueField = "name";
+                HostClubName.DataBind();
+
+                GuestClubName.DataSource = clubs;
+                GuestClubName.DataValueField = "name";
+                GuestClubName.DataBind();
+            }
         }
 
         protected void PurchaseTicketBtn_Click(object sender, EventArgs e)
         {
-            // Check no empty fields
-            if (HostClubName.Text == "" || GuestClubName.Text == "" || MatchStartTime.Text == "")
+            if (HostClubName.SelectedValue == "" || GuestClubName.SelectedValue == "" || MatchStartTime.Text == "")
             {
                 EmptyFieldsMsg.Visible = true;
                 return;
             }
 
-            // Check valid datetime.
             if (!Utils.IsValidDate(MatchStartTime.Text))
             {
                 InvalidDateFormat.Visible = true;
                 return;
             }
-
-            // Check a match exists matching the given information
-            var matchExists = DbHelper.CheckExists(
-                "SELECT * FROM allMatches WHERE host = @HostClubName AND guest = @GuestClubName AND start_time = @MatchStartTime",
-                new
-                {
-                    HostClubName = HostClubName.Text,
-                    GuestClubName = GuestClubName.Text,
-                    MatchStartTime = MatchStartTime.Text
-                }
-            );
-
-            if (!matchExists)
+            
+            if (!MatchHelper.Exists(HostClubName.Text, GuestClubName.Text, MatchStartTime.Text))
             {
                 MatchNotFoundMsg.Visible = true;
+                return;
             }
-
-            // Check if there are tickets available for that match
-            var ticketsExist = DbHelper.CheckExists(
-                "SELECT * FROM allTickets WHERE host_club_name = @HostClubName AND guest_club_name = @GuestClubName AND start_time = @MatchStartTime",
-                new
-                {
-                    HostClubName = HostClubName.Text,
-                    GuestClubName = GuestClubName.Text,
-                    MatchStartTime = MatchStartTime.Text
-                }
-            );
-
-            if (!ticketsExist)
+            
+            if (!MatchHelper.HasAvailableTickets(HostClubName.Text, GuestClubName.Text, MatchStartTime.Text))
             {
                 NoTicketsAvailableMsg.Visible = true;
                 return;
             }
 
-            // Get current logged in fan national id
-            var national_id = DbHelper.GetScalar(
-                "SELECT national_id FROM allFans WHERE username = @Username",
-                new
-                {
-                    Username = Session["Username"].ToString()
-                }
+            TicketHelper.Purchase(
+                HostClubName.SelectedValue,
+                GuestClubName.SelectedValue,
+                MatchStartTime.Text
             );
 
-            // Buy the ticket
-            DbHelper.RunStoredProcedure(
-                "purchaseTicket",
-                new
-                {
-                    national_id_number = national_id,
-                    host_club_name = HostClubName.Text,
-                    guest_club_name = GuestClubName.Text,
-                    start_time = MatchStartTime.Text
-                }
-            );
-
-            Response.Redirect("/Fan/Default.aspx");
+            Response.Redirect("/Fan/Tickets.aspx");
         }
     }
 }

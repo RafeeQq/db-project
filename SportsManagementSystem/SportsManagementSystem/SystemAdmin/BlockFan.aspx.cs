@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,7 @@ namespace SportsManagementSystem.SystemAdmin
         {
             EmptyFieldsMsg.Visible = false;
             NoFanFoundMsg.Visible = false;
+            NationalIdMustBeNumberMsg.Visible = false;
         }
 
         protected void BlockFanBtn_Click(object sender, EventArgs e)
@@ -23,25 +25,19 @@ namespace SportsManagementSystem.SystemAdmin
                 return;
             }
 
-            var fans = DbHelper.RunQuery("SELECT * FROM allFans WHERE national_id = @national_id", new Dictionary<string, object>
+            if (!Utils.IsNumber(FanNationalId.Text))
             {
-                {"@national_id", FanNationalId.Text}
-            });
+                NationalIdMustBeNumberMsg.Visible = true;
+                return;
+            }
 
-            if (fans.Count == 0)
+            if (!FanHelper.Exists(FanNationalId.Text))
             {
                 NoFanFoundMsg.Visible = true;
                 return;
             }
-            
-            
-            DbHelper.RunStoredProcedure(
-                "blockFan",
-                new Dictionary<string, object>
-                {
-                    {"@national_id", FanNationalId.Text},
-                }
-            );
+
+            FanHelper.Block(FanNationalId.Text);
 
             Response.Redirect("/SystemAdmin/Fans.aspx");
         }

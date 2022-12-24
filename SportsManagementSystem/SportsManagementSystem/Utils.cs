@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace SportsManagementSystem
@@ -9,17 +10,20 @@ namespace SportsManagementSystem
     {
         public static bool IsValidDate(string date)
         {
-            return DateTime.TryParseExact(
+            return DateTime.TryParse(
                 date,
-                "yyyy-MM-dd HH:mm:ss",
-                null,
-                System.Globalization.DateTimeStyles.None, out _
+                out _
             );
+        }
+
+        public static string FormatDate(string date)
+        {
+            return DateTime.Parse(date).ToString("yyyy-MM-dd HH:mm:ss");
         }
 
         public static bool IsNumber(string str)
         {
-            return int.TryParse(str, out _);
+            return Regex.IsMatch(str, @"^\d+$");
         }
     }
 }

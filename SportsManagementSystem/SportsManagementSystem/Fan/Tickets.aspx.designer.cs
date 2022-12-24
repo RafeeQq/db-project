@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SportsManagementSystem.SystemAdmin
+namespace SportsManagementSystem.Fan
 {
 
 
-    public partial class Stadiums
+    public partial class Tickets
     {
 
         /// <summary>
-        /// StadiumsTable control.
+        /// TicketsTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView StadiumsTable;
+        protected global::System.Web.UI.WebControls.GridView TicketsTable;
     }
 }

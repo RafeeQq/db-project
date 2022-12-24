@@ -57,7 +57,7 @@ namespace SportsManagementSystem.Fan
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox HostClubName;
+        protected global::System.Web.UI.WebControls.DropDownList HostClubName;
 
         /// <summary>
         /// GuestClubName control.
@@ -66,7 +66,7 @@ namespace SportsManagementSystem.Fan
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox GuestClubName;
+        protected global::System.Web.UI.WebControls.DropDownList GuestClubName;
 
         /// <summary>
         /// MatchStartTime control.

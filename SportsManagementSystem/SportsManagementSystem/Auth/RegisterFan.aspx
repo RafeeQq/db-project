@@ -1,22 +1,28 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Auth/Auth.Master" AutoEventWireup="true" CodeBehind="RegisterFan.aspx.cs" Inherits="SportsManagementSystem.Auth.RegisterFan" %>
+﻿<%@ Page Title="Register as Fan" Language="C#" MasterPageFile="~/Auth/Auth.Master" AutoEventWireup="true" CodeBehind="RegisterFan.aspx.cs" Inherits="SportsManagementSystem.Auth.RegisterFan" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-    <div id="EmptyFieldsMsg" class="alert alert-danger" runat="server">
+    <div id="EmptyFieldsMsg" class="alert alert-danger" runat="server" visible="false">
         Please enter all fields.
     </div>
 
-    <div id="DuplicateUsername" class="alert alert-danger" runat="server">
+    <div id="DuplicateUsernameMsg" class="alert alert-danger" runat="server" visible="false">
         This username is already taken. Try another one.
     </div>
     
-    <div id="DuplicateNationalId" class="alert alert-danger" runat="server">
+    <div id="DuplicateNationalIdMsg" class="alert alert-danger" runat="server" visible="false">
         This national id is already taken. Try another one.
     </div>
-    <div id="NationalIdMustBeNumber" class="alert alert-danger" runat="server">
+
+    <div id="NationalIdMustBeNumberMsg" class="alert alert-danger" runat="server" visible="false">
         National id must be a number.
     </div>
-    <div id="PhoneNumberMustBeNumber" class="alert alert-danger" runat="server">
+    
+    <div id="PhoneNumberMustBeNumberMsg" class="alert alert-danger" runat="server" visible="false">
         Phone number must be a number.
+    </div>
+    
+    <div id="InvalidDateFormatMsg" class="alert alert-danger" runat="server" visible="false">
+        Please enter a valid birth date. (Formatted like Year-Month-Day)
     </div>
     
     <div>

@@ -24,6 +24,15 @@ namespace SportsManagementSystem.Fan
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
+        /// InvalidDateFormatMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InvalidDateFormatMsg;
+
+        /// <summary>
         /// Date control.
         /// </summary>
         /// <remarks>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Web;
+using System.Xml.Linq;
 
 namespace SportsManagementSystem
 {
@@ -63,19 +65,6 @@ namespace SportsManagementSystem
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
-        }
-
-        public static bool CheckUsernameAndPassword(string username, string password)
-        {
-            var results = RunQuery(
-                "SELECT * FROM SystemUser WHERE Username = @username AND Password = @Password",
-                new Dictionary<string, object>() {
-                    { "Username", username },
-                    { "Password", password }
-                }
-            );
-
-            return results.Count() > 0;
         }
 
         public static bool IsUserInRole(string username, UserRole role)
@@ -188,7 +177,6 @@ namespace SportsManagementSystem
             cmd.ExecuteNonQuery();
             conn.Close();
         }
-
 
         public static object GetScalar(string sql, object parameters = null)
         {

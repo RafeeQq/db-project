@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,7 @@ namespace SportsManagementSystem.SystemAdmin
         protected void Page_Load(object sender, EventArgs e)
         {
             EmptyFieldsMsg.Visible = false;
+            ClubAlreadyExistsMsg.Visible = false;
         }
 
         protected void AddClubBtn_Click(object sender, EventArgs e)
@@ -22,14 +24,13 @@ namespace SportsManagementSystem.SystemAdmin
                 return;
             }
 
-            DbHelper.RunStoredProcedure(
-                "addClub",
-                new Dictionary<string, object>
-                {
-                    {"@club_name", ClubName.Text},
-                    {"@club_location", ClubLocation.Text}
-                }
-            );
+            if (ClubHelper.Exists(ClubName.Text))
+            {
+                ClubAlreadyExistsMsg.Visible = true;
+                return;
+            }
+
+            ClubHelper.Add(ClubName.Text, ClubLocation.Text);
 
             Response.Redirect("/SystemAdmin/Default.aspx");
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,18 +18,7 @@ namespace SportsManagementSystem.Fan
                 return;
             }
 
-            var username = Session["Username"].ToString();
-
-            // Check if fan is blocked
-            var isNotBlocked = (bool) DbHelper.GetScalar(
-                "SELECT status FROM allFans WHERE username = @Username",
-                new
-                {
-                    Username = username
-                }
-            );
-
-            if (!isNotBlocked)
+            if (FanHelper.IsCurrentUserBlocked())
             {
                 Response.Redirect("/BlockedFan.aspx");
             }

@@ -24,40 +24,49 @@ namespace SportsManagementSystem.Auth
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
-        /// DuplicateUsername control.
+        /// DuplicateUsernameMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateUsername;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateUsernameMsg;
 
         /// <summary>
-        /// DuplicateNationalId control.
+        /// DuplicateNationalIdMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateNationalId;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateNationalIdMsg;
 
         /// <summary>
-        /// NationalIdMustBeNumber control.
+        /// NationalIdMustBeNumberMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NationalIdMustBeNumber;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NationalIdMustBeNumberMsg;
 
         /// <summary>
-        /// PhoneNumberMustBeNumber control.
+        /// PhoneNumberMustBeNumberMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PhoneNumberMustBeNumber;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PhoneNumberMustBeNumberMsg;
+
+        /// <summary>
+        /// InvalidDateFormatMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InvalidDateFormatMsg;
 
         /// <summary>
         /// Name control.

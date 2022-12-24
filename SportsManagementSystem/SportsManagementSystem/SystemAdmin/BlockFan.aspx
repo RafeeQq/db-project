@@ -11,7 +11,11 @@
             <div id="NoFanFoundMsg" class="alert alert-danger" runat="server">
                 No fan with the given national id was found.
             </div>
-
+        
+            <div id="NationalIdMustBeNumberMsg" class="alert alert-danger" runat="server">
+                National id must be a number.
+            </div>
+        
             <div>
                 <asp:Label runat="server" Text="Fan National ID" CssClass="form-label"></asp:Label>
                 <asp:TextBox ID="FanNationalId" runat="server" CssClass="form-control"></asp:TextBox>

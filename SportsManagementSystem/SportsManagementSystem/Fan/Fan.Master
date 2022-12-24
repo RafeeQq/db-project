@@ -6,7 +6,7 @@
         <a class="nav-link" href="/Fan/Default.aspx">Available Matches</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/Fan/PurchaseTicket.aspx">Purchase Ticket</a>
+        <a class="nav-link" href="/Fan/Tickets.aspx">Tickets</a>
     </li>
 </asp:Content>
 

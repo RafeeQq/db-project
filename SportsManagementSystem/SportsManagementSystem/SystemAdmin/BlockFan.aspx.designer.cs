@@ -33,6 +33,15 @@ namespace SportsManagementSystem.SystemAdmin
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoFanFoundMsg;
 
         /// <summary>
+        /// NationalIdMustBeNumberMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NationalIdMustBeNumberMsg;
+
+        /// <summary>
         /// FanNationalId control.
         /// </summary>
         /// <remarks>

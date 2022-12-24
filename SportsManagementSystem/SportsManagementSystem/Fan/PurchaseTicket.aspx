@@ -4,30 +4,30 @@
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <asp:Panel DefaultButton="PurchaseTicketBtn" runat="server">
         <div class="d-flex flex-column gap-3">
-            <div id="EmptyFieldsMsg" class="alert alert-danger" runat="server" visible="false">
+            <div id="EmptyFieldsMsg" class="alert alert-danger" runat="server">
                 Please enter all fields.
             </div>
 
-            <div id="NoTicketsAvailableMsg" class="alert alert-danger" runat="server" visible="false">
+            <div id="NoTicketsAvailableMsg" class="alert alert-danger" runat="server">
                 No tickets available for that match
             </div>
 
-            <div id="MatchNotFoundMsg" class="alert alert-danger" runat="server" visible="false">
+            <div id="MatchNotFoundMsg" class="alert alert-danger" runat="server">
                 A match with the given information is not found.
             </div>
 
-            <div id="InvalidDateFormat" class="alert alert-danger" runat="server" visible="false">
+            <div id="InvalidDateFormat" class="alert alert-danger" runat="server">
                 Enter valid a date time. Valid formats are Year/Month/Day Hour:Minute:Second
             </div>
 
             <div>
                 <asp:Label runat="server" Text="Host Club Name" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="HostClubName" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:DropDownList ID="HostClubName" runat="server" CssClass="form-control"></asp:DropDownList>
             </div>
 
             <div>
                 <asp:Label runat="server" Text="Guest Club Name" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="GuestClubName" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:DropDownList ID="GuestClubName" runat="server" CssClass="form-control"></asp:DropDownList>
             </div>
             <div>
                 <asp:Label runat="server" Text="Match Start Time" CssClass="form-label"></asp:Label>
