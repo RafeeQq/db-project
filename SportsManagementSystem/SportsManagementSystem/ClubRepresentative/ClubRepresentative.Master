@@ -8,7 +8,7 @@
         <a class="nav-link" href="/ClubRepresentative/UpComingMatches.aspx">upComingMatches</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/ClubRepresentative/AvailableStaium.aspx">AvailableStadiums</a>
+        <a class="nav-link" href="/ClubRepresentative/AvailableStadiums.aspx">AvailableStadiums</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="/ClubRepresentative/SendRequest.aspx">SendRequest</a>
