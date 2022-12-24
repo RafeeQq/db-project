@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Xml.Linq;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 
 namespace SportsManagementSystem.Auth
 {
@@ -14,59 +8,61 @@ namespace SportsManagementSystem.Auth
         protected void Page_Load(object sender, EventArgs e)
         {
             EmptyFieldsMsg.Visible = false;
-            DuplicateUsername.Visible = false;
-            DuplicateNationalId.Visible = false;
+            NationalIdMustBeNumberMsg.Visible = false;
+            PhoneNumberMustBeNumberMsg.Visible = false;
+            InvalidDateFormatMsg.Visible = false;
+            DuplicateUsernameMsg.Visible = false;
+            DuplicateNationalIdMsg.Visible = false;
         }
 
         protected void RegisterBtn_Click(object sender, EventArgs e)
         {
-            // name, username, a password, national id number, phone number,birth date and an address
             if (Name.Text == "" || Username.Text == "" || Password.Text == "" || NationalId.Text == "" || PhoneNumber.Text == "" || BirthDate.Text == "" || Address.Text == "")
             {
                 EmptyFieldsMsg.Visible = true;
                 return;
             }
 
-            var users = DbHelper.RunQuery(
-                "SELECT * FROM SystemUser WHERE username = @username",
-                new Dictionary<string, object>()
-                {
-                    { "@username", Username.Text }
-                }
-            );
-
-            if (users.Count > 0)
+            if (!Utils.IsNumber(NationalId.Text))
             {
-                DuplicateUsername.Visible = true;
+                NationalIdMustBeNumberMsg.Visible = true;
                 return;
             }
 
-
-            var fans = DbHelper.RunQuery(
-                "SELECT * FROM allFans WHERE national_id = @national_id",
-                new Dictionary<string, object>()
-                {
-                    { "@national_id", NationalId.Text }
-                }
-            );
-
-            if (fans.Count > 0)
+            if (!Utils.IsNumber(PhoneNumber.Text))
             {
-                DuplicateNationalId.Visible = true;
+                PhoneNumberMustBeNumberMsg.Visible = true;
                 return;
             }
 
-            DbHelper.RunStoredProcedure("addFan", new Dictionary<string, object>()
+            if (!Utils.IsValidDate(BirthDate.Text))
             {
-                { "@fan_name", Name.Text },
-                { "@username", Username.Text },
-                { "@password", Password.Text },
-                { "@national_id_number", NationalId.Text },
-                { "@birth_date", BirthDate.Text },
-                { "@address", Address.Text },
-                { "@phone_number", PhoneNumber.Text }
-            });
+                InvalidDateFormatMsg.Visible = true;
+                return;
+            }
+            
+            if (AuthHelper.UsernameExists(Username.Text))
+            {
+                DuplicateUsernameMsg.Visible = true;
+                return;
+            }
+            
+            if (FanHelper.Exists(NationalId.Text))
+            {
+                DuplicateNationalIdMsg.Visible = true;
+                return;
+            }
 
+            FanHelper.Add(
+                Name.Text,
+                Username.Text,
+                Password.Text,
+                NationalId.Text,
+                BirthDate.Text,
+                Address.Text,
+                PhoneNumber.Text
+            );
+            
             Session["Username"] = Username.Text;
 
             Response.Redirect("/Default.aspx");

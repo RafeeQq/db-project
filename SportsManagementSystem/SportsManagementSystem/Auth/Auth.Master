@@ -1,8 +1,6 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Auth.master.cs" Inherits="SportsManagementSystem.Auth.Auth" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Sports Management System</a>
@@ -40,8 +38,10 @@
                 <div class="row mt-3">
                     <div class="col-6 mx-auto">
                         <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title"><%: Page.Title %></h4>
+                            </div>
                             <div class="card-body d-flex flex-column gap-3">
-
                                 <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
                             </div>
                         </div>

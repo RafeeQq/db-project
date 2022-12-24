@@ -6,6 +6,14 @@
             <div id="EmptyFieldsMsg" class="alert alert-danger" runat="server">
                 Please enter all fields.
             </div>
+            
+            <div id="StadiumCapacityMustBeNumberMsg" class="alert alert-danger" runat="server">
+                Stadium capacity must be a number
+            </div>
+
+            <div id="StadiumAlreadyExistsMsg" class="alert alert-danger" runat="server">
+                A stadium with the exact same name already exists.
+            </div>
 
             <div>
                 <asp:Label runat="server" Text="Stadium Name" CssClass="form-label"></asp:Label>

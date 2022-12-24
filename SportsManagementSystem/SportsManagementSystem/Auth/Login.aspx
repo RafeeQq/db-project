@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Auth/Auth.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SportsManagementSystem.Auth.Login" %>
+﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/Auth/Auth.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SportsManagementSystem.Auth.Login" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <div id="InvalidCredientialsMsg" class="alert alert-danger" runat="server">

@@ -11,7 +11,7 @@ namespace SportsManagementSystem.SystemAdmin
 {
 
 
-    public partial class AddStadium
+    public partial class BlockFan
     {
 
         /// <summary>
@@ -24,57 +24,39 @@ namespace SportsManagementSystem.SystemAdmin
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
-        /// StadiumCapacityMustBeNumberMsg control.
+        /// NoFanFoundMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StadiumCapacityMustBeNumberMsg;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoFanFoundMsg;
 
         /// <summary>
-        /// StadiumAlreadyExistsMsg control.
+        /// NationalIdMustBeNumberMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StadiumAlreadyExistsMsg;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NationalIdMustBeNumberMsg;
 
         /// <summary>
-        /// StadiumName control.
+        /// FanNationalId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StadiumName;
+        protected global::System.Web.UI.WebControls.TextBox FanNationalId;
 
         /// <summary>
-        /// StadiumLocation control.
+        /// BlockFanBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StadiumLocation;
-
-        /// <summary>
-        /// StadiumCapacity control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StadiumCapacity;
-
-        /// <summary>
-        /// AddStadiumBtn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AddStadiumBtn;
+        protected global::System.Web.UI.WebControls.Button BlockFanBtn;
     }
 }

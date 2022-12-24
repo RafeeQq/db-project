@@ -6,5 +6,19 @@
         <a href="/SystemAdmin/DeleteStadium.aspx" class="btn btn-danger mb-2">Delete Stadium</a>
     </div>
 
-    <asp:GridView runat="server" ID="StadiumTable" class="table table-bordered table-condensed table-responsive table-hover"></asp:GridView>
+    <asp:GridView
+        runat="server"
+        ID="StadiumsTable"
+        class="table table-bordered table-condensed table-responsive table-hover"
+        DataKeyNames="name"
+        OnRowCommand="StadiumsTable_RowCommand"
+        EmptyDataText="No stadiums, yet! Add a few.">
+        <Columns>
+            <asp:ButtonField
+                ButtonType="Button"
+                CommandName="DeleteStadium"
+                ControlStyle-CssClass="btn btn-danger"
+                Text="Delete" />
+        </Columns>
+    </asp:GridView>
 </asp:Content>

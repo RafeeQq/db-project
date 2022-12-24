@@ -7,6 +7,10 @@
                 Please enter all fields.
             </div>
 
+            <div id="ClubAlreadyExistsMsg" class="alert alert-danger" runat="server">
+                A club with the exact same name already exists.
+            </div>
+
             <div>
                 <asp:Label runat="server" Text="Club Name" CssClass="form-label"></asp:Label>
                 <asp:TextBox ID="ClubName" runat="server" CssClass="form-control"></asp:TextBox>

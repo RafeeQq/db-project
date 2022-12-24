@@ -1,7 +1,6 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="User.master.cs" Inherits="SportsManagementSystem.User" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Sports Management System</a>

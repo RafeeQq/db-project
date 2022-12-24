@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SportsManagementSystem.SystemAdmin
+namespace SportsManagementSystem.Fan
 {
 
 
-    public partial class AddStadium
+    public partial class PurchaseTicket
     {
 
         /// <summary>
@@ -24,57 +24,66 @@ namespace SportsManagementSystem.SystemAdmin
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
-        /// StadiumCapacityMustBeNumberMsg control.
+        /// NoTicketsAvailableMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StadiumCapacityMustBeNumberMsg;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoTicketsAvailableMsg;
 
         /// <summary>
-        /// StadiumAlreadyExistsMsg control.
+        /// MatchNotFoundMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StadiumAlreadyExistsMsg;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MatchNotFoundMsg;
 
         /// <summary>
-        /// StadiumName control.
+        /// InvalidDateFormat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StadiumName;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InvalidDateFormat;
 
         /// <summary>
-        /// StadiumLocation control.
+        /// HostClubName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StadiumLocation;
+        protected global::System.Web.UI.WebControls.DropDownList HostClubName;
 
         /// <summary>
-        /// StadiumCapacity control.
+        /// GuestClubName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StadiumCapacity;
+        protected global::System.Web.UI.WebControls.DropDownList GuestClubName;
 
         /// <summary>
-        /// AddStadiumBtn control.
+        /// MatchStartTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AddStadiumBtn;
+        protected global::System.Web.UI.WebControls.TextBox MatchStartTime;
+
+        /// <summary>
+        /// PurchaseTicketBtn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button PurchaseTicketBtn;
     }
 }
