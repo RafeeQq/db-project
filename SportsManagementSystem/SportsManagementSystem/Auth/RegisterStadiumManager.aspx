@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Auth/Auth.Master" AutoEventWireup="true" CodeBehind="RegisterStadiumManager.aspx.cs" Inherits="SportsManagementSystem.Auth.RegisterStadiumManager" %>
- <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <div id="EmptyFieldsMsg" class="alert alert-danger" runat="server">
         Please enter all fields.
     </div>
@@ -8,14 +9,14 @@
         This username is already taken. Try another one.
     </div>
 
-     <div id="DuplicateStadium" class="alert alert-danger" runat="server">
+    <div id="DuplicateStadium" class="alert alert-danger" runat="server">
         This stadium has already been registered.
     </div>
 
-     <div id="StadiumDoesNotExist" class="alert alert-danger" runat="server">
-        This stadium does not exist.Please check the name.
+    <div id="StadiumDoesNotExist" class="alert alert-danger" runat="server">
+        This stadium does not exist. Please check the name.
     </div>
-    
+
     <div>
         <asp:Label runat="server" Text="Name" CssClass="form-label"></asp:Label>
         <asp:TextBox ID="Name" runat="server" CssClass="form-control"></asp:TextBox>
@@ -31,7 +32,7 @@
         <asp:TextBox ID="Password" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
     </div>
 
-     <div>
+    <div>
         <asp:Label runat="server" Text="Stadium Name" CssClass="form-label"></asp:Label>
         <asp:TextBox ID="StadiumName" runat="server" CssClass="form-control"></asp:TextBox>
     </div>
