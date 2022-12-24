@@ -11,7 +11,20 @@ namespace SportsManagementSystem.Fan
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            EmptyFieldsMsg.Visible = false;
+        }
 
+        protected void SearchBtn_Click(object sender, EventArgs e)
+        {
+            if (Date.Text == "")
+            {
+                EmptyFieldsMsg.Visible = true;
+            }
+
+            var matches = DbHelper.RunQuery("SELECT * FROM availableMatchesToAttend(@date)", new Dictionary<string, object>() { { "@date", Date.Text } });
+
+            MatchesTable.DataSource = DbHelper.ConvertToTable(matches);
+            MatchesTable.DataBind();
         }
     }
 }

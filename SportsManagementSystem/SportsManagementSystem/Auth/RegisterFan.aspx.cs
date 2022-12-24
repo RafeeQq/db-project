@@ -16,6 +16,8 @@ namespace SportsManagementSystem.Auth
             EmptyFieldsMsg.Visible = false;
             DuplicateUsername.Visible = false;
             DuplicateNationalId.Visible = false;
+            PhoneNumberMustBeNumber.Visible = false;
+            NationalIdMustBeNumber.Visible = false;
         }
 
         protected void RegisterBtn_Click(object sender, EventArgs e)
@@ -26,6 +28,20 @@ namespace SportsManagementSystem.Auth
                 EmptyFieldsMsg.Visible = true;
                 return;
             }
+
+            if (!int.TryParse(NationalId.Text, out _))
+            {
+                NationalIdMustBeNumber.Visible = true;
+                return;
+            }
+
+            if (!int.TryParse(PhoneNumber.Text, out _))
+            {
+                PhoneNumberMustBeNumber.Visible = true;
+                return;
+            }
+
+            // Check date is certain format
 
             var users = DbHelper.RunQuery(
                 "SELECT * FROM SystemUser WHERE username = @username",

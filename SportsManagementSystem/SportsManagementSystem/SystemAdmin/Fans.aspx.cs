@@ -11,7 +11,7 @@ namespace SportsManagementSystem.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var fans = DbHelper.RunQuery("SELECT * FROM allStadiums");
+            var fans = DbHelper.RunQuery("SELECT * FROM allFans");
 
             FansTable.DataSource = DbHelper.ConvertToTable(fans);
             FansTable.DataBind();

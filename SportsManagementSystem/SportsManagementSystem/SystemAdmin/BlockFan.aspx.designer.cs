@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SportsManagementSystem.Fan
+namespace SportsManagementSystem.SystemAdmin
 {
 
 
-    public partial class Default
+    public partial class BlockFan
     {
 
         /// <summary>
@@ -24,30 +24,30 @@ namespace SportsManagementSystem.Fan
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
-        /// Date control.
+        /// NoFanFoundMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Date;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NoFanFoundMsg;
 
         /// <summary>
-        /// SearchBtn control.
+        /// FanNationalId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SearchBtn;
+        protected global::System.Web.UI.WebControls.TextBox FanNationalId;
 
         /// <summary>
-        /// MatchesTable control.
+        /// BlockFanBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView MatchesTable;
+        protected global::System.Web.UI.WebControls.Button BlockFanBtn;
     }
 }

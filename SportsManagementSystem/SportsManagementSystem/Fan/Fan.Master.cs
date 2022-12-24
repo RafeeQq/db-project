@@ -14,6 +14,23 @@ namespace SportsManagementSystem.Fan
             if (!DbHelper.IsUserInRole(Session["Username"].ToString(), UserRole.Fan))
             {
                 Response.Redirect("/Default.aspx");
+                return;
+            }
+
+            var username = Session["Username"].ToString();
+
+            // Check if fan is blocked
+            var isNotBlocked = (bool) DbHelper.GetScalar(
+                "SELECT status FROM allFans WHERE username = @Username",
+                new
+                {
+                    Username = username
+                }
+            );
+
+            if (!isNotBlocked)
+            {
+                Response.Redirect("/BlockedFan.aspx");
             }
         }
     }

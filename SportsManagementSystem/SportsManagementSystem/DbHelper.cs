@@ -129,5 +129,77 @@ namespace SportsManagementSystem
 
             return table;
         }
+
+        public static List<Dictionary<string, object>> RunQuery(string sql, object parameters)
+        {
+            List<Dictionary<string, object>> results = new List<Dictionary<string, object>>();
+
+            var conn = new SqlConnection(GetConnectionString());
+
+            var cmd = new SqlCommand(sql, conn);
+
+            if (parameters != null)
+            {
+                foreach (var property in parameters.GetType().GetProperties())
+                {
+                    cmd.Parameters.Add(new SqlParameter("@" + property.Name, property.GetValue(parameters)));
+                }
+            }
+
+            conn.Open();
+
+            using (var reader = cmd.ExecuteReader())
+            {
+
+                while (reader.Read())
+                {
+                    results.Add(Enumerable.Range(0, reader.FieldCount).ToDictionary(reader.GetName, reader.GetValue));
+                }
+            }
+
+            conn.Close();
+
+            return results;
+        }
+
+        public static bool CheckExists(string sql, object parameters)
+        {
+            var results = RunQuery(sql, parameters);
+
+            return results.Count() > 0;
+        }
+
+        public static void RunStoredProcedure(string sql, object parameters = null)
+        {
+            var conn = new SqlConnection(GetConnectionString());
+
+            var cmd = new SqlCommand(sql, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            if (parameters != null)
+            {
+                foreach (var property in parameters.GetType().GetProperties())
+                {
+                    cmd.Parameters.Add(new SqlParameter("@" + property.Name, property.GetValue(parameters)));
+                }
+            }
+
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
+
+        public static object GetScalar(string sql, object parameters = null)
+        {
+            var results = RunQuery(sql, parameters);
+
+            if (results.Count() > 0)
+            {
+                return results[0].Values.First();
+            }
+
+            return null;
+        }
     }
 }

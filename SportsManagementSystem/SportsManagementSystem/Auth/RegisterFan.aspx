@@ -12,6 +12,12 @@
     <div id="DuplicateNationalId" class="alert alert-danger" runat="server">
         This national id is already taken. Try another one.
     </div>
+    <div id="NationalIdMustBeNumber" class="alert alert-danger" runat="server">
+        National id must be a number.
+    </div>
+    <div id="PhoneNumberMustBeNumber" class="alert alert-danger" runat="server">
+        Phone number must be a number.
+    </div>
     
     <div>
         <asp:Label runat="server" Text="Name" CssClass="form-label"></asp:Label>
@@ -40,7 +46,7 @@
 
     <div>
         <asp:Label runat="server" Text="Birth Date" CssClass="form-label"></asp:Label>
-        <asp:TextBox ID="BirthDate" runat="server" CssClass="form-control" TextMode="DateTime"></asp:TextBox>
+        <asp:TextBox ID="BirthDate" runat="server" CssClass="form-control" type="datetime"></asp:TextBox>
     </div>
 
     <div>

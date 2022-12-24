@@ -42,6 +42,24 @@ namespace SportsManagementSystem.Auth
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateNationalId;
 
         /// <summary>
+        /// NationalIdMustBeNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NationalIdMustBeNumber;
+
+        /// <summary>
+        /// PhoneNumberMustBeNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PhoneNumberMustBeNumber;
+
+        /// <summary>
         /// Name control.
         /// </summary>
         /// <remarks>
