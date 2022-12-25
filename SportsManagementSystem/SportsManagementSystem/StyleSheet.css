@@ -1,0 +1,54 @@
+﻿body {
+    background-image: url('resources/ballpaper.png');
+    background-size: cover;
+    background-position: center;
+    font-size: .80em;
+    font-family: 'Times New Roman' margin: 0px;
+    padding: 0px;
+    color: #696969;
+}
+
+@keyframes glowing {
+    0% {
+        background-color: #2D4466;
+        box-shadow: 0 0 3px #000000;
+    }
+
+    50% {
+        background-color: #2B5CA5;
+        box-shadow: 0 0 10px #000000;
+    }
+
+    100% {
+        background-color: #2B5CA5;
+        box-shadow: 0 0 3px #000000;
+    }
+}
+
+.btn {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgb(145, 92, 182);
+    padding: 15px 40px;
+    border-radius: 4px;
+    font-weight: normal;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 15px rgba(145, 92, 182, .4);
+}
+
+.form-label {
+    text-decoration: auto;
+    padding: 5px 5px;
+    border-radius: 2px;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-family: 'Times New Roman';
+}
+.form-control {
+ 
+}

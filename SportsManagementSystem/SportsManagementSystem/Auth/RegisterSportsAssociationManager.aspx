@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Auth/Auth.Master" AutoEventWireup="true" CodeBehind="RegisterSportsAssociationManager.aspx.cs" Inherits="SportsManagementSystem.Auth.RegisterSportsAssociationManager" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+    <link href="../StyleSheet.css" rel="stylesheet" type="text/css" />
     <div id="EmptyFieldsMsg" class="alert alert-danger" runat="server">
         Please enter all fields.
     </div>
@@ -24,5 +25,5 @@
         <asp:TextBox ID="Password" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
     </div>
 
-    <asp:Button ID="RegisterBtn" runat="server" Text="Register" OnClick="RegisterBtn_Click" CssClass="btn btn-primary w-100" />
+    <asp:Button ID="RegisterBtn" runat="server" Text="Register" OnClick="RegisterBtn_Click" CssClass="btn" />
 </asp:Content>

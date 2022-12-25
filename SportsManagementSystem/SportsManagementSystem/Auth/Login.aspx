@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Auth/Auth.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SportsManagementSystem.Auth.Login" %>
-
+   
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
+     <link href="../StyleSheet.css" rel="stylesheet" type="text/css" />
     <div id="InvalidCredientialsMsg" class="alert alert-danger" runat="server">
         Invalid username or password.
     </div>
@@ -18,5 +19,5 @@
         <asp:TextBox ID="Password" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
     </div>
     
-    <asp:Button ID="LoginBtn" runat="server" Text="Login" OnClick="LoginBtn_Click" CssClass="btn btn-primary w-100" />
+    <asp:Button ID="LoginBtn" runat="server" Text="Login" OnClick="LoginBtn_Click" CssClass="btn" />
 </asp:Content>

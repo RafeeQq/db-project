@@ -973,3 +973,10 @@ GO
 INSERT INTO SystemUser VALUES ('admin', 'password');
 INSERT INTO SystemAdmin VALUES ('Admin', 'admin');
 EXEC addClub "Chealsy", "Germany"
+EXEC addClub "HotPotato", "Germany"
+EXEC addNewMatch "Chealsy", "HotPotato", "12-12-2002", "12-12-2002"
+EXEC addStadium "std1", "asd", 13131
+EXEC addStadium "std2", "asd", 13131
+EXEC addStadiumManager "mgr1", "std1", "mgg", "asdfs"
+EXEC addRepresentative "Chees", "Chealsy", "csee", "asdfsdf"
+EXEC addHostRequest "Chealsy", "std2", "12-12-2002"
