@@ -24,6 +24,24 @@ namespace SportsManagementSystem.SystemAdmin
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
+        /// StadiumCapacityMustBeNumberMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StadiumCapacityMustBeNumberMsg;
+
+        /// <summary>
+        /// StadiumAlreadyExistsMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StadiumAlreadyExistsMsg;
+
+        /// <summary>
         /// StadiumName control.
         /// </summary>
         /// <remarks>

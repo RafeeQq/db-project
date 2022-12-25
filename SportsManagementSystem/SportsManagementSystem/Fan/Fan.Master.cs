@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,6 +15,12 @@ namespace SportsManagementSystem.Fan
             if (!DbHelper.IsUserInRole(Session["Username"].ToString(), UserRole.Fan))
             {
                 Response.Redirect("/Default.aspx");
+                return;
+            }
+
+            if (FanHelper.IsCurrentUserBlocked())
+            {
+                Response.Redirect("/BlockedFan.aspx");
             }
         }
     }

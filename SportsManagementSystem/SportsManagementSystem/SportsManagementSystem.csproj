@@ -69,7 +69,12 @@
     <Content Include="Auth\RegisterFan.aspx" />
     <Content Include="Auth\RegisterSportsAssociationManager.aspx" />
     <Content Include="Auth\RegisterStadiumManager.aspx" />
+    <Content Include="BlockedFan.aspx" />
+    <Content Include="ClubRepresentative\AvailableStadiums.aspx" />
+    <Content Include="ClubRepresentative\ClubInfo.aspx" />
     <Content Include="ClubRepresentative\Default.aspx" />
+    <Content Include="ClubRepresentative\SendRequest.aspx" />
+    <Content Include="ClubRepresentative\UpComingMatches.aspx" />
     <Content Include="css\bootstrap-grid.css" />
     <Content Include="css\bootstrap-grid.min.css" />
     <Content Include="css\bootstrap-grid.rtl.css" />
@@ -88,6 +93,8 @@
     <Content Include="css\bootstrap.rtl.min.css" />
     <Content Include="Fan\Default.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="Fan\PurchaseTicket.aspx" />
+    <Content Include="Fan\Tickets.aspx" />
     <Content Include="js\bootstrap.bundle.js" />
     <Content Include="js\bootstrap.bundle.min.js" />
     <Content Include="js\bootstrap.esm.js" />
@@ -109,6 +116,7 @@
     <Content Include="StyleSheet.css" />
     <Content Include="SystemAdmin\AddClub.aspx" />
     <Content Include="SystemAdmin\AddStadium.aspx" />
+    <Content Include="SystemAdmin\BlockFan.aspx" />
     <Content Include="SystemAdmin\Default.aspx" />
     <Content Include="SystemAdmin\DeleteClub.aspx" />
     <Content Include="SystemAdmin\DeleteStadium.aspx" />
@@ -152,6 +160,27 @@
     <Compile Include="Auth\RegisterStadiumManager.aspx.designer.cs">
       <DependentUpon>RegisterStadiumManager.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BlockedFan.aspx.cs">
+      <DependentUpon>BlockedFan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BlockedFan.aspx.designer.cs">
+      <DependentUpon>BlockedFan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClubRepresentative\AvailableStadiums.aspx.cs">
+      <DependentUpon>AvailableStadiums.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClubRepresentative\AvailableStadiums.aspx.designer.cs">
+      <DependentUpon>AvailableStadiums.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClubRepresentative\ClubInfo.aspx.cs">
+      <DependentUpon>ClubInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClubRepresentative\ClubInfo.aspx.designer.cs">
+      <DependentUpon>ClubInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ClubRepresentative\ClubRepresentative.Master.cs">
       <DependentUpon>ClubRepresentative.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -166,7 +195,27 @@
     <Compile Include="ClubRepresentative\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ClubRepresentative\SendRequest.aspx.cs">
+      <DependentUpon>SendRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClubRepresentative\SendRequest.aspx.designer.cs">
+      <DependentUpon>SendRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClubRepresentative\UpComingMatches.aspx.cs">
+      <DependentUpon>UpComingMatches.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClubRepresentative\UpComingMatches.aspx.designer.cs">
+      <DependentUpon>UpComingMatches.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DbHelper.cs" />
+    <Compile Include="DbHelpers\AuthHelper.cs" />
+    <Compile Include="DbHelpers\ClubHelper.cs" />
+    <Compile Include="DbHelpers\MatchHelper.cs" />
+    <Compile Include="DbHelpers\TicketHelper.cs" />
+    <Compile Include="DbHelpers\FanHelper.cs" />
+    <Compile Include="DbHelpers\StadiumHelper.cs" />
     <Compile Include="Fan\Fan.Master.cs">
       <DependentUpon>Fan.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -194,6 +243,20 @@
     </Compile>
     <Compile Include="Auth\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Fan\PurchaseTicket.aspx.cs">
+      <DependentUpon>PurchaseTicket.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fan\PurchaseTicket.aspx.designer.cs">
+      <DependentUpon>PurchaseTicket.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Fan\Tickets.aspx.cs">
+      <DependentUpon>Tickets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Fan\Tickets.aspx.designer.cs">
+      <DependentUpon>Tickets.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
@@ -301,6 +364,13 @@
     <Compile Include="SystemAdmin\AddStadium.aspx.designer.cs">
       <DependentUpon>AddStadium.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SystemAdmin\BlockFan.aspx.cs">
+      <DependentUpon>BlockFan.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SystemAdmin\BlockFan.aspx.designer.cs">
+      <DependentUpon>BlockFan.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SystemAdmin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -351,6 +421,7 @@
       <DependentUpon>User.Master</DependentUpon>
     </Compile>
     <Compile Include="UserRole.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\bootstrap-grid.css.map" />

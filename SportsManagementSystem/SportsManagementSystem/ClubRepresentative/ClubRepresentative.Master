@@ -1,4 +1,20 @@
 ﻿<%@ Master Language="C#" MasterPageFile="~/User.Master" AutoEventWireup="true" CodeBehind="ClubRepresentative.master.cs" Inherits="SportsManagementSystem.ClubRepresentative.ClubRepresentative" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ContentPlaceHolderID="Navbar" runat="server">
+    <li class="nav-item">
+        <a class="nav-link" href="/ClubRepresentative/ClubInfo.aspx">Club Info</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/ClubRepresentative/UpComingMatches.aspx">Up Coming Matches</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/ClubRepresentative/AvailableStadiums.aspx">Available Stadiums</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/ClubRepresentative/SendRequest.aspx">Send Request</a>
+    </li>
+</asp:Content>
+
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
+    <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
 </asp:Content>

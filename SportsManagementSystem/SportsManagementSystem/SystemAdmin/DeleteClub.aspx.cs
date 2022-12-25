@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,25 +23,14 @@ namespace SportsManagementSystem.SystemAdmin
                 EmptyFieldsMsg.Visible = true;
                 return;
             }
-
-            var clubs = DbHelper.RunQuery("SELECT * FROM allClubs WHERE name = @name", new Dictionary<string, object>
-            {
-                {"@name", ClubName.Text}
-            });
-
-            if (clubs.Count == 0)
+            
+            if (!ClubHelper.Exists(ClubName.Text))
             {
                 NoClubFoundMsg.Visible = true;
                 return;
             }
 
-            DbHelper.RunStoredProcedure(
-                "deleteClub",
-                new Dictionary<string, object>
-                {
-                    {"@club_name", ClubName.Text},
-                }
-            );
+            ClubHelper.Delete(ClubName.Text);
 
             Response.Redirect("/SystemAdmin/Default.aspx");
         }

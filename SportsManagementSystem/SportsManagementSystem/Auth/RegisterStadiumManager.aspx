@@ -15,7 +15,7 @@
     </div>
 
     <div id="StadiumDoesNotExist" class="alert alert-danger" runat="server">
-        This stadium does not exist.Please check the name.
+        This stadium does not exist. Please check the name.
     </div>
 
     <div>

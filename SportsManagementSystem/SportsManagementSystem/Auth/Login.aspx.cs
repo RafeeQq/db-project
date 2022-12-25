@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Web.Security;
@@ -22,7 +23,7 @@ namespace SportsManagementSystem.Auth
                 return;
             }
 
-            if (DbHelper.CheckUsernameAndPassword(Username.Text, Password.Text))
+            if (AuthHelper.CheckUsernameAndPassword(Username.Text, Password.Text))
             {
                 Session["Username"] = Username.Text;
                 Response.Redirect("/Default.aspx");

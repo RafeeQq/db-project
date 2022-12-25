@@ -290,12 +290,12 @@ GO
 ---------------------------------------- 2.2f --------------------------------------
 CREATE VIEW allTickets
 AS
-	SELECT C1.name AS host_club_name, C2.name AS guest_club_name, Stadium.name, Match.start_time
-	FROM Ticket
-	INNER JOIN Match ON Ticket.match_id = Match.id
-	INNER JOIN Club C1 ON Match.host_club_id = C1.id
-	INNER JOIN Club C2 ON Match.guest_club_id = C2.id
-	LEFT OUTER JOIN Stadium ON Match.stadium_id = Stadium.id
+	SELECT C1.name AS host_club_name, C2.name AS guest_club_name, S.name AS stadium_name, M.start_time, T.status
+	FROM Ticket T
+	INNER JOIN Match M ON T.match_id = M.id
+	INNER JOIN Club C1 ON M.host_club_id = C1.id
+	INNER JOIN Club C2 ON M.guest_club_id = C2.id
+	LEFT OUTER JOIN Stadium S ON M.stadium_id = S.id
 ------------------------------------------------------------------------------------
 
 GO
@@ -772,7 +772,7 @@ CREATE FUNCTION availableMatchesToAttend(@date DATETIME)
 RETURNS TABLE
 AS
 	RETURN (
-		SELECT HC.name AS host_club_name, GC.name AS guest_club_name, M.start_time, S.name as stadium_name
+		SELECT HC.name AS host_club_name, GC.name AS guest_club_name, M.start_time, S.name as stadium_name, S.location stadium_location
 		FROM Match M
 		INNER JOIN Club HC ON M.host_club_id = HC.id
 		INNER JOIN Club GC ON M.guest_club_id = GC.id
@@ -970,13 +970,12 @@ AS
 
 GO
 
-INSERT INTO SystemUser VALUES ('admin', 'password');
+INSERT INTO SystemUser VALUES ('admin', 'admin');
 INSERT INTO SystemAdmin VALUES ('Admin', 'admin');
-EXEC addClub "Chealsy", "Germany"
-EXEC addClub "HotPotato", "Germany"
-EXEC addNewMatch "Chealsy", "HotPotato", "12-12-2002", "12-12-2002"
-EXEC addStadium "std1", "asd", 13131
-EXEC addStadium "std2", "asd", 13131
-EXEC addStadiumManager "mgr1", "std1", "mgg", "asdfs"
-EXEC addRepresentative "Chees", "Chealsy", "csee", "asdfsdf"
-EXEC addHostRequest "Chealsy", "std2", "12-12-2002"
+
+EXEC addNewMatch "Barcelona", "Real Madrid", "2022-12-31", "2022-12-31";
+EXEC addNewMatch "Real Madrid", "Barcelona", "2022-12-1", "2022-12-1";
+
+EXEC generateTickets 3
+
+EXEC generateTickets 2

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Web.UI.WebControls;
 
 namespace SportsManagementSystem.SystemAdmin
@@ -11,10 +8,21 @@ namespace SportsManagementSystem.SystemAdmin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var clubs = DbHelper.RunQuery("SELECT * FROM allClubs");
-            
-            ClubsTable.DataSource = DbHelper.ConvertToTable(clubs);
+            ClubsTable.DataSource = ClubHelper.All();
             ClubsTable.DataBind();
+        }
+
+        protected void ClubsTable_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "DeleteClub")
+            {
+                var i = Convert.ToInt32(e.CommandArgument);
+                var clubName = (string)ClubsTable.DataKeys[i]["name"];
+
+                ClubHelper.Delete(clubName);
+
+                Response.Redirect("/SystemAdmin/Default.aspx");
+            }
         }
     }
 }
