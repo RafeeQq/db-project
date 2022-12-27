@@ -24,13 +24,13 @@ namespace SportsManagementSystem.Auth
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
-        /// DuplicateUsername control.
+        /// DuplicateUsernameMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateUsername;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateUsernameMsg;
 
         /// <summary>
         /// Name control.

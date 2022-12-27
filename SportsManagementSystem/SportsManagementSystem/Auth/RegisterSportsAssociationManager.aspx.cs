@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,7 +13,7 @@ namespace SportsManagementSystem.Auth
         protected void Page_Load(object sender, EventArgs e)
         {
             EmptyFieldsMsg.Visible = false;
-            DuplicateUsername.Visible = false;
+            DuplicateUsernameMsg.Visible = false;
         }
 
         protected void RegisterBtn_Click(object sender, EventArgs e)
@@ -23,26 +24,15 @@ namespace SportsManagementSystem.Auth
                 EmptyFieldsMsg.Visible = true;
                 return;
             }
-            var users = DbHelper.RunQuery(
-                "SELECT * FROM SystemUser WHERE username = @username",
-                new Dictionary<string, object>()
-                {
-                    { "@username", Username.Text }
-                }
-            );
 
-            if (users.Count > 0)
+
+            if (AuthHelper.UsernameExists(Username.Text))
             {
-                DuplicateUsername.Visible = true;
+                DuplicateUsernameMsg.Visible = true;
                 return;
             }
 
-            DbHelper.RunStoredProcedure("addAssociationManager", new Dictionary<string, object>()
-            {
-                { "@name", Name.Text },
-                { "@username", Username.Text },
-                { "@password", Password.Text },
-            });
+            SportsAssociationManagerHelper.Add(Name.Text, Username.Text, Password.Text);
 
             Session["Username"] = Username.Text;
 

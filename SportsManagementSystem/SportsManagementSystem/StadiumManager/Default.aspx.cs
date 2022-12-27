@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,16 +12,7 @@ namespace SportsManagementSystem.StadiumManager
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var manager = DbHelper.RunQuery("SELECT allstadiums.name AS Stadium_Name, allstadiums.location As Location, allstadiums.capacity AS Capacity, allstadiums.status AS Status FROM allStadiumManagers INNER JOIN allStadiums ON" +
-                                            " allStadiums.name = allStadiumManagers.stadium_name WHERE allStadiumManagers.username = @username",
-                new Dictionary<string, object>()
-                {
-                    { "@username", Session["Username"] }
-                }
-                );
-
-
-            StadiumInfo.DataSource = DbHelper.ConvertToTable(manager);
+            StadiumInfo.DataSource = StadiumManagerHelper.GetStadiumOfCurrentUser();
             StadiumInfo.DataBind();
         }
     }

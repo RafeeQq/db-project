@@ -15,6 +15,42 @@ namespace SportsManagementSystem.DbHelpers
             return DbHelper.ConvertToTable(DbHelper.RunQuery("SELECT * FROM allMatches"));
         }
 
+        public static void Add(string host, string guest, string startTime, string endTime)
+        {
+            DbHelper.RunStoredProcedure(
+               "addNewMatch",
+               new
+               {
+                   host,
+                   guest,
+                   start_time = Utils.FormatDate(startTime),
+                   end_time = Utils.FormatDate(endTime)
+               }
+           );
+        }
+
+        public static DataTable AllUpcomingMatches()
+        {
+            var matches = DbHelper.RunQuery("SELECT * FROM allMatches WHERE start_time >= CURRENT_TIMESTAMP");
+
+            return DbHelper.ConvertToTable(matches);
+        }
+
+        public static DataTable AllAlreadyPlayedMatches()
+        {
+            var matches = DbHelper.RunQuery("SELECT * FROM allMatches WHERE end_time < CURRENT_TIMESTAMP");
+
+            return DbHelper.ConvertToTable(matches);
+        }
+
+        public static DataTable AllForHostClub(string hostClub)
+        {
+            return DbHelper.ConvertToTable(DbHelper.RunQuery(
+                "SELECT * FROM allMatches WHERE host = @HostClubName",
+                new { HostClubName = hostClub }
+            ));
+        }
+
         public static DataTable AllAvailableMatchesToAttendStartingFrom(string datetime)
         {
             return DbHelper.ConvertToTable(
@@ -38,6 +74,14 @@ namespace SportsManagementSystem.DbHelpers
             );
         }
 
+        public static bool Exists(string host, string guest, string start, string end)
+        {
+            return DbHelper.CheckExists(
+                "SELECT * FROM allMatches WHERE host = @host AND guest = @guest AND start_time = @start AND end_time = @end",
+                new { host, guest, start = Utils.FormatDate(host), end = Utils.FormatDate(end) }
+            );
+        }
+
         public static bool HasAvailableTickets(string hostClub, string guestClub, string startTime)
         {
             return DbHelper.CheckExists(
@@ -49,6 +93,20 @@ namespace SportsManagementSystem.DbHelpers
                     MatchStartTime = Utils.FormatDate(startTime)
                 }
             );
+        }
+
+        public static void Delete(string host, string guest, string startTime, string endTime)
+        {
+            DbHelper.RunStoredProcedure(
+               "deleteMatch",
+               new
+               {
+                   host = host,
+                   guest = guest,
+                   start_time = startTime,
+                   end_time = endTime
+               }
+           );
         }
     }
 }

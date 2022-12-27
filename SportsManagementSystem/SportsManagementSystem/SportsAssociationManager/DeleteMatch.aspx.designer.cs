@@ -33,22 +33,31 @@ namespace SportsManagementSystem.SportsAssociationManager
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl MatchDoesNotExist;
 
         /// <summary>
-        /// HostName control.
+        /// InvalidDateFormatMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox HostName;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InvalidDateFormatMsg;
 
         /// <summary>
-        /// GuestName control.
+        /// HostClub control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox GuestName;
+        protected global::System.Web.UI.WebControls.DropDownList HostClub;
+
+        /// <summary>
+        /// GuestClub control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList GuestClub;
 
         /// <summary>
         /// StartTime control.

@@ -52,7 +52,7 @@
 
     <div>
         <asp:Label runat="server" Text="Birth Date" CssClass="form-label"></asp:Label>
-        <asp:TextBox ID="BirthDate" runat="server" CssClass="form-control" type="datetime"></asp:TextBox>
+        <asp:TextBox ID="BirthDate" runat="server" CssClass="form-control" type="datetime-local"></asp:TextBox>
     </div>
 
     <div>

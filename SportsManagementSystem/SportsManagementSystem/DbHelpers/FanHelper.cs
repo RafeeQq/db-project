@@ -12,7 +12,11 @@ namespace SportsManagementSystem.DbHelpers
     {
         public static DataTable All()
         {
-            return DbHelper.ConvertToTable(DbHelper.RunQuery("SELECT * FROM allFans"));
+            var table = DbHelper.ConvertToTable(DbHelper.RunQuery("SELECT * FROM allFans"));
+
+            table.Columns["status"].ColumnName = "not blocked";
+
+            return table;
         }
 
         public static bool Exists(string nationalId)

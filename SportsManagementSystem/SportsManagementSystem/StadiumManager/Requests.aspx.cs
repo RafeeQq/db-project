@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,37 +12,37 @@ namespace SportsManagementSystem.StadiumManager
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*
-             * View all requests he already received (in a form of name of the sending club representative, name
-of the host club of the requested match, name of the guest club of the requested match ,start time
-of the match, end time of the match and the staus of the request).*/
-
-            var requests = DbHelper.RunQuery(
-                @"SELECT CR.name AS club_representative_name, HC.name AS host_club_name, GC.name AS guest_club_name, M.start_time, M.end_time, R.status
-                  FROM 
-                    HostRequest R
-                    INNER JOIN ClubRepresentative CR ON CR.id = R.club_representative_id
-                    INNER JOIN StadiumManager SM ON SM.id = R.stadium_manager_id
-                    INNER JOIN Match M ON M.id = R.match_id
-                    INNER JOIN Club HC ON HC.id = M.host_club_id
-                    INNER JOIN Club GC ON GC.id = M.guest_club_id
-                  WHERE SM.username = @username",
-                new Dictionary<string, object>() { { "@username", Session["Username"].ToString() } }
-            );
-
-            RequestsTable.DataSource = DbHelper.ConvertToTable(requests);
-
+            RequestAlreadyHandledMsg.Visible = false;
+            
+            RequestsTable.DataSource = HostRequestHelper.AllPendingRequestsForCurrentUser();
             RequestsTable.DataBind();
         }
 
-        protected void AcceptRequestsBtn_Click(object sender, EventArgs e)
+        protected void RequestsTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            Response.Redirect("/StadiumManager/AcceptRequests.aspx");
-        }
+            var i = Convert.ToInt32(e.CommandArgument);
 
-        protected void RejectRequestsBtn_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("/StadiumManager/RejectRequests.aspx");
+            var stadiumManagerUsername = AuthHelper.GetCurrentUsername();
+            var hostClubName = RequestsTable.DataKeys[i]["host_club_name"].ToString();
+            var guestClubName = RequestsTable.DataKeys[i]["guest_club_name"].ToString();
+            var startTime = RequestsTable.DataKeys[i]["start_time"].ToString();
+
+            if (HostRequestHelper.IsHandled(stadiumManagerUsername, hostClubName, guestClubName, startTime))
+            {
+                RequestAlreadyHandledMsg.Visible = true;
+                return;
+            }
+
+            if (e.CommandName == "AcceptRequest")
+            {
+                HostRequestHelper.AcceptRequest(stadiumManagerUsername, hostClubName, guestClubName, startTime);
+            }
+            else if (e.CommandName == "RejectRequest")
+            {
+                HostRequestHelper.RejectRequest(stadiumManagerUsername, hostClubName, guestClubName, startTime);
+            }
+
+            Response.Redirect("/StadiumManager/Requests.aspx");
         }
     }
 }

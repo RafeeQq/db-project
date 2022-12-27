@@ -8,27 +8,39 @@
             </div>
 
             <div id="MatchDoesNotExist" class="alert alert-danger" runat="server">
-               The info entered doesn't match any matches.
+                The info entered doesn't match any matches.
+            </div>
+
+            <div id="InvalidDateFormatMsg" class="alert alert-danger" runat="server">
+                The date format is invalid. Enter valid dates.
             </div>
 
             <div>
                 <asp:Label runat="server" Text="Host Club Name" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="HostName" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:DropDownList
+                    ID="HostClub"
+                    runat="server"
+                    CssClass="form-control"
+                    DataValueField="name" />
             </div>
 
             <div>
                 <asp:Label runat="server" Text="Guest Club Name" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="GuestName" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:DropDownList
+                    ID="GuestClub"
+                    runat="server"
+                    CssClass="form-control"
+                    DataValueField="name" />
             </div>
 
             <div>
                 <asp:Label runat="server" Text="Start Time" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="StartTime" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="StartTime" runat="server" CssClass="form-control" type="datetime-local"></asp:TextBox>
             </div>
 
             <div>
                 <asp:Label runat="server" Text="End Time" CssClass="form-label"></asp:Label>
-                <asp:TextBox ID="EndTime" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="EndTime" runat="server" CssClass="form-control" type="datetime-local"></asp:TextBox>
             </div>
 
             <asp:Button ID="DeleteMatchBtn" runat="server" Text="Delete Match" OnClick="DeleteMatchBtn_Click" CssClass="btn btn-primary w-100" />

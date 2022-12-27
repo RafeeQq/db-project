@@ -2,7 +2,7 @@
 
 <asp:Content ContentPlaceHolderID="Navbar" runat="server">
     <li class="nav-item">
-        <a class="nav-link" href="/ClubRepresentative/ClubInfo.aspx">Club Info</a>
+        <a class="nav-link" href="/ClubRepresentative/ClubInfo.aspx">My Club</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="/ClubRepresentative/UpComingMatches.aspx">Up Coming Matches</a>
@@ -11,7 +11,7 @@
         <a class="nav-link" href="/ClubRepresentative/AvailableStadiums.aspx">Available Stadiums</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/ClubRepresentative/SendRequest.aspx">Send Request</a>
+        <a class="nav-link" href="/ClubRepresentative/Requests.aspx">Host Requests</a>
     </li>
 </asp:Content>
 

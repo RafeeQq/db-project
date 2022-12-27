@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,55 +13,46 @@ namespace SportsManagementSystem.SportsAssociationManager
         protected void Page_Load(object sender, EventArgs e)
         {
             EmptyFieldsMsg.Visible = false;
-            HostClubDoesNotExist.Visible = false;
-            GuestClubDoesNotExist.Visible = false;
-            ClubVsItself.Visible = false;   
+            ClubVsItselfMsg.Visible = false;
+            StartTimeBeforeEndTimeMsg.Visible = false;
+            InvalidDateFormatMsg.Visible = false;
+
+            if (!Page.IsPostBack)
+            {
+                HostClub.DataSource = ClubHelper.All();
+                GuestClub.DataSource = ClubHelper.All();
+                HostClub.DataBind();
+                GuestClub.DataBind();
+            }
         }
 
         protected void AddMatchBtn_Click(object sender, EventArgs e)
         {
-            if (HostName.Text == "" || GuestName.Text == "" || StartTime.Text == "" || EndTime.Text == "")
+            if (StartTime.Text == "" || EndTime.Text == "")
             {
                 EmptyFieldsMsg.Visible = true;
                 return;
             }
 
-            var club1 = DbHelper.RunQuery("SELECT * FROM Club WHERE Club.name = @hostName",
-                new Dictionary<string, object>()
-                {
-                    {"@hostName", HostName.Text }
-                });
-            if (club1.Count == 0)
+            if (HostClub.SelectedValue == GuestClub.SelectedValue)
             {
-                HostClubDoesNotExist.Visible = true;
+                ClubVsItselfMsg.Visible = true;
                 return;
             }
 
-            var club2 = DbHelper.RunQuery("SELECT * FROM Club WHERE Club.name = @hostName",
-               new Dictionary<string, object>()
-               {
-                    {"@hostName", HostName.Text }
-               });
-            if (club2.Count == 0)
+            if (!Utils.IsValidDate(StartTime.Text) || !Utils.IsValidDate(EndTime.Text))
             {
-                GuestClubDoesNotExist.Visible = true;
+                InvalidDateFormatMsg.Visible = true;
                 return;
             }
 
-            if (HostName.Text == GuestName.Text)
-            { 
-                ClubVsItself.Visible=true;  return;
+            if (DateTime.Parse(StartTime.Text) >= DateTime.Parse(EndTime.Text))
+            {
+                StartTimeBeforeEndTimeMsg.Visible = true;
+                return;
             }
-            DbHelper.RunStoredProcedure(
-               "addNewMatch",
-               new Dictionary<string, object>
-               {
-                    {"@host", HostName.Text},
-                    {"@guest", GuestName.Text},
-                    {"@start_time", StartTime.Text},
-                    {"@end_time", EndTime.Text}
-               }
-           );
+
+            MatchHelper.Add(HostClub.SelectedValue, GuestClub.SelectedValue, StartTime.Text, EndTime.Text);
 
             Response.Redirect("/SportsAssociationManager/Default.aspx");
         }

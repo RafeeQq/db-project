@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,67 +14,38 @@ namespace SportsManagementSystem.Auth
         {
             EmptyFieldsMsg.Visible = false;
             DuplicateUsername.Visible = false;
-            DuplicateStadium.Visible = false;
-            StadiumDoesNotExist.Visible = false;
+            DuplicateStadiumManager.Visible = false;
+
+            if (!Page.IsPostBack)
+            {
+                StadiumName.DataSource = StadiumHelper.All();
+                StadiumName.DataBind();
+            }
         }
 
         protected void RegisterBtn_Click(object sender, EventArgs e)
         {
             // name, username, a password, national id number, phone number,birth date and an address
-            if (Name.Text == "" || Username.Text == "" || Password.Text == "" || StadiumName.Text == "")
+            if (Name.Text == "" || Username.Text == "" || Password.Text == "" || StadiumName.SelectedValue == "")
             {
                 EmptyFieldsMsg.Visible = true;
                 return;
             }
-            var users = DbHelper.RunQuery(
-                "SELECT * FROM SystemUser WHERE username = @username",
-                new Dictionary<string, object>()
-                {
-                    { "@username", Username.Text }
-                }
-            );
 
-            if (users.Count > 0)
+            if (AuthHelper.UsernameExists(Username.Text))
             {
                 DuplicateUsername.Visible = true;
                 return;
             }
 
-            var stadiumExists = DbHelper.RunQuery(
-               "SELECT * FROM Stadium WHERE name = @stadiumName",
-               new Dictionary<string, object>()
-               {
-                    { "@stadiumName", StadiumName.Text }
-               }
-           );
 
-            if (stadiumExists.Count == 0)
+            if (StadiumManagerHelper.ExistsForStadium(StadiumName.SelectedValue))
             {
-                StadiumDoesNotExist.Visible = true;
+                DuplicateStadiumManager.Visible = true;
                 return;
             }
 
-            var stadium = DbHelper.RunQuery(
-               "SELECT * FROM allStadiumManagers WHERE stadium_name = @stadiumName",
-               new Dictionary<string, object>()
-               {
-                    { "@stadiumName", StadiumName.Text }
-               }
-           );
-
-            if (stadium.Count > 0)
-            {
-                DuplicateStadium.Visible = true;
-                return;
-            }
-
-            DbHelper.RunStoredProcedure("addStadiumManager", new Dictionary<string, object>()
-            {
-                { "@name", Name.Text },
-                { "@username", Username.Text },
-                { "@password", Password.Text },
-                { "@stadiumName",StadiumName.Text}
-            });
+            StadiumManagerHelper.Add(Name.Text, Username.Text, Password.Text, StadiumName.SelectedValue);
 
             Session["Username"] = Username.Text;
 

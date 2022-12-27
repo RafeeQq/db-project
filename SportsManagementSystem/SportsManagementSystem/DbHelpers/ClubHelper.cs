@@ -18,6 +18,13 @@ namespace SportsManagementSystem.DbHelpers
             return DbHelper.ConvertToTable(DbHelper.RunQuery("SELECT * FROM allClubs"));
         }
 
+        public static DataTable AllNeverMatchedClubs()
+        {
+            var clubs = DbHelper.RunQuery("SELECT * FROM clubsNeverMatched");
+
+            return DbHelper.ConvertToTable(clubs);
+        }
+
         public static void Add(string name, string location)
         {
             DbHelper.RunStoredProcedure(
@@ -41,5 +48,20 @@ namespace SportsManagementSystem.DbHelpers
             );
         }
 
+        public static DataTable Get(string clubName)
+        {
+            return DbHelper.ConvertToTable(DbHelper.RunQuery("SELECT * FROM allClubs WHERE name = @Name", new { Name = clubName }));
+        }
+
+        public static DataTable AllUpcomingMatches(string clubName)
+        {
+            var matches = DbHelper.RunQuery(
+                "SELECT * FROM upcomingMatchesOfClub(@Club)",
+                new { Club = clubName }
+            );
+
+
+            return DbHelper.ConvertToTable(matches);
+        }
     }
 }

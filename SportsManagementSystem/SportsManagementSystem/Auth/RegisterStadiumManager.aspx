@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Auth/Auth.Master" AutoEventWireup="true" CodeBehind="RegisterStadiumManager.aspx.cs" Inherits="SportsManagementSystem.Auth.RegisterStadiumManager" %>
+﻿<%@ Page Title="Register as Stadium Manager" Language="C#" MasterPageFile="~/Auth/Auth.Master" AutoEventWireup="true" CodeBehind="RegisterStadiumManager.aspx.cs" Inherits="SportsManagementSystem.Auth.RegisterStadiumManager" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <link href="../StyleSheet.css" rel="stylesheet" type="text/css" />
@@ -10,12 +10,8 @@
         This username is already taken. Try another one.
     </div>
 
-    <div id="DuplicateStadium" class="alert alert-danger" runat="server">
-        This stadium has already been registered.
-    </div>
-
-    <div id="StadiumDoesNotExist" class="alert alert-danger" runat="server">
-        This stadium does not exist. Please check the name.
+    <div id="DuplicateStadiumManager" class="alert alert-danger" runat="server">
+        This stadium already has a manager.
     </div>
 
     <div>
@@ -35,7 +31,13 @@
 
     <div>
         <asp:Label runat="server" Text="Stadium Name" CssClass="form-label"></asp:Label>
-        <asp:TextBox ID="StadiumName" runat="server" CssClass="form-control"></asp:TextBox>
+        <asp:DropDownList
+            ID="StadiumName"
+            runat="server"
+            CssClass="form-control"
+            DataTextField="name"
+            DataValueField="name">
+        </asp:DropDownList>
     </div>
 
     <asp:Button ID="RegisterBtn" runat="server" Text="Register" OnClick="RegisterBtn_Click" CssClass="btn" />

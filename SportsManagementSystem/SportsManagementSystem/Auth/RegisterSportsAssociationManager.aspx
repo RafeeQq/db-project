@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Auth/Auth.Master" AutoEventWireup="true" CodeBehind="RegisterSportsAssociationManager.aspx.cs" Inherits="SportsManagementSystem.Auth.RegisterSportsAssociationManager" %>
+﻿<%@ Page Title="Register as Sports Association Manager" Language="C#" MasterPageFile="~/Auth/Auth.Master" AutoEventWireup="true" CodeBehind="RegisterSportsAssociationManager.aspx.cs" Inherits="SportsManagementSystem.Auth.RegisterSportsAssociationManager" %>
 
 <asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <link href="../StyleSheet.css" rel="stylesheet" type="text/css" />
@@ -6,7 +6,7 @@
         Please enter all fields.
     </div>
 
-    <div id="DuplicateUsername" class="alert alert-danger" runat="server">
+    <div id="DuplicateUsernameMsg" class="alert alert-danger" runat="server">
         This username is already taken. Try another one.
     </div>
 

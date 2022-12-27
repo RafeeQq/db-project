@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SportsManagementSystem.StadiumManager
+namespace SportsManagementSystem.ClubRepresentative
 {
 
 
-    public partial class RejectRequests
+    public partial class Requests
     {
 
         /// <summary>
@@ -24,48 +24,48 @@ namespace SportsManagementSystem.StadiumManager
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
-        /// RequestDoesNotExist control.
+        /// DuplicateRequestMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RequestDoesNotExist;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateRequestMsg;
 
         /// <summary>
-        /// HostName control.
+        /// Stadium control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox HostName;
+        protected global::System.Web.UI.WebControls.DropDownList Stadium;
 
         /// <summary>
-        /// GuestName control.
+        /// Match control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox GuestName;
+        protected global::System.Web.UI.WebControls.DropDownList Match;
 
         /// <summary>
-        /// Time control.
+        /// SendRequestBtn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Time;
+        protected global::System.Web.UI.WebControls.Button SendRequestBtn;
 
         /// <summary>
-        /// AcceptRequestBtn control.
+        /// RequestsTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AcceptRequestBtn;
+        protected global::System.Web.UI.WebControls.GridView RequestsTable;
     }
 }

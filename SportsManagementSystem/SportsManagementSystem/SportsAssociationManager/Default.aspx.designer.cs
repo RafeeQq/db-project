@@ -15,48 +15,30 @@ namespace SportsManagementSystem.SportsAssociationManager
     {
 
         /// <summary>
-        /// UpcomingMatches control.
+        /// AllMatchesTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button UpcomingMatches;
+        protected global::System.Web.UI.WebControls.GridView AllMatchesTable;
 
         /// <summary>
-        /// AlreadyPlayedMatches control.
+        /// AlreadyPlayedMatchesTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AlreadyPlayedMatches;
+        protected global::System.Web.UI.WebControls.GridView AlreadyPlayedMatchesTable;
 
         /// <summary>
-        /// ClubsNeverMatched control.
+        /// UpcomingMatchesTable control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ClubsNeverMatched;
-
-        /// <summary>
-        /// AddMatch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AddMatch;
-
-        /// <summary>
-        /// DeleteMatch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button DeleteMatch;
+        protected global::System.Web.UI.WebControls.GridView UpcomingMatchesTable;
     }
 }

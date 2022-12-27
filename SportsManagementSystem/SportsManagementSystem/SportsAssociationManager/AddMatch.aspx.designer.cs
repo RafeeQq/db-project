@@ -24,49 +24,49 @@ namespace SportsManagementSystem.SportsAssociationManager
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
-        /// HostClubDoesNotExist control.
+        /// ClubVsItselfMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HostClubDoesNotExist;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ClubVsItselfMsg;
 
         /// <summary>
-        /// GuestClubDoesNotExist control.
+        /// InvalidDateFormatMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl GuestClubDoesNotExist;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InvalidDateFormatMsg;
 
         /// <summary>
-        /// ClubVsItself control.
+        /// StartTimeBeforeEndTimeMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ClubVsItself;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StartTimeBeforeEndTimeMsg;
 
         /// <summary>
-        /// HostName control.
+        /// HostClub control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox HostName;
+        protected global::System.Web.UI.WebControls.DropDownList HostClub;
 
         /// <summary>
-        /// GuestName control.
+        /// GuestClub control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox GuestName;
+        protected global::System.Web.UI.WebControls.DropDownList GuestClub;
 
         /// <summary>
         /// StartTime control.

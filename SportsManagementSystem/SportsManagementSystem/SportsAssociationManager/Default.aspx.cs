@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,33 +12,30 @@ namespace SportsManagementSystem.SportsAssociationManager
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            UpcomingMatchesTable.DataSource = MatchHelper.AllUpcomingMatches();
+            UpcomingMatchesTable.DataBind();
 
+            AllMatchesTable.DataSource = MatchHelper.All();
+            AllMatchesTable.DataBind();
+
+            AlreadyPlayedMatchesTable.DataSource = MatchHelper.AllAlreadyPlayedMatches();
+            AlreadyPlayedMatchesTable.DataBind();
         }
-
-        protected void UpcomingMatches_Click(object sender, EventArgs e)
+        
+        protected void AllMatchesTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandName == "DeleteMatch")
+            {
+                int i = Convert.ToInt32(e.CommandArgument);
+                var host = (string)AllMatchesTable.DataKeys[i]["host"];
+                var guest = (string)AllMatchesTable.DataKeys[i]["guest"];
+                var startTime = (string)AllMatchesTable.DataKeys[i]["start_time"];
+                var endTime = (string)AllMatchesTable.DataKeys[i]["end_time"];
 
-            Response.Redirect("/SportsAssociationManager/UpcomingMatches.aspx");
-        }
+                MatchHelper.Delete(host, guest, startTime, endTime);
 
-        protected void AlreadyPlayedMatches_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("/SportsAssociationManager/AlreadyPlayedMatches.aspx");
-        }
-
-        protected void ClubsNeverMatched_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("/SportsAssociationManager/ClubsNeverMatched.aspx");
-        }
-
-        protected void AddMatch_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("/SportsAssociationManager/AddMatch.aspx");
-        }
-
-        protected void DeleteMatch_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("/SportsAssociationManager/DeleteMatch.aspx");
+                Response.Redirect("/SportsAssociationManager/Default.aspx");
+            }
         }
     }
 }

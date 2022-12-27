@@ -4,6 +4,9 @@
     <li class="nav-item">
         <a class="nav-link" href="/SportsAssociationManager/Default.aspx">Matches</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/SportsAssociationManager/ClubsNeverMatched.aspx">Clubs Never Matched</a>
+    </li>
 
 </asp:Content>
 

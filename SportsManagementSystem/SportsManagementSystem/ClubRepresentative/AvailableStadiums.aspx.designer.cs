@@ -15,13 +15,31 @@ namespace SportsManagementSystem.ClubRepresentative
     {
 
         /// <summary>
-        /// startDateTime control.
+        /// EmptyFieldsMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox startDateTime;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
+
+        /// <summary>
+        /// InvalidDateFormatMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InvalidDateFormatMsg;
+
+        /// <summary>
+        /// StartDateTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox StartDateTime;
 
         /// <summary>
         /// SearchBtn control.

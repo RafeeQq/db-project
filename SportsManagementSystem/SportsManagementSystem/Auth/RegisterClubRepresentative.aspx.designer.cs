@@ -24,31 +24,22 @@ namespace SportsManagementSystem.Auth
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl EmptyFieldsMsg;
 
         /// <summary>
-        /// DuplicateUsername control.
+        /// DuplicateUsernameMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateUsername;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateUsernameMsg;
 
         /// <summary>
-        /// DuplicateClub control.
+        /// ClubAlreadyHaveRepresentativeMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateClub;
-
-        /// <summary>
-        /// ClubAlreadyHaveRepresentative control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ClubAlreadyHaveRepresentative;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ClubAlreadyHaveRepresentativeMsg;
 
         /// <summary>
         /// Name control.
@@ -84,7 +75,7 @@ namespace SportsManagementSystem.Auth
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ClubName;
+        protected global::System.Web.UI.WebControls.DropDownList ClubName;
 
         /// <summary>
         /// RegisterBtn control.

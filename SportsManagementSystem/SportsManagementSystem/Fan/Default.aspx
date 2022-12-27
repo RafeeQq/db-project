@@ -14,7 +14,7 @@
 
                     <div>
                         <asp:Label runat="server" Text="From Date" CssClass="form-label"></asp:Label>
-                        <asp:TextBox ID="Date" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:TextBox ID="Date" runat="server" CssClass="form-control" type="datetime-local"></asp:TextBox>
                     </div>
 
                     <asp:Button ID="SearchBtn" runat="server" Text="Search" OnClick="SearchBtn_Click" CssClass="btn btn-primary w-100" />
@@ -34,8 +34,8 @@
                 OnRowCommand="MatchesTable_RowCommand"
                 DataKeyNames="host_club_name,guest_club_name,start_time">
                 <Columns>
-                    <asp:ButtonField 
-                        ButtonType="Button" 
+                    <asp:ButtonField
+                        ButtonType="Button"
                         Text="Purchase Ticket"
                         CommandName="PurchaseTicket"
                         ControlStyle-CssClass="btn btn-primary"></asp:ButtonField>

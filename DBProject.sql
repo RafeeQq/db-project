@@ -253,7 +253,7 @@ GO
 ---------------------------------------- 2.2c --------------------------------------
 CREATE VIEW allStadiumManagers
 AS 
-	SELECT SU.username, SU.password, SM.name AS stadium_manger_name, S.name as stadium_name
+	SELECT SU.username, SU.password, SM.name AS stadium_manager_name, S.name as stadium_name
 	FROM StadiumManager SM , Stadium S , SystemUser SU
 	WHERE SM.stadium_id = S.id AND SM.username = SU.username 
 ------------------------------------------------------------------------------------
@@ -304,7 +304,7 @@ GO
 CREATE VIEW allCLubs
 AS
 	SELECT name, location
-	FROM Club
+	FROM Club C
 ------------------------------------------------------------------------------------
 
 GO
@@ -325,6 +325,32 @@ AS
 	FROM HostRequest R, ClubRepresentative CR, StadiumManager SM
 	WHERE R.club_representative_id = CR.id AND R.stadium_manager_id = SM.id
 ------------------------------------------------------------------------------------
+
+GO
+
+CREATE FUNCTION allHostRequestsForRepresentative(@representativeUsername VARCHAR(20))
+RETURNS TABLE
+AS
+	RETURN (
+		SELECT
+			CR.name AS club_representative_name,
+			SM.name AS stadium_manager_name,
+			S.name AS stadium_name,
+			HC.name AS host_club_name,
+			GC.name AS guest_club_name,
+			M.start_time,
+			M.end_time,
+			R.status
+		FROM 
+			HostRequest R
+			INNER JOIN ClubRepresentative CR ON R.club_representative_id = CR.id
+			INNER JOIN StadiumManager SM ON R.stadium_manager_id = SM.id
+			INNER JOIN Stadium S ON SM.stadium_id = S.id
+			INNER JOIN Match M ON R.match_id = M.id
+			INNER JOIN Club HC ON M.host_club_id = HC.id
+			INNER JOIN Club GC ON M.guest_club_id = GC.id
+		WHERE CR.username = @representativeUsername
+	)
 
 GO
 
@@ -386,7 +412,8 @@ AS
 	DELETE FROM Match 
 	WHERE host_club_id = (SELECT id FROM Club WHERE Club.name = @host) 
 	AND guest_club_id = (SELECT id FROM Club WHERE Club.name = @guest)
-	AND start_time = @start_time AND end_time = @end_time;
+	AND start_time = @start_time 
+	AND end_time = @end_time;
 ------------------------------------------------------------------------------------
 
 GO
@@ -608,17 +635,18 @@ AS
 GO
 
 -------------------------------------- XVIII -----------------------------------------
-CREATE FUNCTION allPendingRequests(@m VARCHAR(20))
+CREATE FUNCTION allPendingRequests(@stadium_manager_username VARCHAR(20))
 RETURNS TABLE
 AS
 	RETURN (
-		SELECT ClubRepresentative.name AS club_representative_name, Club.name AS guest_club_name, Match.start_time
+		SELECT ClubRepresentative.name AS club_representative_name, HC.name AS host_club_name, GC.name AS guest_club_name, Match.start_time, Match.end_time, HostRequest.status
 		FROM HostRequest
 		INNER JOIN ClubRepresentative ON HostRequest.club_representative_id = ClubRepresentative.id
 		INNER JOIN Match ON HostRequest.match_id = Match.id
-		INNER JOIN Club ON Match.guest_club_id = Club.id
+		INNER JOIN Club HC ON Match.host_club_id = HC.id
+		INNER JOIN Club GC ON Match.guest_club_id = GC.id
 		INNER JOIN StadiumManager ON HostRequest.stadium_manager_id = StadiumManager.id
-		WHERE StadiumManager.username = @m
+		WHERE StadiumManager.username = @stadium_manager_username
 	)
 ------------------------------------------------------------------------------------
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportsManagementSystem.DbHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,11 +12,7 @@ namespace SportsManagementSystem.ClubRepresentative
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var clubInfo = DbHelper.RunQuery("SELECT AC.*" +
-                " FROM  allCLubs AC , allClubRepresentatives ACR " +
-                "WHERE AC.name =ACR.club_name AND ACR.username = @username",
-                new Dictionary<string, object>() { { "@username", Session["username"] } });
-            ClubTable.DataSource = DbHelper.ConvertToTable(clubInfo);
+            ClubTable.DataSource = ClubRepresentativeHelper.GetClubOfCurrentUser();
             ClubTable.DataBind();
         }
     }
