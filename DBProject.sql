@@ -781,7 +781,7 @@ CREATE FUNCTION upcomingMatchesOfClub(@c VARCHAR(20))
 RETURNS TABLE
 AS
 	RETURN (
-		SELECT C1.name AS host_club_name, C2.name AS guest_club_name, Match.start_time, Stadium.name AS stadium_name
+		SELECT C1.name AS host_club_name, C2.name AS guest_club_name, Match.start_time, Match.end_time, Stadium.name AS stadium_name
 		FROM Match
 		INNER JOIN Club C1 ON C1.id = Match.host_club_id
 		INNER JOIN Club C2 ON C2.id = Match.guest_club_id
@@ -1000,10 +1000,3 @@ GO
 
 INSERT INTO SystemUser VALUES ('admin', 'admin');
 INSERT INTO SystemAdmin VALUES ('Admin', 'admin');
-
-EXEC addNewMatch "Barcelona", "Real Madrid", "2022-12-31", "2022-12-31";
-EXEC addNewMatch "Real Madrid", "Barcelona", "2022-12-1", "2022-12-1";
-
-EXEC generateTickets 3
-
-EXEC generateTickets 2
