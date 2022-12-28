@@ -14,11 +14,15 @@
             <div id="InvalidDateFormatMsg" class="alert alert-danger" runat="server">
                 The date format is invalid. Enter valid dates.
             </div>
-
+            
             <div id="StartTimeBeforeEndTimeMsg" class="alert alert-danger" runat="server">
                 Start time must be before end time.
             </div>
 
+            <div id="MatchTimingCollisionMsg" class="alert alert-danger" runat="server">
+                One of the clubs is will already be playing a match at that time interval.
+            </div>
+            
             <div>
                 <asp:Label runat="server" Text="Host Club Name" CssClass="form-label"></asp:Label>
                 <asp:DropDownList

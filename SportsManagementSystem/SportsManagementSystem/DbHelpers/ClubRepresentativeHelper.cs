@@ -92,5 +92,10 @@ namespace SportsManagementSystem.DbHelpers
         {
             return ClubHelper.AllUpcomingMatches(GetClubNameOfCurrentUser());
         }
+
+        public static DataTable AllUpcomingMatchesHostbedByCurrentUserClub()
+        {
+            return ClubHelper.AllUpcomingMatchesHostedBy(GetClubNameOfCurrentUser());
+        }
     }
 }

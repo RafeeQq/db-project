@@ -63,5 +63,29 @@ namespace SportsManagementSystem.DbHelpers
 
             return DbHelper.ConvertToTable(matches);
         }
+
+        public static DataTable AllUpcomingMatchesHostedBy(string clubName)
+        {
+            var matches = DbHelper.RunQuery(
+                "SELECT * FROM upcomingMatchesOfClub(@Club) WHERE host_club_name = @Club",
+                new { Club = clubName }
+            );
+
+
+            return DbHelper.ConvertToTable(matches);
+        }
+
+        public static bool HasMatchDuring(string clubName, string startTime, string endTime)
+        {
+            return DbHelper.CheckExists(
+                "SELECT * FROM allMatches WHERE (host = @Club OR guest = @Club) AND NOT (start_time > @End OR @Start > end_time)",
+                new
+                {
+                    Club = clubName,
+                    Start = Utils.FormatDate(startTime),
+                    End = Utils.FormatDate(endTime)
+                }
+            );
+        }
     }
 }

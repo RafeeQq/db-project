@@ -11,6 +11,17 @@
                 <div id="DuplicateRequestMsg" class="alert alert-danger" runat="server">
                     You have already sent a request for this match to this stadium.
                 </div>
+                
+                <div id="MatchAlreadyOnStadiumMsg" class="alert alert-danger" runat="server">
+                    This match is already scheduled to be hosted on a stadium and its tickets has been already generated and might have been sold to some fans.
+                </div>
+                <div id="StadiumNotAvailableMsg" class="alert alert-danger" runat="server">
+                    This stadium is not available for hosting matches.
+                </div>
+                
+                <div id="StadiumNotAvailableDuringMatchMsg" class="alert alert-danger" runat="server">
+                    This stadium will be hosting another match during that time period.
+                </div>
 
                 <asp:DropDownList
                     runat="server"

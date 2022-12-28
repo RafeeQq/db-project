@@ -17,7 +17,10 @@ namespace SportsManagementSystem.DbHelpers
         {
             var table = DbHelper.ConvertToTable(DbHelper.RunQuery("SELECT * FROM allStadiums"));
 
-            table.Columns["status"].ColumnName = "available";
+            if (table.Rows.Count > 0)
+            {
+                table.Columns["status"].ColumnName = "available";
+            }
 
             return table;
         }
@@ -50,6 +53,24 @@ namespace SportsManagementSystem.DbHelpers
         public static bool IsAvailable(string stadiumName)
         {
             return (bool)DbHelper.GetScalar("SELECT status FROM allStadiums WHERE name = @Name", new { Name = stadiumName });
+        }
+
+        public static bool IsAvailableDuringMatch(string stadiumName, string hostClubName, string startTime)
+        {
+            var endTime = (DateTime)DbHelper.GetScalar(
+                "SELECT end_time FROM allMatches WHERE host = @Host AND start_time = @Start",
+                new { Host = hostClubName, Start = Utils.FormatDate(startTime) }
+            );
+
+            return !DbHelper.CheckExists(
+                "SELECT S.name FROM Stadium S INNER JOIN Match M ON M.stadium_id = S.id WHERE S.name = @Stadium AND NOT (M.start_time > @End OR @Start > M.end_time)",
+                new
+                {
+                    Stadium = stadiumName,
+                    Start = Utils.FormatDate(startTime),
+                    End = Utils.FormatDate(endTime.ToString())
+                }
+            );
         }
 
         public static DataTable Get(object stadiumName)

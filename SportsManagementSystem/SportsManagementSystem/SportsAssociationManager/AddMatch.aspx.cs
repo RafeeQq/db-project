@@ -16,6 +16,7 @@ namespace SportsManagementSystem.SportsAssociationManager
             ClubVsItselfMsg.Visible = false;
             StartTimeBeforeEndTimeMsg.Visible = false;
             InvalidDateFormatMsg.Visible = false;
+            MatchTimingCollisionMsg.Visible = false;
 
             if (!Page.IsPostBack)
             {
@@ -49,6 +50,12 @@ namespace SportsManagementSystem.SportsAssociationManager
             if (DateTime.Parse(StartTime.Text) >= DateTime.Parse(EndTime.Text))
             {
                 StartTimeBeforeEndTimeMsg.Visible = true;
+                return;
+            }
+
+            if (ClubHelper.HasMatchDuring(HostClub.SelectedValue, StartTime.Text, EndTime.Text) || ClubHelper.HasMatchDuring(GuestClub.SelectedValue, StartTime.Text, EndTime.Text))
+            {
+                MatchTimingCollisionMsg.Visible = true;
                 return;
             }
 

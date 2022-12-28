@@ -33,6 +33,33 @@ namespace SportsManagementSystem.ClubRepresentative
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl DuplicateRequestMsg;
 
         /// <summary>
+        /// MatchAlreadyOnStadiumMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MatchAlreadyOnStadiumMsg;
+
+        /// <summary>
+        /// StadiumNotAvailableMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StadiumNotAvailableMsg;
+
+        /// <summary>
+        /// StadiumNotAvailableDuringMatchMsg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl StadiumNotAvailableDuringMatchMsg;
+
+        /// <summary>
         /// Stadium control.
         /// </summary>
         /// <remarks>

@@ -14,7 +14,10 @@ namespace SportsManagementSystem.DbHelpers
         {
             var table = DbHelper.ConvertToTable(DbHelper.RunQuery("SELECT * FROM allFans"));
 
-            table.Columns["status"].ColumnName = "not blocked";
+            if (table.Rows.Count > 0)
+            {
+                table.Columns["status"].ColumnName = "not blocked";
+            }
 
             return table;
         }

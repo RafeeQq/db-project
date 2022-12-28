@@ -78,7 +78,7 @@ namespace SportsManagementSystem.DbHelpers
         {
             return DbHelper.CheckExists(
                 "SELECT * FROM allMatches WHERE host = @host AND guest = @guest AND start_time = @start AND end_time = @end",
-                new { host, guest, start = Utils.FormatDate(host), end = Utils.FormatDate(end) }
+                new { host, guest, start = Utils.FormatDate(start), end = Utils.FormatDate(end) }
             );
         }
 
@@ -103,10 +103,22 @@ namespace SportsManagementSystem.DbHelpers
                {
                    host = host,
                    guest = guest,
-                   start_time = startTime,
-                   end_time = endTime
+                   start_time = Utils.FormatDate(startTime),
+                   end_time = Utils.FormatDate(endTime)
                }
            );
+        }
+
+        public static bool HasStadium(string hostClubName, string startTime)
+        {
+            return DbHelper.CheckExists(
+                "SELECT * FROM upcomingMatchesOfClub(@Host) WHERE start_time = @StartTime AND stadium_name IS NOT NULL",
+                new
+                {
+                    Host = hostClubName,
+                    StartTime = Utils.FormatDate(startTime)
+                }
+            );
         }
     }
 }

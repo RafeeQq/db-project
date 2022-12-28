@@ -15,6 +15,9 @@ namespace SportsManagementSystem.ClubRepresentative
         {
             EmptyFieldsMsg.Visible = false;
             DuplicateRequestMsg.Visible = false;
+            MatchAlreadyOnStadiumMsg.Visible = false;
+            StadiumNotAvailableMsg.Visible = false;
+            StadiumNotAvailableDuringMatchMsg.Visible = false;
 
             RequestsTable.DataSource = ClubRepresentativeHelper.AllSentHostRequestsOfCurrentUser();
             RequestsTable.DataBind();
@@ -22,7 +25,7 @@ namespace SportsManagementSystem.ClubRepresentative
             if (!Page.IsPostBack)
             {
                 var stadiumManagers = StadiumManagerHelper.All();
-                var matches = ClubRepresentativeHelper.AllClubMatches();
+                var matches = ClubRepresentativeHelper.AllUpcomingMatchesHostbedByCurrentUserClub();
 
                 stadiumManagers.Columns.Add("label");
                 matches.Columns.Add("label");
@@ -34,8 +37,8 @@ namespace SportsManagementSystem.ClubRepresentative
 
                 foreach (DataRow row in matches.Rows)
                 {
-                    var hostClubName = row["host"];
-                    var guestClubName = row["guest"];
+                    var hostClubName = row["host_club_name"];
+                    var guestClubName = row["guest_club_name"];
                     var startTime = row["start_time"];
                     var endTime = row["end_time"];
 
@@ -65,6 +68,24 @@ namespace SportsManagementSystem.ClubRepresentative
             if (ClubRepresentativeHelper.HasSentRequest(AuthHelper.GetCurrentUsername(), Stadium.Text, Match.Text))
             {
                 DuplicateRequestMsg.Visible = true;
+                return;
+            }
+
+            if (MatchHelper.HasStadium(ClubRepresentativeHelper.GetClubNameOfCurrentUser(), Match.Text))
+            {
+                MatchAlreadyOnStadiumMsg.Visible = true;
+                return;
+            }
+
+            if (!StadiumHelper.IsAvailable(Stadium.Text))
+            {
+                StadiumNotAvailableMsg.Visible = true;
+                return;
+            }
+
+            if (!StadiumHelper.IsAvailableDuringMatch(Stadium.Text, ClubRepresentativeHelper.GetClubNameOfCurrentUser(), Match.Text))
+            {
+                StadiumNotAvailableDuringMatchMsg.Visible = true;
                 return;
             }
 
